@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proper Blocks - block management, done properly</title>
+<meta name="description" content="Independent block management for London leasehold buildings. Diligent with day-to-day spend, methodical with debt recovery, and a proprietary portal that keeps every leaseholder informed. ICAEW chartered, RTM director since 2018.">
+<meta name="theme-color" content="#155F66">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Proper Blocks - block management, done properly">
+<meta property="og:description" content="Independent block management, done differently. Financial diligence on every pound, a communication portal to keep all stakeholders informed, and joining leaseholders in the trenches in London's most difficult blocks.">
+<meta property="og:url" content="https://properblocks.co.uk/">
+<meta property="og:site_name" content="Proper Blocks">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Proper Blocks - block management, done properly">
+<meta name="twitter:description" content="Independent block management for London leasehold buildings.">
+
+<link rel="canonical" href="https://properblocks.co.uk/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%2216%22%20width%3D%2211%22%20height%3D%2213%22%20rx%3D%221%22%20fill%3D%22%234DDBE8%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2216%22%20width%3D%2211%22%20height%3D%2213%22%20rx%3D%221%22%20fill%3D%22%231F8E99%22%2F%3E%3Crect%20x%3D%2210.5%22%20y%3D%224%22%20width%3D%2211%22%20height%3D%2213%22%20rx%3D%221%22%20fill%3D%22%23155F66%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAF9F6;
+  --panel:#FFFFFF;
+  --alt:#F5F4EF;
+  --ink:#1E293B;
+  --ink-2:#475569;
+  --ink-3:#64748B;
+  --rule:#E6E3DC;
+  --rule-2:#CFCBC1;
+  --copper:#1F8E99;
+  --copper-deep:#155F66;
+  --copper-light:#CDF4F8;
+  --moss:#103E43;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:Inter,sans-serif;font-size:15.5px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+
+/* Header */
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(251,248,242,0);transition:background 0.4s ease,border-color 0.4s ease;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-bottom-color:var(--rule)}
+header .inner{max-width:1200px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
+.mark{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+.mark-glyph{width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+.mark:hover .mark-glyph{transform:rotate(-8deg) scale(1.05)}
+.mark-glyph svg{width:100%;height:100%}
+.mark-name{font-family:Fraunces,serif;font-size:21px;font-weight:500;letter-spacing:-0.01em}
+nav.head{display:flex;gap:30px;align-items:center}
+nav.head a:not(.btn){text-decoration:none;color:var(--ink-2);font-size:14px;font-weight:500;transition:color 0.18s ease;position:relative}
+nav.head a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--copper);transform:scaleX(0);transform-origin:left;transition:transform 0.32s cubic-bezier(0.22,1,0.36,1)}
+nav.head a:not(.btn):hover{color:var(--copper-deep)}
+nav.head a:not(.btn):hover::after{transform:scaleX(1)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:all 0.22s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
+.btn:focus{outline:none}
+.btn:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:3px}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:var(--moss);transform:translateY(-1px);box-shadow:0 10px 24px rgba(30,41,59,0.18)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--rule-2)}
+.btn-ghost:hover{background:var(--alt)}
+
+/* Hero with particle-text headline morph + ambient particle field */
+.hero-wrap{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
+.hero-particles-bg{position:absolute;inset:0;pointer-events:none;opacity:0.5}
+.hero{position:relative;padding:144px 32px 80px;max-width:900px;margin:0 auto;text-align:center;min-height:auto}
+.hero .lede,.hero-static-fallback{margin-left:auto;margin-right:auto}
+.hero-ctas,.hero-meta{justify-content:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:0.12em;color:var(--copper-deep);margin-bottom:20px;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.2s,transform 0.7s ease 0.2s}
+.hero-eyebrow.in{opacity:1;transform:translateY(0)}
+.hero-eyebrow::before{content:"";width:24px;height:1px;background:var(--copper);display:inline-block}
+
+.hero-static-fallback{display:block;font-family:Fraunces,serif;font-weight:400;font-size:clamp(46px,5.4vw,68px);line-height:1.02;letter-spacing:-0.025em;color:var(--ink);margin-bottom:24px}
+.hero-static-fallback em{font-style:italic;color:var(--copper-deep);font-weight:500}
+
+.hero .lede{font-size:18px;color:var(--ink-2);line-height:1.55;max-width:520px;margin-bottom:32px;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.5s,transform 0.7s ease 0.5s}
+.hero .lede.in{opacity:1;transform:translateY(0)}
+.hero-ctas{display:flex;gap:12px;align-items:center;margin-bottom:38px;flex-wrap:wrap;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.7s,transform 0.7s ease 0.7s}
+.hero-ctas.in{opacity:1;transform:translateY(0)}
+
+/* Scrollytelling morph section. The track is taller than the viewport, the
+   sticky inner pins at the top while the user scrolls past it, and the
+   scroll progress drives the video's currentTime from the decrepit start
+   frame to the tranquil end frame. */
+.morph{position:relative;background:linear-gradient(180deg,var(--alt) 0%,var(--bg) 100%);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.morph-track{height:200vh;position:relative}
+.morph-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.morph-sticky video{height:88vh;max-width:100%;width:auto;object-fit:contain;display:block;border-radius:6px;box-shadow:0 30px 80px rgba(30,41,59,0.18);background:#1B2027}
+.morph-progress{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);width:min(360px,60vw);height:2px;background:rgba(30,41,59,0.12);border-radius:1px;overflow:hidden}
+.morph-progress span{display:block;height:100%;background:var(--copper-deep);width:0%;transition:width 0.12s linear}
+
+/* Trust strip */
+.trust{padding:32px 32px;background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;z-index:2}
+.trust-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.trust-label{font-size:12px;letter-spacing:0.14em;color:var(--ink-3);font-weight:600}
+.trust-creds{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
+.trust-creds .c{font-family:Fraunces,serif;font-size:17px;color:var(--ink);font-weight:500;letter-spacing:-0.005em;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:0;transform:translateY(8px);transition:opacity 0.6s ease,transform 0.6s ease;text-align:center}
+.trust-creds .c.in{opacity:1;transform:translateY(0)}
+.trust-creds .c:nth-child(1).in{transition-delay:0s}
+.trust-creds .c:nth-child(2).in{transition-delay:0.08s}
+.trust-creds .c:nth-child(3).in{transition-delay:0.16s}
+.trust-creds .c:nth-child(4).in{transition-delay:0.24s}
+.trust-creds .c .ind{color:var(--copper-deep);font-style:italic;font-weight:400;font-size:14px}
+
+/* Section base */
+.section{max-width:1200px;margin:0 auto;padding:96px 32px;position:relative}
+#approach{padding-bottom:40px}
+.section-head{max-width:760px;margin-bottom:56px}
+.section-head h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(34px,3.8vw,46px);letter-spacing:-0.02em;line-height:1.1;color:var(--ink);margin-bottom:18px}
+.section-head h2 .w{display:inline-block;opacity:0;transform:translateY(20px);color:var(--ink);transition:opacity 0.95s cubic-bezier(0.22,1,0.36,1),transform 0.95s cubic-bezier(0.22,1,0.36,1),color 0.95s cubic-bezier(0.22,1,0.36,1)}
+.section-head h2 .w.in{opacity:1;transform:translateY(0)}
+.section-head h2 .w.em{color:var(--copper-deep);font-style:italic;font-weight:500}
+.section-head h2 em{font-style:italic;color:var(--copper-deep);font-weight:500}
+.section-head p{font-size:17px;color:var(--ink-2);line-height:1.65;max-width:640px;opacity:0;transform:translateY(8px);transition:opacity 0.6s ease 0.3s,transform 0.6s ease 0.3s}
+.section-head p.in{opacity:1;transform:translateY(0)}
+
+/* Pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pillars.two-up{grid-template-columns:repeat(2,1fr);gap:28px;max-width:980px;margin:0 auto}
+.pillar{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:32px 30px;display:flex;flex-direction:column;gap:14px;position:relative;transition:transform 0.32s cubic-bezier(0.4,0,0.2,1),box-shadow 0.32s ease,border-color 0.32s ease;opacity:0;transform:translateY(22px);overflow:hidden}
+.pillar.in{opacity:1;transform:translateY(0)}
+.pillar:nth-child(1){transition-delay:0s}
+.pillar:nth-child(2){transition-delay:0.12s}
+.pillar:nth-child(3){transition-delay:0.24s}
+.pillar:hover{transform:translateY(-4px);border-color:var(--copper-light);box-shadow:0 16px 40px rgba(30,41,59,0.10)}
+.pillar::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--copper-light),var(--copper));transform:scaleX(0.2);transform-origin:left;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)}
+.pillar:hover::before{transform:scaleX(1)}
+.pillar .ic{width:48px;height:48px;border-radius:6px;background:var(--copper-light);display:flex;align-items:center;justify-content:center}
+.pillar .ic svg{width:24px;height:24px;stroke:var(--copper-deep);stroke-width:1.8;fill:none}
+.pillar h3{font-family:Fraunces,serif;font-weight:500;font-size:22px;letter-spacing:-0.005em;color:var(--ink)}
+.pillar p{font-size:15px;color:var(--ink-2);line-height:1.55}
+.pillar .stat{margin-top:auto;padding-top:18px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline}
+.pillar .stat .v{font-family:Fraunces,serif;font-size:28px;font-weight:500;color:var(--copper-deep);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.pillar .stat .l{font-size:12px;color:var(--ink-3);letter-spacing:0.02em}
+
+/* CTA band */
+.cta-band{position:relative;padding:64px 32px 96px;text-align:center;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%);overflow:hidden}
+.cta-band canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.85}
+.cta-band-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.cta-band .eyebrow{font-size:12px;letter-spacing:0.16em;color:var(--copper-deep);font-weight:600;margin-bottom:18px}
+.cta-band h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(36px,3.8vw,52px);letter-spacing:-0.02em;color:var(--ink);margin-bottom:18px;line-height:1.08}
+.cta-band h2 em{font-style:italic;color:var(--copper-deep)}
+.cta-band p{font-size:17px;color:var(--ink-2);margin-top:24px;margin-bottom:0;max-width:520px;margin-left:auto;margin-right:auto}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* Footer */
+footer{padding:48px 32px;border-top:1px solid var(--rule);background:var(--panel)}
+footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+footer .links{display:flex;gap:24px}
+footer a{font-size:13px;color:var(--ink-3);text-decoration:none;transition:color 0.18s ease}
+footer a:hover{color:var(--copper-deep)}
+footer .copy{font-size:13px;color:var(--ink-3)}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:32px;padding:120px 24px 48px;min-height:auto}
+  .pillars,.pillars.two-up{grid-template-columns:1fr}
+  nav.head{gap:14px}
+  nav.head a:not(.btn){display:none}
+  .morph-sticky video{height:78vh}
+}
+</style>
+<noscript>
+<style>
+/* If JavaScript is disabled the reveal animations never fire, so make sure
+   the elements that start at opacity:0 are visible by default. */
+.hero-eyebrow,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.section-head h2 .w{
+  opacity:1 !important;transform:none !important
+}
+</style>
+</noscript>
+</head>
+<body>
+
+<header id="hd">
+  <div class="inner">
+    <a href="/" class="mark">
+      <span class="mark-glyph">
+        <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
+      </span>
+      <span class="mark-name">Proper Blocks</span>
+    </a>
+    <nav class="head">
+      <a href="#approach">Approach</a>
+      <a href="https://portal.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
+      <a href="#contact" class="btn btn-primary">Talk to us</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-wrap">
+  <div class="hero-particles-bg" aria-hidden="true">
+    <canvas id="dust"></canvas>
+  </div>
+
+  <section class="hero">
+    <div>
+      <div class="hero-eyebrow" id="hero-eb">Independent block management &middot; London</div>
+      <h1 class="hero-static-fallback">Block management, <em>done properly.</em></h1>
+      <p class="lede" id="hero-lede">Financial diligence on every pound, a communication portal to keep all stakeholders informed, and joining leaseholders in the trenches in London's most difficult blocks. Independent block management, done differently.</p>
+      <div class="hero-ctas" id="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Talk to us</a>
+        <a href="#approach" class="btn btn-ghost">How we work</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="morph" id="morph" aria-label="Block transformation animation">
+  <div class="morph-track" id="morph-track">
+    <div class="morph-sticky">
+      <video id="hero-morph"
+             src="/brand/morph.mp4?v=4"
+             preload="metadata"
+             muted
+             playsinline
+             aria-label="Animation of a neglected residential block transforming into a flourishing well-kept building as you scroll"></video>
+      <div class="morph-progress" aria-hidden="true"><span id="morph-progress-bar"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="trust-inner">
+    <div class="trust-label">Credentials</div>
+    <div class="trust-creds" data-reveal-children>
+      <div class="c">Chartered Accountant <span class="ind">/ founder</span></div>
+      <div class="c">Active RTM director <span class="ind">/ since 2018</span></div>
+      <div class="c">Proprietary leaseholder portal <span class="ind">/ monthly leaseholder comms</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="approach">
+  <div class="section-head" data-reveal-head>
+    <h2 data-words>We've lived the problem.</h2>
+    <p>We know the core two things which define a well-run block:</p>
+  </div>
+  <div class="pillars two-up" data-reveal-children>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <h3>Financial diligence</h3>
+      <p>Every supplier invoice checked for value-for-money. Service-charge debts pursued fairly. Quarterly financial reports shared with RTM directors. Service charge accounts always filed on time.</p>
+    </div>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="7" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.5" cy="7" r="0.6" fill="currentColor" stroke="none"/></svg></div>
+      <h3>Communication portal</h3>
+      <p>Director notices, your financial statement, contractor visit requests, and a monthly newsletter to approved stakeholders. Everything in one place. We remove the stress.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="contact">
+  <div class="cta-band-inner">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Minimum cost and stress. <em>Outcomes focussed.</em></h2>
+    <div class="cta-row">
+      <a href="mailto:hello@properblocks.co.uk?subject=Book%20a%2030-minute%20call" class="btn btn-primary" style="padding:14px 30px;font-size:15px">Book a 30-minute call</a>
+    </div>
+    <p>We take on a small number of buildings each year, to ensure each is given the attention required.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="inner">
+    <div class="copy">&copy; 2026 Big Brain Ltd &middot; Co. No. 11209610 &middot; Proper Blocks is a portal developed by Big Brain Ltd</div>
+    <div class="links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="mailto:hello@properblocks.co.uk">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const hd = document.getElementById('hd');
+  const onScroll = () => { hd.classList.toggle('scrolled', window.scrollY > 12); };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  function show(id, delay){
+    const el = document.getElementById(id);
+    if(el) setTimeout(()=>el.classList.add('in'), delay);
+  }
+  if(prefersReduced){
+    ['hero-eb','hero-lede','hero-ctas'].forEach(id=>{
+      const el = document.getElementById(id); if(el) el.classList.add('in');
+    });
+  } else {
+    // Fire reveals directly via setTimeout instead of nesting inside
+    // requestAnimationFrame. rAF can be throttled / never-fired in
+    // backgrounded or automation-controlled tabs, leaving the hero
+    // permanently at opacity 0. setTimeout always fires.
+    show('hero-eb', 200);
+    show('hero-lede', 500);
+    show('hero-ctas', 700);
+  }
+
+  if(prefersReduced){
+    document.querySelectorAll('[data-reveal-children]').forEach(g=>g.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in')));
+    document.querySelectorAll('[data-reveal-head]').forEach(g=>g.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in')));
+    document.querySelectorAll('[data-words]').forEach(el=>{
+      el.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
+    });
+    document.querySelectorAll('[data-counter]').forEach(el=>{
+      const target = parseInt(el.dataset.target,10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const comma = el.dataset.comma;
+      const fmt = comma ? target.toLocaleString('en-GB') : target;
+      el.textContent = prefix + fmt + suffix;
+    });
+  } else {
+    document.querySelectorAll('[data-words]').forEach(el=>{
+      const raw = el.textContent;
+      const tokens = raw.split(/(\s+)/);
+      el.innerHTML = tokens.map((t,i)=>{
+        if(/^\s+$/.test(t)) return t;
+        return '<span class="w" style="transition-delay:'+(i*0.09)+'s">'+t+'</span>';
+      }).join('');
+    });
+
+    const ioReveal = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(!e.isIntersecting) return;
+        const t = e.target;
+        if(t.hasAttribute('data-reveal-children')){
+          t.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
+        }
+        if(t.hasAttribute('data-reveal-head')){
+          t.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
+          t.querySelectorAll('[data-words] .w').forEach(w=>w.classList.add('in'));
+        }
+        if(t.hasAttribute('data-words') && !t.closest('[data-reveal-head]')){
+          t.querySelectorAll('.w').forEach(w=>w.classList.add('in'));
+        }
+        ioReveal.unobserve(t);
+      });
+    }, {threshold:0.18});
+    document.querySelectorAll('[data-reveal-children],[data-reveal-head],[data-words]').forEach(el=>ioReveal.observe(el));
+
+    const ioCount = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(!e.isIntersecting) return;
+        animateCount(e.target);
+        ioCount.unobserve(e.target);
+      });
+    }, {threshold:0.4});
+    document.querySelectorAll('[data-counter]').forEach(el=>ioCount.observe(el));
+  }
+
+  function animateCount(el){
+    const target = parseInt(el.dataset.target,10);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const comma = el.dataset.comma;
+    const dur = 1400;
+    const start = performance.now();
+    function step(now){
+      const t = Math.min(1, (now - start)/dur);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val = Math.floor(ease * target);
+      const fmt = comma ? val.toLocaleString('en-GB') : val;
+      el.textContent = prefix + fmt + suffix;
+      if(t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Scroll-driven scrubber for the morph video. Uses the standard scrollytelling
+  // pattern: a tall .morph-track section gives the scroll distance, the inner
+  // .morph-sticky pins at top:0 while the track scrolls past, and the track's
+  // bounding rect gives a clean 0..1 progress value to drive video.currentTime.
+  // Reduced motion freezes on the final tranquil frame, no scroll handler at all.
+  (function setupMorphScrub(){
+    const video = document.getElementById('hero-morph');
+    const track = document.getElementById('morph-track');
+    const bar = document.getElementById('morph-progress-bar');
+    if(!video || !track) return;
+
+    if(prefersReduced){
+      const seekToEnd = () => {
+        const dur = isFinite(video.duration) && video.duration > 0 ? video.duration : 8;
+        try { video.currentTime = Math.max(0, dur - 0.05); } catch(e){}
+        if(bar) bar.style.width = '100%';
+      };
+      if(video.readyState >= 1) seekToEnd();
+      else video.addEventListener('loadedmetadata', seekToEnd, { once: true });
+      return;
+    }
+
+    let duration = 0;
+    let targetTime = 0;
+    let lastWritten = -1;
+    let rafPending = false;
+
+    const onMeta = () => { duration = video.duration || 8; schedule(); };
+    if(video.readyState >= 1) onMeta();
+    else video.addEventListener('loadedmetadata', onMeta, { once: true });
+
+    function computeProgress(){
+      const rect = track.getBoundingClientRect();
+      const viewport = window.innerHeight || 600;
+      const scrollable = rect.height - viewport;
+      if(scrollable <= 0) return 0;
+      // 0 when the track top sits at the viewport top (just entered pinning),
+      // 1 when the track has scrolled scrollable px past that point.
+      const progress = (-rect.top) / scrollable;
+      return Math.max(0, Math.min(1, progress));
+    }
+
+    function render(){
+      rafPending = false;
+      if(!duration) return;
+      const progress = computeProgress();
+      targetTime = Math.min(progress * duration, duration * 0.75);
+      if(bar) bar.style.width = (Math.min(progress / 0.75, 1) * 100).toFixed(1) + '%';
+      // Only write currentTime when the delta is at least one frame at 24fps
+      // (the source rate). The smooth-encoded MP4 has a keyframe per frame so
+      // every seek lands cleanly.
+      if(Math.abs(targetTime - lastWritten) < 0.04) return;
+      lastWritten = targetTime;
+      try { video.currentTime = targetTime; } catch(e){}
+    }
+
+    function schedule(){
+      if(rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(render);
+    }
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    schedule();
+  })();
+
+  function ambient(canvas, opts){
+    if(!canvas) return;
+    if(prefersReduced){ canvas.style.display = 'none'; return; }
+    const ctx = canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    let w, h, particles = [];
+    function resize(){
+      const r = canvas.parentElement.getBoundingClientRect();
+      w = canvas.width = Math.max(2, Math.floor(r.width*dpr));
+      h = canvas.height = Math.max(2, Math.floor(r.height*dpr));
+      canvas.style.width = r.width+'px';
+      canvas.style.height = r.height+'px';
+      const density = opts.density || 9000;
+      const count = Math.floor((r.width*r.height)/density);
+      particles = [];
+      for(let i=0;i<count;i++) particles.push(make());
+    }
+    function make(){
+      return {
+        x: Math.random()*w, y: Math.random()*h,
+        sp: (0.04 + Math.random()*0.18)*dpr,
+        op: 0.15 + Math.random()*0.7,
+        sz: (0.4 + Math.random()*1.2)*dpr,
+        fade: 0.002 + Math.random()*0.003, dir:1
+      };
+    }
+    function tick(){
+      ctx.clearRect(0,0,w,h);
+      for(const p of particles){
+        p.y -= p.sp;
+        p.op += p.fade * p.dir;
+        if(p.op > 0.8) p.dir = -1;
+        if(p.op < 0.05){ p.dir = 1; p.y = h + 10; p.x = Math.random()*w; }
+        if(p.y < -10){ p.y = h + 10; p.x = Math.random()*w; }
+        ctx.fillStyle = opts.colour.replace('?',p.op.toFixed(2));
+        ctx.fillRect(p.x, p.y, p.sz, p.sz*2);
+      }
+      requestAnimationFrame(tick);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    tick();
+  }
+  ambient(document.getElementById('dust'), {colour:'rgba(31,142,153,?)', density:11000});
+
+
+})();
+</script>
+
+</body>
+</html>

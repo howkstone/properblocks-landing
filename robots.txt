@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://properblocks.co.uk/sitemap.xml
