@@ -15,6 +15,19 @@ const path = require('path');
 const DH = path.join('C:', 'Users', 'user', 'dennis-house-portal', 'ui');
 const OUT = __dirname;
 
+// R2 public bucket for landing brand assets (separate from dennis-house-docs,
+// which holds private documents and D1 backups - that bucket MUST stay private).
+// Bucket: properblocks-public. Enabled via `wrangler r2 bucket dev-url enable`.
+const R2_PUBLIC_BASE = 'https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev';
+
+function rewriteBrandPaths(html) {
+  // Pages does not host the 7MB morph.mp4 (GitHub HTTP push timeout class).
+  // Replace any /brand/morph.mp4(?v=N) reference with the R2 public URL.
+  return html
+    .replace(/\/brand\/morph\.mp4(\?v=\d+)?/g, `${R2_PUBLIC_BASE}/morph.mp4`)
+    .replace(/\/brand\/buildings\.jpg(\?v=\d+)?/g, `${R2_PUBLIC_BASE}/buildings.jpg`);
+}
+
 function readModuleTemplate(file) {
   // Reads a ui/*.js file and returns the contents of its `export default` template literal.
   const src = fs.readFileSync(path.join(DH, file), 'utf8');
@@ -40,7 +53,7 @@ function inlinePolicyCss(html, css) {
 
 const policyCss = readPolicyCss();
 
-const landing = readModuleTemplate('landing.js');
+const landing = rewriteBrandPaths(readModuleTemplate('landing.js'));
 const privacy = inlinePolicyCss(readModuleTemplate('privacy.js'), policyCss);
 const cookies = inlinePolicyCss(readModuleTemplate('cookies.js'), policyCss);
 const terms   = inlinePolicyCss(readModuleTemplate('terms.js'),   policyCss);
