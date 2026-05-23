@@ -49,11 +49,11 @@ body{
 header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(251,248,242,0);transition:background 0.4s ease,border-color 0.4s ease;border-bottom:1px solid transparent}
 header.scrolled{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-bottom-color:var(--rule)}
 header .inner{max-width:1200px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
-.mark{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
-.mark-glyph{width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+.mark{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}
+.mark-glyph{width:24px;height:24px;display:flex;align-items:center;justify-content:center;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
 .mark:hover .mark-glyph{transform:rotate(-8deg) scale(1.05)}
 .mark-glyph svg{width:100%;height:100%}
-.mark-name{font-family:Fraunces,serif;font-size:21px;font-weight:500;letter-spacing:-0.01em}
+.mark-name{font-family:Fraunces,serif;font-size:17px;font-weight:500;letter-spacing:-0.01em}
 nav.head{display:flex;gap:30px;align-items:center}
 nav.head a:not(.btn){text-decoration:none;color:var(--ink-2);font-size:14px;font-weight:500;transition:color 0.18s ease;position:relative}
 nav.head a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--copper);transform:scaleX(0);transform-origin:left;transition:transform 0.32s cubic-bezier(0.22,1,0.36,1)}
@@ -69,17 +69,57 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .btn-ghost:hover{background:var(--alt)}
 
 /* Hero with particle-text headline morph + ambient particle field */
+/* Hero stage: 200vh sticky pin so the user's first 100vh of scroll lights the
+   second phase of the H1 manifesto ("done properly") without the page moving.
+   Once both phases are lit, sticky releases and the rest of the page scrolls
+   naturally. */
+.hero-stage{position:relative;min-height:200vh;z-index:2;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%);overflow:hidden}
 .hero-wrap{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
 .hero-particles-bg{position:absolute;inset:0;pointer-events:none;opacity:0.5}
-.hero{position:relative;padding:144px 32px 80px;max-width:900px;margin:0 auto;text-align:center;min-height:auto}
+.hero{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 32px 60px;max-width:960px;margin:0 auto;text-align:center}
 .hero .lede,.hero-static-fallback{margin-left:auto;margin-right:auto}
 .hero-ctas,.hero-meta{justify-content:center}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:0.12em;color:var(--copper-deep);margin-bottom:20px;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.2s,transform 0.7s ease 0.2s}
 .hero-eyebrow.in{opacity:1;transform:translateY(0)}
 .hero-eyebrow::before{content:"";width:24px;height:1px;background:var(--copper);display:inline-block}
 
+/* Manifesto H1 - two-phase reveal (Ken-style). Phase A on load timer,
+   Phase B word-lit by scrollY progress through the .hero-stage. */
+.hero-manifesto{font-family:Fraunces,serif;font-weight:400;font-size:clamp(46px,5.4vw,68px);line-height:1.05;letter-spacing:-0.025em;color:var(--ink);margin:0 auto 32px;max-width:760px}
+.hero-manifesto .phase{display:block}
+.hero-manifesto .phase-b{margin-top:0.18em}
+.hero-manifesto .w{display:inline-block;margin-right:0.2em;color:rgba(31,27,23,0.18);transition:color 0.45s ease}
+.hero-manifesto .w.lit{color:var(--ink)}
+.hero-manifesto .w.em{font-style:italic;font-weight:500}
+.hero-manifesto .w.em.lit{color:var(--copper-deep)}
+
 .hero-static-fallback{display:block;font-family:Fraunces,serif;font-weight:400;font-size:clamp(46px,5.4vw,68px);line-height:1.02;letter-spacing:-0.025em;color:var(--ink);margin-bottom:24px}
 .hero-static-fallback em{font-style:italic;color:var(--copper-deep);font-weight:500}
+
+/* Unravel section: bricks rise from below, then "Proper Blocks" wordmark
+   characters cascade up. IntersectionObserver triggers; per-character
+   transition-delay set in JS for the stagger. */
+.unravel{padding:104px 32px 96px;background:var(--bg);overflow:hidden;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.unravel-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
+.unravel-glyph{width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.unravel-glyph svg{width:100%;height:100%;overflow:visible}
+.unravel-glyph rect{transform:translateY(80px);opacity:0;transition:transform 0.75s cubic-bezier(0.16,1,0.3,1),opacity 0.55s ease;transform-origin:50% 100%}
+.unravel.in .unravel-glyph rect:nth-of-type(1){transform:translateY(0);opacity:1;transition-delay:0ms}
+.unravel.in .unravel-glyph rect:nth-of-type(2){transform:translateY(0);opacity:1;transition-delay:140ms}
+.unravel.in .unravel-glyph rect:nth-of-type(3){transform:translateY(0);opacity:1;transition-delay:340ms}
+.unravel-word{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(54px,8vw,104px);letter-spacing:-0.028em;color:var(--ink);line-height:1;display:inline-flex;overflow:hidden;padding:0.18em 0;align-items:baseline}
+.unravel-word .ch{display:inline-block;transform:translateY(110%);opacity:0;transition:transform 0.7s cubic-bezier(0.16,1,0.3,1),opacity 0.45s ease}
+.unravel-word .ch.space{width:0.32em;transform:none;opacity:1}
+.unravel.in .unravel-word .ch{transform:translateY(0);opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .unravel-glyph rect,.unravel-word .ch{transition:opacity 0.3s ease;transform:none;opacity:1}
+  .unravel.in .unravel-glyph rect,.unravel.in .unravel-word .ch{transform:none}
+}
+
+/* Pillars intro - sits between the unravel and the two-pillar grid */
+.pillars-intro{padding:96px 32px 24px;text-align:center}
+.pillars-intro p{font-family:Fraunces,Georgia,serif;font-size:clamp(22px,2.6vw,32px);font-weight:500;line-height:1.25;letter-spacing:-0.012em;color:var(--ink);max-width:720px;margin:0 auto}
+.pillars-intro em{font-style:italic;color:var(--copper-deep);font-weight:500}
 
 .hero-pillars{font-family:Fraunces,serif;font-weight:500;font-size:clamp(20px,2.2vw,28px);line-height:1.2;letter-spacing:-0.01em;color:var(--ink);max-width:600px;margin:0 auto 14px;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.35s,transform 0.7s ease 0.35s}
 .hero-pillars em{font-style:italic;color:var(--copper-deep);font-weight:500}
@@ -222,7 +262,12 @@ footer a:hover{color:var(--copper-deep)}
 footer .copy{font-size:13px;color:var(--ink-3)}
 
 @media (max-width:900px){
-  .hero{grid-template-columns:1fr;gap:32px;padding:120px 24px 48px;min-height:auto}
+  .hero{padding:80px 24px 32px;gap:24px}
+  .hero-manifesto{font-size:clamp(36px,9vw,52px);margin-bottom:24px}
+  .unravel{padding:72px 24px 64px}
+  .unravel-glyph{width:64px;height:64px}
+  .unravel-word{font-size:clamp(42px,11vw,72px)}
+  .pillars-intro{padding:72px 24px 16px}
   .pillars,.pillars.two-up{grid-template-columns:1fr}
   nav.head{gap:14px}
   nav.head a:not(.btn){display:none}
@@ -257,23 +302,34 @@ footer .copy{font-size:13px;color:var(--ink-3)}
   </div>
 </header>
 
-<div class="hero-wrap">
+<section class="hero-stage" id="hero-stage">
   <div class="hero-particles-bg" aria-hidden="true">
     <canvas id="dust"></canvas>
   </div>
-
   <section class="hero">
     <div>
-      <h1 class="hero-static-fallback">Block management, <em>done properly.</em></h1>
-      <p class="hero-pillars" id="hero-pillars">Financially diligent. <em>Communicators supreme.</em></p>
-      <p class="lede" id="hero-lede">Chartered accountant. Proprietary secure portal.</p>
+      <h1 class="hero-manifesto" id="hero-manifesto" aria-label="Block management, done properly."></h1>
+      <noscript><h1 class="hero-static-fallback">Block management, <em>done properly.</em></h1></noscript>
       <div class="hero-ctas" id="hero-ctas">
         <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
         <a href="#approach" class="btn btn-ghost">How we work</a>
       </div>
     </div>
   </section>
-</div>
+</section>
+
+<section class="unravel" id="unravel" aria-label="Proper Blocks">
+  <div class="unravel-inner">
+    <div class="unravel-glyph" aria-hidden="true">
+      <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
+    </div>
+    <div class="unravel-word" id="unravel-word" aria-label="Proper Blocks"></div>
+  </div>
+</section>
+
+<section class="pillars-intro">
+  <p>Financially diligent. <em>Communicators supreme.</em></p>
+</section>
 
 <section class="morph" id="morph" aria-label="Block transformation animation">
   <div class="morph-track" id="morph-track">
@@ -295,15 +351,14 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     <div class="trust-creds" data-reveal-children>
       <div class="c">Chartered Accountant <span class="ind">/ founder</span></div>
       <div class="c">Active RTM director <span class="ind">/ since 2018</span></div>
-      <div class="c">Proprietary leaseholder portal <span class="ind">/ monthly leaseholder comms</span></div>
+      <div class="c">Proprietary leaseholder portal <span class="ind">/ regular leaseholder comms</span></div>
     </div>
   </div>
 </section>
 
 <section class="section" id="approach">
   <div class="section-head" data-reveal-head>
-    <h2 data-words>We've lived the problem.</h2>
-    <p>We know the core two things which define a well-run block:</p>
+    <h2 data-words>Two things define a well-run block.</h2>
   </div>
   <div class="pillars two-up" data-reveal-children>
     <div class="pillar">
@@ -313,9 +368,8 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     </div>
     <div class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="7" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.5" cy="7" r="0.6" fill="currentColor" stroke="none"/></svg></div>
-      <h3>Communication portal</h3>
-      <p>Director notices, leaseholder financial statements, contractor visit requests, and a periodic newsletter to approved stakeholders.</p>
-      <p class="pillar-tag">Everything in one place. <em>We remove your stress.</em></p>
+      <h3>Outstanding communication</h3>
+      <p><em>Frequency and quality.</em> Director meetings, leaseholder financial statements up-to-date, contractor visit requests, tenant and managing-agent registrations, periodic newsletter to approved stakeholders.</p>
     </div>
   </div>
 </section>
@@ -324,28 +378,27 @@ footer .copy{font-size:13px;color:var(--ink-3)}
   <div class="casework-inner">
     <div class="section-head" data-reveal-head>
       <h2 data-words>What we've taken on.</h2>
-      <p>A snapshot of what we've inherited and addressed in blocks under our management. Anonymised; current and former clients are not identified.</p>
     </div>
     <div class="casework-grid" data-reveal-children>
       <article class="case">
         <span class="case-tag">Major works</span>
-        <h3>Asbestos identified mid £250k Section 20 major-works programme.</h3>
-        <p>Asbestos re-inspection had been overdue for over a decade when we took over. Surveys scoped, licensed remediation arranged, the budget honestly reset with leaseholders, the works completed safely. No surprises sprung; every cost choice explained at the time it was made.</p>
+        <h3>Asbestos identified mid £250k Section 20 works.</h3>
+        <p>Re-inspection overdue for over a decade when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders, works completed safely.</p>
       </article>
       <article class="case">
         <span class="case-tag">Building safety</span>
-        <h3>No Fire Risk Assessment on file since 2017. Directors at criminal risk.</h3>
-        <p>Commissioned a competent FRA within weeks of taking over. Got the directors out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005 and the Building Safety Act 2022, and put the remediation actions on a tracked plan.</p>
+        <h3>No Fire Risk Assessment on file since 2017.</h3>
+        <p>Commissioned a competent FRA within weeks of taking over. Got directors out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005; remediation actions on a tracked plan.</p>
       </article>
       <article class="case">
         <span class="case-tag">Financial diligence</span>
-        <h3>Considerable inherited service-charge debtors, the largest unpaid for seven years.</h3>
-        <p>Reviewed the balances, pursued recovery proportionately and firmly, kept the block solvent through the recovery period. Disputed line-items revisited from the lease, not the prior agent's invoice.</p>
+        <h3>Inherited service-charge debtors, largest unpaid seven years.</h3>
+        <p>Balances reviewed, recovery pursued proportionately and firmly, the block kept solvent through the period. Disputed line-items revisited from the lease, not the prior agent's invoice.</p>
       </article>
       <article class="case">
         <span class="case-tag">Communication</span>
         <h3>Months of unanswered leaseholder correspondence.</h3>
-        <p>And absolute refusal from the previous managing agent to provide any more than the legally required minimum information. The portal exists so this cannot happen on our watch - every message logged, every action tracked, every response visible to its leaseholder.</p>
+        <p>Absolute refusal from the previous agent to share more than the legally required minimum. The portal logs every message, every action, every response - visible to its leaseholder.</p>
       </article>
     </div>
   </div>
@@ -353,7 +406,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 
 <section class="who" id="who">
   <div class="who-inner" data-reveal-head>
-    <p>Whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders - the principal is the same: the people who live in the block. That's who we collaborate with, honestly.</p>
+    <p>We work with residential and mixed-use blocks in London. Whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders - the principal is the same: our goal is to improve the block, for the benefit of all stakeholders.</p>
   </div>
 </section>
 
@@ -426,19 +479,75 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     const el = document.getElementById(id);
     if(el) setTimeout(()=>el.classList.add('in'), delay);
   }
-  if(prefersReduced){
-    ['hero-pillars','hero-lede','hero-ctas'].forEach(id=>{
-      const el = document.getElementById(id); if(el) el.classList.add('in');
+  show('hero-ctas', prefersReduced ? 0 : 900);
+
+  // ---- Hero manifesto: two-phase reveal ----
+  // Phase A (timer): "Block management." lights word-by-word on load.
+  // Phase B (scroll-driven): "done properly." lights as scrollY climbs through
+  // the .hero-stage's 200vh. The hero is sticky-pinned for that first 100vh
+  // so the screen stays put until both sentences are revealed. Same pattern
+  // as theken.uk's "Someone you love is slipping out of reach..." manifesto.
+  (function(){
+    const target = document.getElementById('hero-manifesto');
+    if(!target) return;
+    // Two phases: phase-a (timer) and phase-b (scroll). Each is a separate row.
+    const phaseA = ['Block','management.'];
+    const phaseB = ['done','properly.'];
+    const mkSpan = (word, em) => '<span class="w'+(em?' em':'')+'">'+word+'</span>';
+    target.innerHTML =
+      '<span class="phase phase-a">' + phaseA.map(w=>mkSpan(w,false)).join(' ') + '</span>' +
+      '<span class="phase phase-b">' + phaseB.map(w=>mkSpan(w,true)).join(' ') + '</span>';
+    const wordsA = target.querySelectorAll('.phase-a .w');
+    const wordsB = target.querySelectorAll('.phase-b .w');
+    if(prefersReduced){
+      wordsA.forEach(w=>w.classList.add('lit'));
+      wordsB.forEach(w=>w.classList.add('lit'));
+      return;
+    }
+    // Phase A on timer
+    const PER_WORD_MS = 220;
+    const PRE_ROLL_MS = 350;
+    wordsA.forEach((w,i)=>setTimeout(()=>w.classList.add('lit'), PRE_ROLL_MS + i*PER_WORD_MS));
+    // Phase B by scroll position through the hero-stage
+    function onManifestoScroll(){
+      const vh = window.innerHeight;
+      const sy = window.scrollY;
+      // Wait until phase A timer should have finished before scroll affects phase B
+      const phaseAReadyAt = PRE_ROLL_MS + wordsA.length * PER_WORD_MS;
+      const startScroll = vh * 0.10; // light first word of phase B once user starts scrolling
+      const endScroll = vh * 0.80;   // all phase-B words lit by 80% viewport scrolled
+      const progress = Math.max(0, Math.min(1, (sy - startScroll) / (endScroll - startScroll)));
+      const litCount = Math.round(progress * wordsB.length);
+      wordsB.forEach((w,i)=>w.classList.toggle('lit', i < litCount));
+    }
+    window.addEventListener('scroll', onManifestoScroll, {passive:true});
+    onManifestoScroll();
+  })();
+
+  // ---- Unravel: bricks rise, then "Proper Blocks" wordmark cascades up ----
+  (function(){
+    const section = document.getElementById('unravel');
+    const word = document.getElementById('unravel-word');
+    if(!section || !word) return;
+    const text = 'Proper Blocks';
+    word.innerHTML = text.split('').map(ch=>{
+      if(ch===' ') return '<span class="ch space" aria-hidden="true"> </span>';
+      return '<span class="ch">'+ch+'</span>';
+    }).join('');
+    const chars = word.querySelectorAll('.ch');
+    let nonSpaceIdx = 0;
+    chars.forEach(c=>{
+      if(c.classList.contains('space')) return;
+      // Stagger starts after the bricks finish settling (~540ms total brick delay+duration).
+      c.style.transitionDelay = (560 + nonSpaceIdx*48) + 'ms';
+      nonSpaceIdx++;
     });
-  } else {
-    // Fire reveals directly via setTimeout instead of nesting inside
-    // requestAnimationFrame. rAF can be throttled / never-fired in
-    // backgrounded or automation-controlled tabs, leaving the hero
-    // permanently at opacity 0. setTimeout always fires.
-    show('hero-pillars', 200);
-    show('hero-lede', 450);
-    show('hero-ctas', 650);
-  }
+    if(prefersReduced){ section.classList.add('in'); return; }
+    const ioU = new IntersectionObserver((es)=>{
+      es.forEach(e=>{ if(e.isIntersecting){ section.classList.add('in'); ioU.disconnect(); } });
+    },{threshold:0.4});
+    ioU.observe(section);
+  })();
 
   if(prefersReduced){
     document.querySelectorAll('[data-reveal-children]').forEach(g=>g.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in')));
