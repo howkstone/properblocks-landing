@@ -4,8 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Proper Blocks - block management, done properly</title>
-<meta name="description" content="Independent block management for London leasehold buildings. Diligent with day-to-day spend, methodical with debt recovery, and a proprietary portal that keeps every leaseholder informed. ICAEW chartered, RTM director since 2018.">
+<meta name="description" content="Independent London block management for RTM companies and residents' associations. Chartered accountant founder, proprietary leaseholder portal, RTM director since 2018.">
 <meta name="theme-color" content="#155F66">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://properblocks.co.uk/#organization",
+      "name": "Proper Blocks",
+      "alternateName": "Big Brain Ltd trading as Proper Blocks",
+      "url": "https://properblocks.co.uk/",
+      "logo": "https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev/buildings.jpg",
+      "description": "Independent London block management for right-to-manage (RTM) companies, resident-management companies and organised leaseholder groups.",
+      "founder": {
+        "@type": "Person",
+        "name": "Howard Stone",
+        "jobTitle": "Founder",
+        "hasCredential": [
+          {"@type": "EducationalOccupationalCredential", "credentialCategory": "Chartered Accountant", "recognizedBy": {"@type": "Organization", "name": "Institute of Chartered Accountants in England and Wales", "alternateName": "ICAEW"}},
+          {"@type": "EducationalOccupationalCredential", "credentialCategory": "RTM Director", "name": "Right-to-manage company director since 2018"}
+        ]
+      },
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Big Brain Ltd",
+        "identifier": "11209610",
+        "url": "https://bigbraincompany.co.uk/",
+        "address": {"@type": "PostalAddress", "addressCountry": "GB", "addressRegion": "England"}
+      },
+      "areaServed": {"@type": "City", "name": "London"},
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@properblocks.co.uk",
+        "contactType": "customer service",
+        "availableLanguage": "English"
+      }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://properblocks.co.uk/#service",
+      "name": "Proper Blocks - independent block management",
+      "description": "Independent block management for London right-to-manage companies, residents' associations and organised leaseholder groups. Financial diligence on supplier invoices, methodical service-charge recovery, statutory compliance (Building Safety Act 2022, Landlord & Tenant Act 1985 section 20, fire risk assessment, asbestos), and a proprietary leaseholder portal.",
+      "provider": {"@id": "https://properblocks.co.uk/#organization"},
+      "areaServed": [{"@type": "City", "name": "London"}, {"@type": "AdministrativeArea", "name": "England"}],
+      "serviceType": "Residential block management",
+      "audience": {"@type": "Audience", "audienceType": "Right-to-manage companies, resident-management companies, organised leaseholder groups"},
+      "url": "https://properblocks.co.uk/",
+      "knowsAbout": ["Right to Manage", "Section 20 consultation", "Service charge accounting", "Building Safety Act 2022", "Fire Risk Assessment", "Leasehold management", "Residents' association governance"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://properblocks.co.uk/#website",
+      "url": "https://properblocks.co.uk/",
+      "name": "Proper Blocks",
+      "publisher": {"@id": "https://properblocks.co.uk/#organization"},
+      "inLanguage": "en-GB"
+    }
+  ]
+}
+</script>
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Proper Blocks - block management, done properly">
@@ -73,10 +133,11 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    second phase of the H1 manifesto ("done properly") without the page moving.
    Once both phases are lit, sticky releases and the rest of the page scrolls
    naturally. */
-.hero-stage{position:relative;min-height:200vh;z-index:2;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%);overflow:hidden}
+.hero-stage{position:relative;min-height:200vh;z-index:2;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
 .hero-wrap{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
 .hero-particles-bg{position:absolute;inset:0;pointer-events:none;opacity:0.5}
-.hero{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 32px 60px;max-width:960px;margin:0 auto;text-align:center}
+.hero{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:48px;padding:64px 32px 48px;max-width:960px;margin:0 auto;text-align:center}
+.hero-text{display:flex;flex-direction:column;align-items:center}
 .hero .lede,.hero-static-fallback{margin-left:auto;margin-right:auto}
 .hero-ctas,.hero-meta{justify-content:center}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:0.12em;color:var(--copper-deep);margin-bottom:20px;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.2s,transform 0.7s ease 0.2s}
@@ -96,18 +157,19 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .hero-static-fallback{display:block;font-family:Fraunces,serif;font-weight:400;font-size:clamp(46px,5.4vw,68px);line-height:1.02;letter-spacing:-0.025em;color:var(--ink);margin-bottom:24px}
 .hero-static-fallback em{font-style:italic;color:var(--copper-deep);font-weight:500}
 
-/* Unravel section: bricks rise from below, then "Proper Blocks" wordmark
-   characters cascade up. IntersectionObserver triggers; per-character
-   transition-delay set in JS for the stagger. */
-.unravel{padding:104px 32px 96px;background:var(--bg);overflow:hidden;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.unravel-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
-.unravel-glyph{width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* Unravel: bricks rise from below, then "Proper Blocks" wordmark characters
+   cascade up. Lives inside the hero, just below the CTAs. Triggered by a
+   timer once the CTAs have settled (see JS at the bottom of this file). */
+.unravel{padding:0}
+.hero-unravel{padding:0;margin-top:8px}
+.unravel-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+.unravel-glyph{width:54px;height:54px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .unravel-glyph svg{width:100%;height:100%;overflow:visible}
 .unravel-glyph rect{transform:translateY(80px);opacity:0;transition:transform 0.75s cubic-bezier(0.16,1,0.3,1),opacity 0.55s ease;transform-origin:50% 100%}
 .unravel.in .unravel-glyph rect:nth-of-type(1){transform:translateY(0);opacity:1;transition-delay:0ms}
 .unravel.in .unravel-glyph rect:nth-of-type(2){transform:translateY(0);opacity:1;transition-delay:140ms}
 .unravel.in .unravel-glyph rect:nth-of-type(3){transform:translateY(0);opacity:1;transition-delay:340ms}
-.unravel-word{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(54px,8vw,104px);letter-spacing:-0.028em;color:var(--ink);line-height:1;display:inline-flex;overflow:hidden;padding:0.18em 0;align-items:baseline}
+.unravel-word{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(38px,5.4vw,64px);letter-spacing:-0.025em;color:var(--ink);line-height:1;display:inline-flex;overflow:hidden;padding:0.18em 0;align-items:baseline}
 .unravel-word .ch{display:inline-block;transform:translateY(110%);opacity:0;transition:transform 0.7s cubic-bezier(0.16,1,0.3,1),opacity 0.45s ease}
 .unravel-word .ch.space{width:0.32em;transform:none;opacity:1}
 .unravel.in .unravel-word .ch{transform:translateY(0);opacity:1}
@@ -196,7 +258,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .case:nth-child(3){transition-delay:0.2s}
 .case:nth-child(4){transition-delay:0.3s}
 .case:hover{border-color:var(--copper-light)}
-.case-tag{font-size:11px;letter-spacing:0.12em;color:var(--copper-deep);font-weight:600;text-transform:uppercase}
+.case-tag{font-size:11px;letter-spacing:0.12em;color:var(--copper-deep);font-weight:600}
 .case h3{font-family:Fraunces,serif;font-weight:500;font-size:20px;letter-spacing:-0.005em;color:var(--ink);line-height:1.25}
 .case p{font-size:15px;color:var(--ink-2);line-height:1.55}
 @media (max-width:900px){.casework-grid{grid-template-columns:1fr}}
@@ -249,7 +311,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .msg-error{margin-top:12px;font-size:13px;color:var(--copper-deep);min-height:18px;text-align:right}
 .msg-error.is-error{color:#D94A3D}
 .msg-success{text-align:center;padding:12px 0 4px}
-.msg-success .check{width:48px;height:48px;border-radius:50%;background:#2AA06A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;font-weight:600}
+.msg-success .check{width:48px;height:48px;border-radius:50%;background:#2AA06A;color:#1E293B;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;font-weight:700}
 .msg-success h3{margin-bottom:8px}
 .msg-success p{color:var(--ink-2);font-size:14px;line-height:1.55;max-width:420px;margin:0 auto}
 
@@ -307,7 +369,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     <canvas id="dust"></canvas>
   </div>
   <section class="hero">
-    <div>
+    <div class="hero-text">
       <h1 class="hero-manifesto" id="hero-manifesto" aria-label="Block management, done properly."></h1>
       <noscript><h1 class="hero-static-fallback">Block management, <em>done properly.</em></h1></noscript>
       <div class="hero-ctas" id="hero-ctas">
@@ -315,32 +377,31 @@ footer .copy{font-size:13px;color:var(--ink-3)}
         <a href="#approach" class="btn btn-ghost">How we work</a>
       </div>
     </div>
+    <div class="unravel hero-unravel" id="unravel" aria-label="Proper Blocks">
+      <div class="unravel-inner">
+        <div class="unravel-glyph" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
+        </div>
+        <div class="unravel-word" id="unravel-word" aria-label="Proper Blocks"></div>
+      </div>
+    </div>
   </section>
 </section>
 
-<section class="unravel" id="unravel" aria-label="Proper Blocks">
-  <div class="unravel-inner">
-    <div class="unravel-glyph" aria-hidden="true">
-      <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
-    </div>
-    <div class="unravel-word" id="unravel-word" aria-label="Proper Blocks"></div>
+<section class="section" id="approach">
+  <div class="section-head" data-reveal-head>
+    <h2 data-words>We've lived the problem, and we know the two things that define a well-run block.</h2>
   </div>
-</section>
-
-<section class="pillars-intro">
-  <p>Financially diligent. <em>Communicators supreme.</em></p>
-</section>
-
-<section class="morph" id="morph" aria-label="Block transformation animation">
-  <div class="morph-track" id="morph-track">
-    <div class="morph-sticky">
-      <video id="hero-morph"
-             src="https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev/morph.mp4"
-             preload="metadata"
-             muted
-             playsinline
-             aria-label="Animation of a neglected residential block transforming into a flourishing well-kept building as you scroll"></video>
-      <div class="morph-progress" aria-hidden="true"><span id="morph-progress-bar"></span></div>
+  <div class="pillars two-up" data-reveal-children>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <h3>Financial diligence</h3>
+      <p>Every supplier invoice checked for value-for-money. Service-charge debts pursued with strength and fairness. Quarterly financial reports shared with RTM directors. Service charge accounts always filed on time.</p>
+    </div>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="7" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.5" cy="7" r="0.6" fill="currentColor" stroke="none"/></svg></div>
+      <h3>Outstanding communication</h3>
+      <p>Director meetings, leaseholder financial statements up-to-date, contractor visit requests, tenant and managing-agent registrations, periodic newsletter to approved stakeholders. <em>Frequency and quality.</em></p>
     </div>
   </div>
 </section>
@@ -352,24 +413,6 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       <div class="c">Chartered Accountant <span class="ind">/ founder</span></div>
       <div class="c">Active RTM director <span class="ind">/ since 2018</span></div>
       <div class="c">Proprietary leaseholder portal <span class="ind">/ regular leaseholder comms</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="approach">
-  <div class="section-head" data-reveal-head>
-    <h2 data-words>Two things define a well-run block.</h2>
-  </div>
-  <div class="pillars two-up" data-reveal-children>
-    <div class="pillar">
-      <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-      <h3>Financial diligence</h3>
-      <p>Every supplier invoice checked for value-for-money. Service-charge debts pursued with strength and fairness. Quarterly financial reports shared with RTM directors. Service charge accounts always filed on time.</p>
-    </div>
-    <div class="pillar">
-      <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="7" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.5" cy="7" r="0.6" fill="currentColor" stroke="none"/></svg></div>
-      <h3>Outstanding communication</h3>
-      <p><em>Frequency and quality.</em> Director meetings, leaseholder financial statements up-to-date, contractor visit requests, tenant and managing-agent registrations, periodic newsletter to approved stakeholders.</p>
     </div>
   </div>
 </section>
@@ -508,45 +551,41 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     const PER_WORD_MS = 220;
     const PRE_ROLL_MS = 350;
     wordsA.forEach((w,i)=>setTimeout(()=>w.classList.add('lit'), PRE_ROLL_MS + i*PER_WORD_MS));
-    // Phase B by scroll position through the hero-stage
+    // ---- Phase B + unravel: chained scroll-driven reveals ----
+    // Build the unravel chars now so the scroll handler can drive them.
+    const unravelSection = document.getElementById('unravel');
+    const unravelWord = document.getElementById('unravel-word');
+    if(unravelWord){
+      const text = 'Proper Blocks';
+      unravelWord.innerHTML = text.split('').map(ch=>{
+        if(ch===' ') return '<span class="ch space" aria-hidden="true"> </span>';
+        return '<span class="ch">'+ch+'</span>';
+      }).join('');
+      let nonSpaceIdx = 0;
+      unravelWord.querySelectorAll('.ch').forEach(c=>{
+        if(c.classList.contains('space')) return;
+        c.style.transitionDelay = (560 + nonSpaceIdx*48) + 'ms';
+        nonSpaceIdx++;
+      });
+    }
+    if(prefersReduced && unravelSection){ unravelSection.classList.add('in'); }
+
     function onManifestoScroll(){
       const vh = window.innerHeight;
       const sy = window.scrollY;
-      // Wait until phase A timer should have finished before scroll affects phase B
-      const phaseAReadyAt = PRE_ROLL_MS + wordsA.length * PER_WORD_MS;
-      const startScroll = vh * 0.10; // light first word of phase B once user starts scrolling
-      const endScroll = vh * 0.80;   // all phase-B words lit by 80% viewport scrolled
+      // Phase B (done properly) lights as the user scrolls 0.10vh → 0.70vh.
+      const startScroll = vh * 0.10;
+      const endScroll = vh * 0.70;
       const progress = Math.max(0, Math.min(1, (sy - startScroll) / (endScroll - startScroll)));
       const litCount = Math.round(progress * wordsB.length);
       wordsB.forEach((w,i)=>w.classList.toggle('lit', i < litCount));
+      // Unravel triggers once the last 'done properly' word lights up.
+      if(unravelSection && litCount >= wordsB.length){
+        unravelSection.classList.add('in');
+      }
     }
     window.addEventListener('scroll', onManifestoScroll, {passive:true});
     onManifestoScroll();
-  })();
-
-  // ---- Unravel: bricks rise, then "Proper Blocks" wordmark cascades up ----
-  (function(){
-    const section = document.getElementById('unravel');
-    const word = document.getElementById('unravel-word');
-    if(!section || !word) return;
-    const text = 'Proper Blocks';
-    word.innerHTML = text.split('').map(ch=>{
-      if(ch===' ') return '<span class="ch space" aria-hidden="true"> </span>';
-      return '<span class="ch">'+ch+'</span>';
-    }).join('');
-    const chars = word.querySelectorAll('.ch');
-    let nonSpaceIdx = 0;
-    chars.forEach(c=>{
-      if(c.classList.contains('space')) return;
-      // Stagger starts after the bricks finish settling (~540ms total brick delay+duration).
-      c.style.transitionDelay = (560 + nonSpaceIdx*48) + 'ms';
-      nonSpaceIdx++;
-    });
-    if(prefersReduced){ section.classList.add('in'); return; }
-    const ioU = new IntersectionObserver((es)=>{
-      es.forEach(e=>{ if(e.isIntersecting){ section.classList.add('in'); ioU.disconnect(); } });
-    },{threshold:0.4});
-    ioU.observe(section);
   })();
 
   if(prefersReduced){

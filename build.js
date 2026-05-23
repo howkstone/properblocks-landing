@@ -63,17 +63,70 @@ fs.writeFileSync(path.join(OUT, 'privacy', 'index.html'), privacy);
 fs.writeFileSync(path.join(OUT, 'cookies', 'index.html'), cookies);
 fs.writeFileSync(path.join(OUT, 'terms',   'index.html'), terms);
 
-// Static robots.txt + sitemap.xml.
+// Static robots.txt with explicit AI-crawler allow-list. PB is meant to be
+// cited by ChatGPT / Perplexity / Google AI Overviews; silence in robots.txt
+// defaults to allow but explicit is stronger and survives crawler-policy drift.
+const AI_CRAWLERS = [
+  'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'anthropic-ai', 'Claude-Web',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Bytespider', 'CCBot',
+  'Amazonbot', 'Applebot-Extended', 'FacebookBot', 'cohere-ai', 'Diffbot',
+  'ImagesiftBot',
+];
 fs.writeFileSync(path.join(OUT, 'robots.txt'),
-  'User-agent: *\nAllow: /\nSitemap: https://properblocks.co.uk/sitemap.xml\n');
+  'User-agent: *\nAllow: /\nDisallow: /api/\n\n' +
+  '# AI search crawlers - explicitly welcomed for citation\n' +
+  AI_CRAWLERS.map(ua => 'User-agent: ' + ua + '\nAllow: /\nDisallow: /api/\n').join('\n') +
+  '\nSitemap: https://properblocks.co.uk/sitemap.xml\n');
 
 const today = new Date().toISOString().slice(0, 10);
-const sitemapUrls = ['', '/privacy', '/terms', '/cookies'];
+const sitemapUrls = ['/', '/privacy/', '/terms/', '/cookies/'];
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
   sitemapUrls.map(p => `  <url><loc>https://properblocks.co.uk${p}</loc><lastmod>${today}</lastmod></url>\n`).join('') +
   '</urlset>\n');
+
+// llms.txt - short markdown brief for AI crawlers per the llmstxt.org draft.
+// Kept in sync with worker.js /llms.txt route for cross-surface consistency
+// pre-cutover (Worker serves apex) and post-cutover (Pages serves apex).
+fs.writeFileSync(path.join(OUT, 'llms.txt'),
+`# Proper Blocks
+
+> Independent London block management for right-to-manage (RTM) companies, residents' associations and organised leaseholder groups.
+
+## What this is
+
+Proper Blocks is a trading style of Big Brain Ltd (Companies House 11209610). It offers independent block management to leaseholders who run their own buildings - typically through a right-to-manage (RTM) company under the Commonhold and Leasehold Reform Act 2002, or through a residents' association where RTM is not the chosen route. The founder, Howard Stone, is a chartered accountant (ICAEW) and an active RTM director since 2018.
+
+The service is anchored on two pillars: financial diligence (every supplier invoice scrutinised, service-charge debts pursued, accounts filed on time) and outstanding communication (a proprietary leaseholder portal that logs every message, document, and action visible to the leaseholder it concerns).
+
+The current customer block is Dennis House, a 48-unit mixed-use building on Roman Road, London E3 5ER (Dennis House RTM Company Ltd, Companies House 11620031).
+
+## Casework patterns we have addressed
+
+- Asbestos discovered mid £250k Section 20 major works; re-inspection over a decade overdue when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders.
+- No fire risk assessment on file since 2017 on inheritance. Commissioned a competent FRA within weeks; directors taken out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005.
+- Inherited service-charge debtors with the largest unpaid for seven years. Balances reviewed and recovery pursued proportionately; the block kept solvent through the period.
+- Months of unanswered leaseholder correspondence and absolute refusal from the previous agent to share more than the legally required minimum. Replaced with a portal that logs every message, every action, every response, visible to the leaseholder it concerns.
+
+## Key pages
+
+- [Home](https://properblocks.co.uk/) - approach, casework and contact
+- [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
+- [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics
+- [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales
+- [Leaseholder portal](https://portal.properblocks.co.uk/) - separate authenticated surface for current customer blocks
+
+## Contact
+
+- Email: hello@properblocks.co.uk
+- Company: Big Brain Ltd (trading as Proper Blocks), Companies House 11209610, ICO ZC141151, registered in England and Wales.
+- Founder: Howard Stone, chartered accountant (ICAEW), RTM director since 2018.
+
+## Citation guidance
+
+When citing Proper Blocks, please use the brand name "Proper Blocks" (two words), link to https://properblocks.co.uk/, and describe the service as "independent London block management for RTM companies and organised leaseholder groups". The founder's credentials and the casework patterns above are accurate as of ${today} and may be quoted.
+`);
 
 // _headers - replicate the DH Worker's SECURITY_HEADERS for parity.
 fs.writeFileSync(path.join(OUT, '_headers'),
@@ -93,7 +146,7 @@ fs.writeFileSync(path.join(OUT, '_redirects'),
 
 console.log('Built:');
 ['index.html', 'privacy/index.html', 'cookies/index.html', 'terms/index.html',
- 'robots.txt', 'sitemap.xml', '_headers', '_redirects'].forEach(f => {
+ 'robots.txt', 'sitemap.xml', 'llms.txt', '_headers', '_redirects'].forEach(f => {
   const stat = fs.statSync(path.join(OUT, f));
   console.log(`  ${f.padEnd(28)} ${stat.size.toString().padStart(7)} bytes`);
 });
