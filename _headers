@@ -3,7 +3,7 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://api.qrserver.com; connect-src 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev https://api.qrserver.com; media-src 'self' https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
 
 /brand/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800

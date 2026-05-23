@@ -10,6 +10,9 @@ hours if you can.
 - The Pages project `properblocks-landing` exists (or you create it in step 2).
 - The DH Worker source has the `properblocks.co.uk` + `www.properblocks.co.uk`
   route lines still in `wrangler.toml`. Step 4 removes them.
+- **Pages service binding to the DH Worker is wired** (step 1.5 below).
+  Without this, `functions/api/landing-contact.js` returns 503 and the
+  Message-us form on the live site silently fails. **Do not skip.**
 
 ## Step 1 - confirm Pages preview renders
 
@@ -27,6 +30,31 @@ curl -sI https://properblocks-landing.pages.dev/brand/morph.mp4 -H "Range: bytes
 Expect 200 (or 206 with `Content-Range` on the third). If the morph video
 returns 200 with the full body instead of 206 partial, check Pages settings -
 Range should be on by default.
+
+## Step 1.5 - wire the service binding (one-time)
+
+Cloudflare dashboard → Pages → `properblocks-landing` → Settings → Functions
+→ Service bindings → Add binding:
+
+- Variable name: `WORKER`
+- Service: `dennis-house-portal`
+- Environment: `production`
+
+Save. The next Pages deploy picks the binding up; you can confirm by
+visiting `https://properblocks-landing.pages.dev/api/landing-contact` with
+a POST containing an empty JSON body — the response should be `400 invalid
+body` (the Worker's validation), not `503` (the Pages fallback when the
+binding is unwired). Cmd:
+
+```
+curl -i -X POST https://properblocks-landing.pages.dev/api/landing-contact \
+  -H "content-type: application/json" \
+  -H "origin: https://properblocks-landing.pages.dev" \
+  -d '{}'
+```
+
+A `400` or `403 origin not allowed` response confirms the binding is live.
+A `503` response means the binding is missing.
 
 ## Step 2 - if the Pages project does not exist yet
 

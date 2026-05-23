@@ -28,18 +28,34 @@
 
 ## Persona-query results (baseline)
 
+**Targeting correction (Howard 2026-05-23)**: PB is a **block manager** (the service), not an RTM-software vendor. Earlier query set conflated the two categories. The actual head-to-head is Rendall & Rittner / London Block Management / Urang / JCF — managed-agent firms — NOT Block in a Box / Resident / RTM 360. Future passes target the corrected query set below.
+
+### Corrected query set (track from next run)
+
+| Query | Google rank | ChatGPT cite? | Perplexity cite? | Notes |
+|---|---|---|---|---|
+| good block manager london | (run next pass) | | | head category |
+| finance block manager london | | | | exploits Howard's chartered-accountant edge |
+| best block manager london | | | | brand-superlative |
+| rtm block manager | | | | structural-fit query |
+| residents association block manager | | | | structural-fit query |
+
+### Original (mis-targeted) query set from this pass
+
+Kept for context; do not re-run unless surface shifts.
+
 | Query | Google rank | ChatGPT cite? | Perplexity cite? | Competitors cited |
 |---|---|---|---|---|
-| RTM software London | not top 10 | no | no | Block in a Box, RTM 360, RTM Pro, Landlord Vision |
+| RTM software London | not top 10 | no | no | Block in a Box, RTM 360, RTM Pro, Landlord Vision (wrong category) |
 | self-managed block management London | not top 10 | no | no | Common Ground Estates, Bawtrys, Rendall & Rittner, JFM |
 | alternative to Haus Block Management | not top 10 | no | no | Prime PM, GQ PM, JCF, Watson, Alba |
 | RTM director services London | not top 10 | no | no | London Block Management, Rendall & Rittner, Uniq, Horizon, RTMF |
 | block management Roman Road London | not top 10 | no | no | London Block Management, Rendall & Rittner, PM-UK, Urang, JCF, Brompton |
 | Proper Blocks block management | not top 10 (brand query returns WordPress plugin) | no | no | none relevant — brand is invisible to its own name |
-| leaseholder portal software UK | not top 10 | no | no | Resident, Blocks Online, Tilt Property, MRI Qube, CPM, PMMS, Urang |
+| leaseholder portal software UK | not top 10 | no | no | Resident, Blocks Online, Tilt Property, MRI Qube, CPM, PMMS, Urang (wrong category) |
 | Section 20 consultation help London | not top 10 | no | no | LBHF, L&Q, TPI, MTVH, Peabody, Red Brick PM, Coodes, Lease Advice Bureau |
 
-Visibility: **0/8** queries cite properblocks.co.uk today.
+Visibility: **0/8** on the mis-targeted queries; corrected set untested.
 
 ## Competitor citation frequency (baseline)
 
@@ -66,8 +82,8 @@ Visibility: **0/8** queries cite properblocks.co.uk today.
 
 ### Queued for Howard
 
-- Self-managed-RTM hub page (`/self-managed-rtm-london` or similar) — would cover four of the eight failed persona queries with FAQ schema (Section 20, leaseholder portal, RMC vs RTM, what self-management costs). Recommendation: 800-1,200 words with Howard's own RTM-director voice, anonymised Dennis House case-study anchor. Howard decides whether this is in scope this week.
-- LinkedIn presence for Proper Blocks brand (currently no entity signal). AI search heavily cites LinkedIn for B2B small firms. Howard decides whether to register and seed with 3-5 posts about RTM patterns.
+- Block-manager hub page (`/block-manager-london` or `/about` enrichment) — would cover the five corrected persona queries with FAQ schema (what a good block manager does, fee transparency, RTM vs RA structure, why financial diligence matters, picking a manager). Recommendation: 800-1,200 words in Howard's own voice with anonymised Dennis House case-study anchor. Howard decides whether this is in scope this week.
+- LinkedIn presence for Proper Blocks brand (currently no entity signal). AI search heavily cites LinkedIn for B2B small firms. Howard decides whether to register and seed with 3-5 posts about block-management patterns.
 
 ### Out of scope this run
 
