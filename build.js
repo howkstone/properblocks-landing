@@ -79,7 +79,7 @@ fs.writeFileSync(path.join(OUT, 'robots.txt'),
   '\nSitemap: https://properblocks.co.uk/sitemap.xml\n');
 
 const today = new Date().toISOString().slice(0, 10);
-const sitemapUrls = ['/', '/privacy/', '/terms/', '/cookies/'];
+const sitemapUrls = ['/', '/privacy/', '/terms/', '/cookies/', '/block-manager-london/'];
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
@@ -112,6 +112,7 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 ## Key pages
 
 - [Home](https://properblocks.co.uk/) - approach, casework and contact
+- [Block manager - London](https://properblocks.co.uk/block-manager-london/) - service detail, fees, FAQ, founder credentials
 - [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
 - [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics
 - [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales
