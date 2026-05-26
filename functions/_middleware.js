@@ -53,6 +53,17 @@ function buildCsp(nonce) {
 }
 
 export async function onRequest(context) {
+  // www -> apex canonical 301. The _redirects file format on Pages only
+  // supports path-based source rules, not cross-host, so this redirect lives
+  // here in the middleware instead. Added 2026-05-26 after cutover, when www
+  // started serving content directly alongside apex (which is bad for SEO
+  // canonical signalling and breaks the canonical link tag in the HTML).
+  const reqUrl = new URL(context.request.url);
+  if (reqUrl.host === 'www.properblocks.co.uk') {
+    reqUrl.host = 'properblocks.co.uk';
+    return Response.redirect(reqUrl.toString(), 301);
+  }
+
   const response = await context.next();
 
   // Bail early for non-HTML responses - they get the static CSP from _headers.
