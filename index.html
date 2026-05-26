@@ -133,7 +133,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    second phase of the H1 manifesto ("done properly") without the page moving.
    Once both phases are lit, sticky releases and the rest of the page scrolls
    naturally. */
-.hero-stage{position:relative;min-height:200vh;z-index:2;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
+.hero-stage{position:relative;min-height:220vh;z-index:2;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
 .hero-wrap{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
 .hero-particles-bg{position:absolute;inset:0;pointer-events:none;opacity:0.5}
 .hero{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:48px;padding:64px 32px 48px;max-width:960px;margin:0 auto;text-align:center}
@@ -157,25 +157,27 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .hero-static-fallback{display:block;font-family:Fraunces,serif;font-weight:400;font-size:clamp(46px,5.4vw,68px);line-height:1.02;letter-spacing:-0.025em;color:var(--ink);margin-bottom:24px}
 .hero-static-fallback em{font-style:italic;color:var(--copper-deep);font-weight:500}
 
-/* Unravel: bricks rise from below, then "Proper Blocks" wordmark characters
-   cascade up. Lives inside the hero, just below the CTAs. Triggered by a
-   timer once the CTAs have settled (see JS at the bottom of this file). */
+/* Unravel: "Proper Blocks" wordmark grows from the bottom in 5 scroll-driven
+   stages (one stage per scroll-wheel notch). Lives inside the hero, just
+   below the CTAs. The 5-stage progression is wired to scrollY in the
+   manifesto IIFE at the bottom of this file. */
 .unravel{padding:0}
 .hero-unravel{padding:0;margin-top:8px}
-.unravel-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
-.unravel-glyph{width:54px;height:54px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.unravel-inner{max-width:920px;margin:0 auto;display:flex;align-items:flex-end;justify-content:center;gap:22px;flex-wrap:nowrap;clip-path:inset(100% 0 0 0);transition:clip-path 0.32s cubic-bezier(0.4,0,0.2,1)}
+.unravel-glyph{width:80px;height:80px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .unravel-glyph svg{width:100%;height:100%;overflow:visible}
-.unravel-glyph rect{transform:translateY(80px);opacity:0;transition:transform 0.75s cubic-bezier(0.16,1,0.3,1),opacity 0.55s ease;transform-origin:50% 100%}
-.unravel.in .unravel-glyph rect:nth-of-type(1){transform:translateY(0);opacity:1;transition-delay:0ms}
-.unravel.in .unravel-glyph rect:nth-of-type(2){transform:translateY(0);opacity:1;transition-delay:140ms}
-.unravel.in .unravel-glyph rect:nth-of-type(3){transform:translateY(0);opacity:1;transition-delay:340ms}
-.unravel-word{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(38px,5.4vw,64px);letter-spacing:-0.025em;color:var(--ink);line-height:1;display:inline-flex;overflow:hidden;padding:0.18em 0;align-items:baseline}
-.unravel-word .ch{display:inline-block;transform:translateY(110%);opacity:0;transition:transform 0.7s cubic-bezier(0.16,1,0.3,1),opacity 0.45s ease}
-.unravel-word .ch.space{width:0.32em;transform:none;opacity:1}
-.unravel.in .unravel-word .ch{transform:translateY(0);opacity:1}
+.unravel-word{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(54px,7.4vw,94px);letter-spacing:-0.025em;color:var(--ink);line-height:1;padding:0.04em 0;white-space:nowrap}
+
+/* Five discrete stages — clip-path reveals from the bottom (100% top-inset
+   = fully clipped; 0% = fully visible). 20% per stage. */
+.unravel.stage-1 .unravel-inner{clip-path:inset(80% 0 0 0)}
+.unravel.stage-2 .unravel-inner{clip-path:inset(60% 0 0 0)}
+.unravel.stage-3 .unravel-inner{clip-path:inset(40% 0 0 0)}
+.unravel.stage-4 .unravel-inner{clip-path:inset(20% 0 0 0)}
+.unravel.stage-5 .unravel-inner{clip-path:inset(0 0 0 0)}
+
 @media (prefers-reduced-motion:reduce){
-  .unravel-glyph rect,.unravel-word .ch{transition:opacity 0.3s ease;transform:none;opacity:1}
-  .unravel.in .unravel-glyph rect,.unravel.in .unravel-word .ch{transform:none}
+  .unravel-inner{clip-path:none;transition:none}
 }
 
 /* Pillars intro - sits between the unravel and the two-pillar grid */
@@ -455,7 +457,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 
 <section class="cta-band" id="contact">
   <div class="cta-band-inner">
-    <h2>We focus on <strong>outcomes</strong> and <strong>collaboration</strong>.</h2>
+    <h2>We focus on <strong>collaboration</strong> and <strong>outcomes</strong>.</h2>
     <div class="cta-row">
       <button type="button" class="btn btn-primary js-open-message-modal" style="padding:14px 30px;font-size:15px;border:none;cursor:pointer;font:inherit">Message us</button>
     </div>
@@ -552,40 +554,45 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     const PRE_ROLL_MS = 350;
     wordsA.forEach((w,i)=>setTimeout(()=>w.classList.add('lit'), PRE_ROLL_MS + i*PER_WORD_MS));
     // ---- Phase B + unravel: chained scroll-driven reveals ----
-    // Build the unravel chars now so the scroll handler can drive them.
+    // Wordmark text just renders flat - the 5-stage growth is driven by
+    // clip-path on .unravel-inner; no per-char animation needed.
     const unravelSection = document.getElementById('unravel');
     const unravelWord = document.getElementById('unravel-word');
-    if(unravelWord){
-      const text = 'Proper Blocks';
-      unravelWord.innerHTML = text.split('').map(ch=>{
-        if(ch===' ') return '<span class="ch space" aria-hidden="true"> </span>';
-        return '<span class="ch">'+ch+'</span>';
-      }).join('');
-      let nonSpaceIdx = 0;
-      unravelWord.querySelectorAll('.ch').forEach(c=>{
-        if(c.classList.contains('space')) return;
-        c.style.transitionDelay = (560 + nonSpaceIdx*48) + 'ms';
-        nonSpaceIdx++;
-      });
+    if(unravelWord) unravelWord.textContent = 'Proper Blocks';
+    if(prefersReduced && unravelSection){
+      for(let i=1;i<=5;i++) unravelSection.classList.add('stage-'+i);
     }
-    if(prefersReduced && unravelSection){ unravelSection.classList.add('in'); }
 
     function onManifestoScroll(){
       const vh = window.innerHeight;
       const sy = window.scrollY;
-      // Phase B (done properly) lights as the user scrolls 0.10vh → 0.70vh.
-      const startScroll = vh * 0.10;
-      const endScroll = vh * 0.70;
-      const progress = Math.max(0, Math.min(1, (sy - startScroll) / (endScroll - startScroll)));
-      const litCount = Math.round(progress * wordsB.length);
+      // Phase B (done properly) lights as the user scrolls 0.05vh → 0.45vh.
+      const phaseBStart = vh * 0.05;
+      const phaseBEnd = vh * 0.45;
+      const phaseBProgress = Math.max(0, Math.min(1, (sy - phaseBStart) / (phaseBEnd - phaseBStart)));
+      const litCount = Math.round(phaseBProgress * wordsB.length);
       wordsB.forEach((w,i)=>w.classList.toggle('lit', i < litCount));
-      // Unravel triggers once the last 'done properly' word lights up.
-      if(unravelSection && litCount >= wordsB.length){
-        unravelSection.classList.add('in');
-      }
+
     }
     window.addEventListener('scroll', onManifestoScroll, {passive:true});
     onManifestoScroll();
+
+    // Unravel reveal - timer-driven so it always fires regardless of whether
+    // the user scrolls. Was scroll-driven (0.50vh → 1.10vh) but Howard
+    // reported the wordmark not revealing on his phone (2026-05-26): on small
+    // viewports the user can read the hero without scrolling far enough to
+    // trigger the unravel, and the scroll-driven path leaves the wordmark
+    // permanently hidden. Timer-based reveal starts after phase A's word
+    // pulse completes (~800ms) plus a beat to let the eye land on the hero,
+    // then steps through the 5 clip-path stages over 1.5s.
+    if(unravelSection){
+      const UNRAVEL_START_MS = 1400;     // after phase A pulse + a beat
+      const UNRAVEL_STEP_MS = 280;       // 5 steps × 280ms = 1.4s reveal
+      for(let i=1; i<=5; i++) {
+        setTimeout(() => unravelSection.classList.add('stage-' + i),
+                   UNRAVEL_START_MS + (i-1) * UNRAVEL_STEP_MS);
+      }
+    }
   })();
 
   if(prefersReduced){
