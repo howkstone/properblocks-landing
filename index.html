@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proper Blocks - block management, done properly</title>
+<title>Proper Blocks - independent block management for London RTM companies</title>
 <meta name="description" content="Independent London block management for RTM companies and residents' associations. Chartered accountant founder, proprietary leaseholder portal, RTM director since 2018.">
 <meta name="theme-color" content="#155F66">
 
@@ -348,6 +348,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     </a>
     <nav class="head">
       <a href="#approach">Approach</a>
+      <a href="/block-manager-london/">London</a>
       <a href="https://portal.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
       <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
     </nav>
@@ -360,8 +361,8 @@ footer .copy{font-size:13px;color:var(--ink-3)}
   </div>
   <section class="hero">
     <div class="hero-text">
-      <h1 class="hero-manifesto" id="hero-manifesto" aria-label="Block management, done properly."></h1>
-      <noscript><h1 class="hero-static-fallback">Block management, <em>done properly.</em></h1></noscript>
+      <h1 class="hero-manifesto" id="hero-manifesto"><span class="phase phase-a">Block management.</span> <span class="phase phase-b">done <em>properly.</em></span></h1>
+      <p class="hero-pillars" id="hero-pillars">Financially diligent. Communicators supreme. <em>Chartered accountant.</em> <em>Proprietary secure portal.</em></p>
       <div class="hero-ctas" id="hero-ctas">
         <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
         <a href="#approach" class="btn btn-ghost">How we work</a>
@@ -398,9 +399,10 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 
 <section class="trust">
   <div class="trust-inner">
-    <div class="trust-label">Credentials</div>
+    <div class="trust-label">Founder &amp; credentials</div>
     <div class="trust-creds" data-reveal-children>
-      <div class="c">Chartered Accountant <span class="ind">/ founder</span></div>
+      <div class="c">Howard Stone <span class="ind">/ founder</span></div>
+      <div class="c">Chartered Accountant <span class="ind">/ ICAEW</span></div>
       <div class="c">Active RTM director <span class="ind">/ since 2018</span></div>
       <div class="c">Proprietary leaseholder portal <span class="ind">/ regular leaseholder comms</span></div>
     </div>
@@ -512,6 +514,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     const el = document.getElementById(id);
     if(el) setTimeout(()=>el.classList.add('in'), delay);
   }
+  show('hero-pillars', prefersReduced ? 0 : 700);
   show('hero-ctas', prefersReduced ? 0 : 900);
 
   // ---- Hero manifesto: two-phase reveal ----
