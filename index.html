@@ -243,23 +243,19 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .casework-inner{max-width:1100px;margin:0 auto;padding:88px 32px}
 .section-sub{font-family:Fraunces,serif;font-style:italic;color:var(--ink-2);font-size:17px;margin-top:8px;line-height:1.5}
 
-/* Horizontal scroll-pinned casework. Cards enter from right, pause centre,
-   exit left as user scrolls vertically. One card per scroll-stop; four
-   cards => track-sentinel ~360vh. Sticky stage at 100vh holds the rail
-   pinned while the user scrolls through the track. Reduced-motion users
-   get a plain vertical stack via the media query at the bottom. */
-.casework-scroll{background:var(--bg);position:relative}
-.casework-scroll-track{position:relative;height:360vh}
-.casework-stage{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.casework-rail{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-.case-card{position:absolute;top:50%;left:50%;width:min(720px,calc(100vw - 64px));transform:translate(-50%,-50%) translateX(120vw);opacity:0;transition:transform 0.05s linear,opacity 0.18s ease;will-change:transform,opacity}
-.case-card.in{opacity:1}
-.case-card-eyebrow{font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper-deep);font-weight:600;text-align:center;margin-bottom:24px}
-.case-card-grid{display:grid;grid-template-columns:1fr 32px 1fr;gap:0;align-items:center}
+/* Sticky-stack casework. Each card position:sticky at a staggered top so
+   the next card slides up to cover the previous, leaving a 24px lip of
+   each prior card visible like a deck of paper. CSS-only — no scroll JS.
+   Pattern used by Linear, Stripe, Notion feature sections. */
+.casework-stack{background:var(--bg);padding:48px 24px 96px}
+.casework-stack-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.case-stack-card{position:sticky;top:calc(96px + var(--stack-idx) * 24px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;padding:44px 44px 40px;box-shadow:0 24px 48px -16px rgba(31,27,23,0.18),0 6px 14px -6px rgba(31,27,23,0.08);transition:transform 0.4s ease}
+.case-stack-eyebrow{font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper-deep);font-weight:600;margin-bottom:28px}
+.case-stack-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 
 /* The tatty sign - paper-cream weathered card, slight rotation, two nails
    top corners, peeling masking-tape strip. Restrained, not gimmicky. */
-.case-sign{position:relative;background:linear-gradient(180deg,#FAF5E9 0%,#F2EAD0 100%);padding:38px 26px 32px;border-radius:2px;transform:rotate(-1.1deg);box-shadow:0 14px 28px -10px rgba(31,27,23,0.22),0 4px 10px -4px rgba(31,27,23,0.14),inset 0 0 0 1px rgba(31,27,23,0.06);min-height:140px;display:flex;align-items:center;justify-content:center}
+.case-sign{position:relative;background:linear-gradient(180deg,#FAF5E9 0%,#F2EAD0 100%);padding:42px 28px 36px;border-radius:2px;transform:rotate(-1.1deg);box-shadow:0 14px 28px -10px rgba(31,27,23,0.22),0 4px 10px -4px rgba(31,27,23,0.14),inset 0 0 0 1px rgba(31,27,23,0.06);min-height:160px;display:flex;align-items:center;justify-content:center}
 .case-sign::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(60,40,20,0.025) 2px,rgba(60,40,20,0.025) 3px);pointer-events:none;border-radius:2px}
 .case-sign::after{content:'';position:absolute;left:6px;right:6px;bottom:0;height:14px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(60,40,20,0.06) 100%);pointer-events:none;border-radius:0 0 2px 2px}
 .case-nail{position:absolute;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#5C5048 0%,#2E2620 60%,#1A1410 100%);box-shadow:0 1px 1px rgba(0,0,0,0.4),inset 0 -1px 0 rgba(255,255,255,0.15)}
@@ -269,39 +265,26 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .case-tape-2{transform:translateX(-50%) rotate(4deg);left:55%;width:96px}
 .case-tape-3{transform:translateX(-50%) rotate(-2deg);left:42%;width:108px}
 .case-tape-4{transform:translateX(-50%) rotate(2.5deg);left:48%;width:100px}
-.case-sign-text{font-family:Fraunces,serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.35;color:#2E2218;text-align:center;letter-spacing:-0.005em;position:relative;z-index:1}
+.case-sign-text{font-family:Fraunces,serif;font-style:italic;font-weight:500;font-size:20px;line-height:1.35;color:#2E2218;text-align:center;letter-spacing:-0.005em;position:relative;z-index:1}
 
-.case-arrow{font-family:Fraunces,serif;font-size:28px;color:var(--copper-deep);font-weight:300;text-align:center;line-height:1}
-
-/* The polished outcome card. Clean, no rotation, white background, sits
-   solidly next to the tatty sign. */
-.case-outcome{background:#fff;padding:30px 28px 28px;border-radius:6px;border:1px solid var(--rule);box-shadow:0 8px 22px -10px rgba(31,27,23,0.12);min-height:140px;display:flex;flex-direction:column;justify-content:center}
-.case-outcome-eyebrow{font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ok);font-weight:600;margin-bottom:10px}
-.case-outcome p{font-size:15px;color:var(--ink);line-height:1.55;margin:0}
-
-/* Progress dots — fixed at bottom centre of the stage. */
-.case-progress{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:2}
-.case-dot{width:8px;height:8px;border-radius:50%;background:rgba(31,27,23,0.15);transition:background 0.3s ease,width 0.3s ease}
-.case-dot.active{background:var(--copper-deep);width:22px;border-radius:4px}
-.case-dot.done{background:rgba(31,27,23,0.35)}
+/* The polished outcome — no longer a separate card-on-card, just a clean
+   prose block to the right of the sign with a green "What we did" eyebrow. */
+.case-outcome{display:flex;flex-direction:column;justify-content:center}
+.case-outcome-eyebrow{font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ok);font-weight:600;margin-bottom:14px}
+.case-outcome p{font-size:16px;color:var(--ink);line-height:1.6;margin:0}
 
 @media (max-width:760px){
-  .case-card{width:calc(100vw - 32px)}
-  .case-card-grid{grid-template-columns:1fr;gap:18px}
-  .case-arrow{transform:rotate(90deg);font-size:24px;padding:4px 0}
-  .case-sign{padding:30px 18px 24px;min-height:0}
-  .case-sign-text{font-size:16px}
-  .case-outcome{padding:22px 20px}
-  .case-outcome p{font-size:14px}
-  .casework-scroll-track{height:380vh}
+  .casework-stack{padding:32px 16px 64px}
+  .casework-stack-inner{gap:24px}
+  .case-stack-card{padding:28px 24px 26px;top:calc(72px + var(--stack-idx) * 18px);border-radius:14px}
+  .case-stack-grid{grid-template-columns:1fr;gap:24px}
+  .case-sign{padding:32px 20px 26px;min-height:0}
+  .case-sign-text{font-size:17px}
+  .case-outcome p{font-size:15px}
 }
 
 @media (prefers-reduced-motion:reduce){
-  .casework-scroll-track{height:auto}
-  .casework-stage{position:static;height:auto;padding:64px 16px}
-  .casework-rail{flex-direction:column;height:auto;gap:48px}
-  .case-card{position:relative;top:auto;left:auto;transform:none !important;opacity:1 !important;width:min(720px,100%)}
-  .case-progress{display:none}
+  .case-stack-card{position:static;top:auto}
 }
 
 /* CTA band */
@@ -465,85 +448,73 @@ footer .copy{font-size:13px;color:var(--ink-3)}
   </div>
 </section>
 
-<!-- Scroll-pinned horizontal casework: each card enters from the right,
-     pauses centre, slides out left as the user scrolls vertically. Four
-     cards = four scroll stops within one sticky 100vh stage. -->
-<section class="casework-scroll" id="casework-scroll" aria-label="Inherited problems and how we addressed them">
-  <div class="casework-scroll-track" id="casework-scroll-track">
-    <div class="casework-stage">
-      <div class="casework-rail" id="casework-rail">
-        <article class="case-card" data-idx="0">
-          <div class="case-card-eyebrow">Major works</div>
-          <div class="case-card-grid">
-            <div class="case-sign" aria-hidden="true">
-              <span class="case-nail case-nail-tl"></span>
-              <span class="case-nail case-nail-tr"></span>
-              <span class="case-tape"></span>
-              <div class="case-sign-text">Asbestos identified mid £250k Section 20 works.</div>
-            </div>
-            <div class="case-arrow" aria-hidden="true">→</div>
-            <div class="case-outcome">
-              <div class="case-outcome-eyebrow">What we did</div>
-              <p>Re-inspection overdue for over a decade when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders, works completed safely.</p>
-            </div>
-          </div>
-        </article>
-        <article class="case-card" data-idx="1">
-          <div class="case-card-eyebrow">Building safety</div>
-          <div class="case-card-grid">
-            <div class="case-sign" aria-hidden="true">
-              <span class="case-nail case-nail-tl"></span>
-              <span class="case-nail case-nail-tr"></span>
-              <span class="case-tape case-tape-2"></span>
-              <div class="case-sign-text">No Fire Risk Assessment on file since 2017.</div>
-            </div>
-            <div class="case-arrow" aria-hidden="true">→</div>
-            <div class="case-outcome">
-              <div class="case-outcome-eyebrow">What we did</div>
-              <p>Commissioned a competent FRA within weeks of taking over. Got directors out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005; remediation actions on a tracked plan.</p>
-            </div>
-          </div>
-        </article>
-        <article class="case-card" data-idx="2">
-          <div class="case-card-eyebrow">Financial diligence</div>
-          <div class="case-card-grid">
-            <div class="case-sign" aria-hidden="true">
-              <span class="case-nail case-nail-tl"></span>
-              <span class="case-nail case-nail-tr"></span>
-              <span class="case-tape case-tape-3"></span>
-              <div class="case-sign-text">Inherited service-charge debtors, largest unpaid over ten years.</div>
-            </div>
-            <div class="case-arrow" aria-hidden="true">→</div>
-            <div class="case-outcome">
-              <div class="case-outcome-eyebrow">What we did</div>
-              <p>Balances reviewed, recovery pursued proportionately and firmly, the block kept solvent through the period. Disputed line-items revisited from the lease, not the prior agent's invoice.</p>
-            </div>
-          </div>
-        </article>
-        <article class="case-card" data-idx="3">
-          <div class="case-card-eyebrow">Communication</div>
-          <div class="case-card-grid">
-            <div class="case-sign" aria-hidden="true">
-              <span class="case-nail case-nail-tl"></span>
-              <span class="case-nail case-nail-tr"></span>
-              <span class="case-tape case-tape-4"></span>
-              <div class="case-sign-text">Months of unanswered leaseholder correspondence.</div>
-            </div>
-            <div class="case-arrow" aria-hidden="true">→</div>
-            <div class="case-outcome">
-              <div class="case-outcome-eyebrow">What we did</div>
-              <p>Absolute refusal from the previous agent to share more than the legally required minimum. The portal logs every message, every action, every response, visible to its leaseholder.</p>
-            </div>
-          </div>
-        </article>
+<!-- Sticky-stack casework. Each card position:sticky at a staggered top
+     value so as the user scrolls, the next card slides up to cover the
+     previous, leaving a thin "deposited" lip visible at the top. Same
+     pattern as Linear / Stripe / Notion feature sections. CSS-only —
+     no JS scroll driver. -->
+<section class="casework-stack" id="casework-stack" aria-label="Inherited problems and how we addressed them">
+  <div class="casework-stack-inner">
+    <article class="case-stack-card" style="--stack-idx:0">
+      <div class="case-stack-eyebrow">Major works</div>
+      <div class="case-stack-grid">
+        <div class="case-sign" aria-hidden="true">
+          <span class="case-nail case-nail-tl"></span>
+          <span class="case-nail case-nail-tr"></span>
+          <span class="case-tape"></span>
+          <div class="case-sign-text">Asbestos identified mid £250k Section 20 works.</div>
+        </div>
+        <div class="case-outcome">
+          <div class="case-outcome-eyebrow">What we did</div>
+          <p>Re-inspection overdue for over a decade when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders, works completed safely.</p>
+        </div>
       </div>
-      <div class="case-progress" aria-hidden="true">
-        <span class="case-dot" data-dot="0"></span>
-        <span class="case-dot" data-dot="1"></span>
-        <span class="case-dot" data-dot="2"></span>
-        <span class="case-dot" data-dot="3"></span>
+    </article>
+    <article class="case-stack-card" style="--stack-idx:1">
+      <div class="case-stack-eyebrow">Building safety</div>
+      <div class="case-stack-grid">
+        <div class="case-sign" aria-hidden="true">
+          <span class="case-nail case-nail-tl"></span>
+          <span class="case-nail case-nail-tr"></span>
+          <span class="case-tape case-tape-2"></span>
+          <div class="case-sign-text">No Fire Risk Assessment on file since 2017.</div>
+        </div>
+        <div class="case-outcome">
+          <div class="case-outcome-eyebrow">What we did</div>
+          <p>Commissioned a competent FRA within weeks of taking over. Got directors out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005; remediation actions on a tracked plan.</p>
+        </div>
       </div>
-    </div>
+    </article>
+    <article class="case-stack-card" style="--stack-idx:2">
+      <div class="case-stack-eyebrow">Financial diligence</div>
+      <div class="case-stack-grid">
+        <div class="case-sign" aria-hidden="true">
+          <span class="case-nail case-nail-tl"></span>
+          <span class="case-nail case-nail-tr"></span>
+          <span class="case-tape case-tape-3"></span>
+          <div class="case-sign-text">Inherited service-charge debtors, largest unpaid over ten years.</div>
+        </div>
+        <div class="case-outcome">
+          <div class="case-outcome-eyebrow">What we did</div>
+          <p>Balances reviewed, recovery pursued proportionately and firmly, the block kept solvent through the period. Disputed line-items revisited from the lease, not the prior agent's invoice.</p>
+        </div>
+      </div>
+    </article>
+    <article class="case-stack-card" style="--stack-idx:3">
+      <div class="case-stack-eyebrow">Communication</div>
+      <div class="case-stack-grid">
+        <div class="case-sign" aria-hidden="true">
+          <span class="case-nail case-nail-tl"></span>
+          <span class="case-nail case-nail-tr"></span>
+          <span class="case-tape case-tape-4"></span>
+          <div class="case-sign-text">Months of unanswered leaseholder correspondence.</div>
+        </div>
+        <div class="case-outcome">
+          <div class="case-outcome-eyebrow">What we did</div>
+          <p>Absolute refusal from the previous agent to share more than the legally required minimum. The portal logs every message, every action, every response, visible to its leaseholder.</p>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -763,62 +734,10 @@ footer .copy{font-size:13px;color:var(--ink-3)}
   // Morph video / scrubber removed 2026-05-26: the section was pulled
   // from the markup but the JS remained. Dead code stripped.
 
-  // Casework horizontal scroll driver. The section is 360vh tall with a
-  // sticky inner stage at 100vh. We map vertical scroll within the section
-  // to per-card translateX: each card occupies a 1/Nth slice of the scroll
-  // range and slides through right -> centre -> left as the user scrolls.
-  // Pause in the centre is implicit because the card snaps to translateX(0)
-  // at the midpoint of its slice and only drifts out as we cross 75%.
-  (function setupCaseworkScroll(){
-    if(prefersReduced) return; // CSS handles the static-stack fallback.
-    const track = document.getElementById('casework-scroll-track');
-    const cards = Array.from(document.querySelectorAll('#casework-rail .case-card'));
-    const dots = Array.from(document.querySelectorAll('.case-dot'));
-    if(!track || cards.length === 0) return;
-    let rafPending = false;
-    function update(){
-      rafPending = false;
-      const rect = track.getBoundingClientRect();
-      const vh = window.innerHeight || 800;
-      const scrollable = rect.height - vh; // amount the user can scroll within the section
-      if(scrollable <= 0) return;
-      const scrolled = Math.max(0, Math.min(scrollable, -rect.top));
-      const progress = scrolled / scrollable; // 0..1 across the whole section
-      const n = cards.length;
-      // Each card owns a 1/n slice; within its slice it slides from
-      // right-offscreen (slice=0) -> centre (slice=0.5) -> left-offscreen (slice=1).
-      // Cards outside their slice sit fully off-screen on the appropriate side.
-      let activeIdx = Math.min(n-1, Math.floor(progress * n));
-      for(let i=0; i<n; i++){
-        const sliceStart = i / n;
-        const sliceEnd = (i+1) / n;
-        let localProgress;
-        if(progress < sliceStart) localProgress = -1; // not yet entered
-        else if(progress > sliceEnd) localProgress = 2; // already exited
-        else localProgress = (progress - sliceStart) / (sliceEnd - sliceStart); // 0..1 within slice
-        // translateX in vw units: localProgress 0 => +120vw (offscreen right),
-        // 0.5 => 0vw (centre), 1 => -120vw (offscreen left). Tightly held in
-        // the middle 30% for a perceptible pause.
-        let tx;
-        if(localProgress < 0) tx = 120;
-        else if(localProgress > 1) tx = -120;
-        else if(localProgress < 0.35) tx = 120 * (1 - localProgress / 0.35); // ease into centre
-        else if(localProgress > 0.65) tx = -120 * ((localProgress - 0.65) / 0.35); // ease out left
-        else tx = 0; // pause centre
-        const card = cards[i];
-        card.style.transform = 'translate(-50%,-50%) translateX(' + tx.toFixed(2) + 'vw)';
-        card.classList.toggle('in', Math.abs(tx) < 110);
-      }
-      dots.forEach((d, i) => {
-        d.classList.toggle('active', i === activeIdx);
-        d.classList.toggle('done', i < activeIdx);
-      });
-    }
-    function schedule(){ if(!rafPending){ rafPending = true; requestAnimationFrame(update); } }
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    update();
-  })();
+  // Casework JS scroll driver removed 2026-05-29: replaced the horizontal
+  // pinned-stage pattern with a pure-CSS sticky-stack (Linear / Stripe
+  // pattern). The CSS `position:sticky` on each .case-stack-card handles
+  // the stack-as-you-scroll effect with no JS needed.
 
   function ambient(canvas, opts){
     if(!canvas) return;
