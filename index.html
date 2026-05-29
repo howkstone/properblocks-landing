@@ -683,33 +683,56 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       }).join('');
     });
 
-    const ioReveal = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(!e.isIntersecting) return;
-        const t = e.target;
-        if(t.hasAttribute('data-reveal-children')){
-          t.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
-        }
-        if(t.hasAttribute('data-reveal-head')){
-          t.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
-          t.querySelectorAll('[data-words] .w').forEach(w=>w.classList.add('in'));
-        }
-        if(t.hasAttribute('data-words') && !t.closest('[data-reveal-head]')){
-          t.querySelectorAll('.w').forEach(w=>w.classList.add('in'));
-        }
-        ioReveal.unobserve(t);
+    // Accessibility (2026-05-29): when prefers-reduced-motion is set, reveal
+    // all scroll-driven elements immediately instead of waiting for them to
+    // enter the viewport. Without this branch, anyone running OS-level
+    // reduced-motion sees a blank page because the .in class is never added.
+    if (prefersReduced) {
+      document.querySelectorAll('[data-reveal-children],[data-reveal-head]').forEach(t=>{
+        t.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
+        t.querySelectorAll('[data-words] .w').forEach(w=>w.classList.add('in'));
       });
-    }, {threshold:0.18});
-    document.querySelectorAll('[data-reveal-children],[data-reveal-head],[data-words]').forEach(el=>ioReveal.observe(el));
+      document.querySelectorAll('[data-words]').forEach(t=>{
+        t.querySelectorAll('.w').forEach(w=>w.classList.add('in'));
+      });
+      // Counters: snap straight to the target value.
+      document.querySelectorAll('[data-counter]').forEach(el=>{
+        const target = parseInt(el.dataset.target,10);
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        const comma = el.dataset.comma;
+        const fmt = comma ? target.toLocaleString('en-GB') : target;
+        el.textContent = prefix + fmt + suffix;
+      });
+    } else {
+      const ioReveal = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(!e.isIntersecting) return;
+          const t = e.target;
+          if(t.hasAttribute('data-reveal-children')){
+            t.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
+          }
+          if(t.hasAttribute('data-reveal-head')){
+            t.querySelectorAll(':scope > *').forEach(c=>c.classList.add('in'));
+            t.querySelectorAll('[data-words] .w').forEach(w=>w.classList.add('in'));
+          }
+          if(t.hasAttribute('data-words') && !t.closest('[data-reveal-head]')){
+            t.querySelectorAll('.w').forEach(w=>w.classList.add('in'));
+          }
+          ioReveal.unobserve(t);
+        });
+      }, {threshold:0.18});
+      document.querySelectorAll('[data-reveal-children],[data-reveal-head],[data-words]').forEach(el=>ioReveal.observe(el));
 
-    const ioCount = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(!e.isIntersecting) return;
-        animateCount(e.target);
-        ioCount.unobserve(e.target);
-      });
-    }, {threshold:0.4});
-    document.querySelectorAll('[data-counter]').forEach(el=>ioCount.observe(el));
+      const ioCount = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(!e.isIntersecting) return;
+          animateCount(e.target);
+          ioCount.unobserve(e.target);
+        });
+      }, {threshold:0.4});
+      document.querySelectorAll('[data-counter]').forEach(el=>ioCount.observe(el));
+    }
   }
 
   function animateCount(el){
