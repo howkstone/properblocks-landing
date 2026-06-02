@@ -79,7 +79,7 @@ fs.writeFileSync(path.join(OUT, 'robots.txt'),
   '\nSitemap: https://properblocks.co.uk/sitemap.xml\n');
 
 const today = new Date().toISOString().slice(0, 10);
-const sitemapUrls = ['/', '/privacy/', '/terms/', '/cookies/', '/block-manager-london/'];
+const sitemapUrls = ['/', '/privacy/', '/terms/', '/cookies/', '/block-manager-london/', '/contractor/'];
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
