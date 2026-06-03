@@ -116,7 +116,7 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 - [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
 - [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics
 - [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales
-- [Leaseholder portal](https://portal.properblocks.co.uk/) - separate authenticated surface for current customer blocks
+- [Leaseholder portal](https://dennishouse.properblocks.co.uk/) - separate authenticated surface for current customer blocks
 
 ## Contact
 
