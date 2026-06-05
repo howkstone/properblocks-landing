@@ -329,6 +329,31 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .who-inner p{font-family:Fraunces,Georgia,serif;font-size:clamp(19px,2.1vw,24px);font-weight:400;line-height:1.5;color:var(--ink);letter-spacing:-0.005em}
 .who-inner strong{color:var(--copper-deep);font-weight:600}
 
+/* Onboarding journey - 3-step "how taking us on works" stepper. Echoes the
+   numbered-token language of the 5-point health check, but laid out as a
+   connected horizontal path (numbered tokens joined by a directional copper
+   line) that folds into a vertical timeline on mobile. Reveals via the shared
+   data-reveal-children hook, so no new JS. */
+.journey{background:var(--bg)}
+.journey-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1040px;margin:0 auto}
+.jstep{position:relative;display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateY(22px);transition:opacity 0.6s ease,transform 0.6s cubic-bezier(0.22,1,0.36,1)}
+.jstep.in{opacity:1;transform:none}
+.jstep:nth-child(1){transition-delay:0s}
+.jstep:nth-child(2){transition-delay:0.12s}
+.jstep:nth-child(3){transition-delay:0.24s}
+.jstep-num{width:56px;height:56px;border-radius:10px;background:var(--copper-light);display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:22px;font-weight:500;color:var(--copper-deep);font-variant-numeric:tabular-nums;position:relative;z-index:1;flex-shrink:0;transition:background 0.3s ease,color 0.3s ease}
+.jstep:hover .jstep-num{background:var(--copper-deep);color:var(--copper-light)}
+.jstep:not(:last-child)::after{content:"";position:absolute;top:27px;left:56px;width:calc(100% - 30px);height:2px;background:linear-gradient(90deg,var(--copper),var(--copper-light));z-index:0;border-radius:2px}
+.jstep-body h3{font-family:Fraunces,serif;font-weight:500;font-size:21px;letter-spacing:-0.005em;color:var(--ink);margin-bottom:7px}
+.jstep-body p{font-size:15.5px;color:var(--ink-2);line-height:1.6}
+@media (max-width:900px){
+  .journey-steps{grid-template-columns:1fr;gap:0;max-width:560px}
+  .jstep{flex-direction:row;gap:18px;padding-bottom:30px}
+  .jstep:last-child{padding-bottom:0}
+  .jstep:not(:last-child)::after{top:56px;left:27px;width:2px;height:calc(100% - 56px);background:linear-gradient(180deg,var(--copper),var(--copper-light))}
+  .jstep-body{padding-top:4px}
+}
+
 /* CTA-band: bold accent words */
 .cta-band h2 strong{color:var(--copper-deep);font-weight:600;font-style:normal}
 
@@ -385,7 +410,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 <style>
 /* If JavaScript is disabled the reveal animations never fire, so make sure
    the elements that start at opacity:0 are visible by default. */
-.hero-pillars,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.section-head h2 .w{
+.hero-pillars,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.jstep,.section-head h2 .w{
   opacity:1 !important;transform:none !important
 }
 </style>
@@ -571,8 +596,8 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       <div class="check-row">
         <div class="check-num">02</div>
         <div class="check-body">
-          <h3>Major works</h3>
-          <p>A costed, long-term plan for the big jobs, with Section 20 consultation run properly so the cost stays recoverable from leaseholders.</p>
+          <h3>Major works and reserves</h3>
+          <p>A costed, long-term plan for the big jobs, with Section 20 consultation run properly so the cost stays recoverable, and a reserve built steadily against it so leaseholders aren't hit with sudden, painful demands.</p>
         </div>
       </div>
       <div class="check-row">
@@ -592,8 +617,8 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       <div class="check-row">
         <div class="check-num">05</div>
         <div class="check-body">
-          <h3>Capital plan and cash forecast</h3>
-          <p>A multi-year cash forecast set against the capital works ahead, so the reserve is built steadily and leaseholders aren't faced with sudden, painfully high demands.</p>
+          <h3>Governance and company health</h3>
+          <p>Companies House filings, statutory registers and the confirmation statement kept current, so the company that controls your block can't be struck off from under you.</p>
         </div>
       </div>
     </div>
@@ -636,6 +661,38 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 <section class="who" id="who">
   <div class="who-inner" data-reveal-head>
     <p>We work with residential and mixed-use blocks in London. Whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders - the principle is the same: our goal is to improve the block, for the benefit of all stakeholders. If you're not yet in control of your block, we can help you set up a Right to Manage company.</p>
+  </div>
+</section>
+
+<section class="journey" id="how-it-works" aria-label="How taking us on works">
+  <div class="section" style="padding-top:96px;padding-bottom:96px">
+    <div class="section-head" data-reveal-head>
+      <h2 data-words>Taking us on, step by step.</h2>
+      <p>Changing managing agent feels daunting. We run the handover ourselves, so the switch is orderly and you're never left exposed.</p>
+    </div>
+    <ol class="journey-steps" data-reveal-children>
+      <li class="jstep">
+        <div class="jstep-num">01</div>
+        <div class="jstep-body">
+          <h3>A conversation, and a health check</h3>
+          <p>We talk through what's going wrong, then run our 5-point health check across the documents you share, so you see exactly where you stand before committing to anything.</p>
+        </div>
+      </li>
+      <li class="jstep">
+        <div class="jstep-num">02</div>
+        <div class="jstep-body">
+          <h3>An orderly handover</h3>
+          <p>We take over the records, funds, contracts and compliance from your current agent, so nothing is dropped as control passes to you.</p>
+        </div>
+      </li>
+      <li class="jstep">
+        <div class="jstep-num">03</div>
+        <div class="jstep-body">
+          <h3>You see everything, from day one</h3>
+          <p>Quarterly reports, every action logged in your portal, and our partners already instructed, so the block is properly run and you can prove it.</p>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 
