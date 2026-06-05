@@ -245,6 +245,21 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 @media (max-width:1040px){.pillars.partners-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
 @media (max-width:560px){.pillars.partners-grid{grid-template-columns:1fr}}
 
+/* 5-point Critical Health Check - banded, ruled, numbered diagnostic list */
+.healthcheck-band{background:var(--alt);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.healthcheck-list{max-width:920px;margin:10px auto 0;border-top:1px solid var(--rule)}
+.check-row{display:grid;grid-template-columns:54px 1fr;gap:26px;padding:28px 4px;border-bottom:1px solid var(--rule);align-items:start;opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s cubic-bezier(0.22,1,0.36,1)}
+.check-row.in{opacity:1;transform:none}
+.check-row:nth-child(2){transition-delay:0.08s}
+.check-row:nth-child(3){transition-delay:0.16s}
+.check-row:nth-child(4){transition-delay:0.24s}
+.check-row:nth-child(5){transition-delay:0.32s}
+.check-num{width:54px;height:54px;border-radius:8px;background:var(--copper-light);display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:21px;font-weight:500;color:var(--copper-deep);font-variant-numeric:tabular-nums;transition:background 0.3s ease,color 0.3s ease}
+.check-row:hover .check-num{background:var(--copper-deep);color:var(--copper-light)}
+.check-body h3{font-family:Fraunces,serif;font-weight:500;font-size:21px;letter-spacing:-0.005em;color:var(--ink);margin:6px 0 7px}
+.check-body p{font-size:15.5px;color:var(--ink-2);line-height:1.6;max-width:660px}
+@media (max-width:560px){.check-row{grid-template-columns:46px 1fr;gap:18px;padding:22px 2px}.check-num{width:46px;height:46px;font-size:18px}}
+
 /* Casework - anonymised inherited-block problem patterns */
 .casework{background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .casework-inner{max-width:1100px;margin:0 auto;padding:88px 32px}
@@ -551,6 +566,52 @@ footer .copy{font-size:13px;color:var(--ink-3)}
         </div>
       </div>
     </article>
+  </div>
+</section>
+
+<section class="healthcheck-band" aria-label="Critical health check">
+  <div class="section" style="padding-top:84px;padding-bottom:84px">
+    <div class="section-head" data-reveal-head>
+      <h2 data-words>A 5-point critical health check.</h2>
+      <p>The first thing we run on any block we take on. Five checks that separate a sound building from one quietly storing up trouble, each one a lesson from a block we've inherited.</p>
+    </div>
+    <div class="healthcheck-list" data-reveal-children>
+      <div class="check-row">
+        <div class="check-num">01</div>
+        <div class="check-body">
+          <h3>Insurance</h3>
+          <p>Insured for the full rebuild cost, not market value, with directors' &amp; officers', terrorism and crime cover all in place.</p>
+        </div>
+      </div>
+      <div class="check-row">
+        <div class="check-num">02</div>
+        <div class="check-body">
+          <h3>Fire and compliance</h3>
+          <p>A current Fire Risk Assessment with its actions closed off, plus asbestos, electrics, water and lifts: the checks that carry personal liability for directors.</p>
+        </div>
+      </div>
+      <div class="check-row">
+        <div class="check-num">03</div>
+        <div class="check-body">
+          <h3>Major works</h3>
+          <p>A costed, long-term plan for the big jobs, with Section 20 consultation run properly so the cost stays recoverable from leaseholders.</p>
+        </div>
+      </div>
+      <div class="check-row">
+        <div class="check-num">04</div>
+        <div class="check-body">
+          <h3>Cash and arrears</h3>
+          <p>Who owes what and how far back, and whether there's enough in reserve for what's coming. A decade of arrears against an unfunded roof is the usual inheritance.</p>
+        </div>
+      </div>
+      <div class="check-row">
+        <div class="check-num">05</div>
+        <div class="check-body">
+          <h3>Recoverability</h3>
+          <p>Whether that debt can actually be collected: the limitation clock, the 18-month demand rule, certified accounts and correct apportionment.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
