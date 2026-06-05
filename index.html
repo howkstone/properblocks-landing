@@ -238,14 +238,12 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .pillar .stat .v{font-family:Fraunces,serif;font-size:28px;font-weight:500;color:var(--copper-deep);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
 .pillar .stat .l{font-size:12px;color:var(--ink-3);letter-spacing:0.02em}
 
-/* ProperBlocks Partners - reuses .pillar; five-up bench of partner disciplines */
-.pillars.partners-grid{grid-template-columns:repeat(5,1fr);gap:16px}
-.partners-grid .pillar{padding:30px 24px 28px}
+/* ProperBlocks Partners - reuses .pillar; six disciplines in a 3x2 bench */
+.pillars.partners-grid{grid-template-columns:repeat(3,1fr);gap:18px}
 .partners-grid .pillar:nth-child(4){transition-delay:0.36s}
 .partners-grid .pillar:nth-child(5){transition-delay:0.45s}
-.partners-grid .pillar h3{font-size:20px}
-.partners-grid .pillar p{font-size:14px}
-.partners-grid .pillar .stat .v{font-size:21px}
+.partners-grid .pillar:nth-child(6){transition-delay:0.54s}
+.partners-grid .pillar .stat .v{font-size:25px}
 @media (max-width:1040px){.pillars.partners-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
 @media (max-width:560px){.pillars.partners-grid{grid-template-columns:1fr}}
 
@@ -794,6 +792,12 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       <h3>Vetted contractor network</h3>
       <p>Maintenance, cleaning, grounds, lifts and fire, every contractor checked for insurance, accreditation and references before they touch your block.</p>
       <div class="stat"><span class="v">100%</span><span class="l">checked before instruction</span></div>
+    </article>
+    <article class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M8 6h8"/><path d="M16 14v4"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg></div>
+      <h3>Certified service-charge accountant</h3>
+      <p>A qualified accountant certifies the service-charge accounts each year, so the figures leaseholders are billed are independently checked and signed off, not taken on trust.</p>
+      <div class="stat"><span class="v">Annual</span><span class="l">independent certification</span></div>
     </article>
   </div>
 </section>
