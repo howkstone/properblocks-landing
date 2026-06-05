@@ -238,10 +238,14 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .pillar .stat .v{font-family:Fraunces,serif;font-size:28px;font-weight:500;color:var(--copper-deep);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
 .pillar .stat .l{font-size:12px;color:var(--ink-3);letter-spacing:0.02em}
 
-/* ProperBlocks Partners - reuses .pillar; four-up bench of partner disciplines */
-.pillars.partners-grid{grid-template-columns:repeat(4,1fr);gap:18px}
+/* ProperBlocks Partners - reuses .pillar; five-up bench of partner disciplines */
+.pillars.partners-grid{grid-template-columns:repeat(5,1fr);gap:16px}
+.partners-grid .pillar{padding:30px 24px 28px}
 .partners-grid .pillar:nth-child(4){transition-delay:0.36s}
-.partners-grid .pillar .stat .v{font-size:23px}
+.partners-grid .pillar:nth-child(5){transition-delay:0.45s}
+.partners-grid .pillar h3{font-size:20px}
+.partners-grid .pillar p{font-size:14px}
+.partners-grid .pillar .stat .v{font-size:21px}
 @media (max-width:1040px){.pillars.partners-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
 @media (max-width:560px){.pillars.partners-grid{grid-template-columns:1fr}}
 
@@ -568,11 +572,41 @@ footer .copy{font-size:13px;color:var(--ink-3)}
           <span class="case-nail case-nail-tl"></span>
           <span class="case-nail case-nail-tr"></span>
           <span class="case-tape case-tape-2"></span>
-          <div class="case-sign-text">Unsuitable insurance cover, with gaps putting directors at risk.</div>
+          <div class="case-sign-text">Previous manager moving to charge &pound;55k a year for buildings insurance.</div>
         </div>
         <div class="case-outcome">
           <div class="case-outcome-eyebrow">What we did</div>
-          <p>Consolidated every policy through one independent broker, added terrorism and directors' &amp; officers' cover, and reviewed the sums insured so the block is properly protected.</p>
+          <p>Challenged it, set the rebuild value properly, and the same cover came back at &pound;26k. Then consolidated every policy through one independent broker and added terrorism and directors' and officers' cover.</p>
+        </div>
+      </div>
+    </article>
+    <article class="case-stack-card" style="--stack-idx:5">
+      <div class="case-stack-eyebrow">Site security</div>
+      <div class="case-stack-grid">
+        <div class="case-sign" aria-hidden="true">
+          <span class="case-nail case-nail-tl"></span>
+          <span class="case-nail case-nail-tr"></span>
+          <span class="case-tape case-tape-3"></span>
+          <div class="case-sign-text">Trespass, fly-tipping and gates left standing open.</div>
+        </div>
+        <div class="case-outcome">
+          <div class="case-outcome-eyebrow">What we did</div>
+          <p>Brought the vehicle and pedestrian gates back under proper control, improved emergency-services access, and gave residents a direct route to report dumping so it gets cleared, not left to pile up.</p>
+        </div>
+      </div>
+    </article>
+    <article class="case-stack-card" style="--stack-idx:6">
+      <div class="case-stack-eyebrow">Taking back control</div>
+      <div class="case-stack-grid">
+        <div class="case-sign" aria-hidden="true">
+          <span class="case-nail case-nail-tl"></span>
+          <span class="case-nail case-nail-tr"></span>
+          <span class="case-tape case-tape"></span>
+          <div class="case-sign-text">A previous managing agent holding the block's money and its records.</div>
+        </div>
+        <div class="case-outcome">
+          <div class="case-outcome-eyebrow">What we did</div>
+          <p>Took the building into Right to Manage, recovered &pound;179,000 of leaseholders' funds, and chased the outstanding money and records hard, with the tribunal ready as backup if the handover stalled.</p>
         </div>
       </div>
     </article>
@@ -648,6 +682,12 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       <h3>Insurance</h3>
       <p>Block buildings cover placed and reviewed by an independent broker, with terrorism and directors' &amp; officers' included and the sums insured checked.</p>
       <div class="stat"><span class="v">&pound;50bn</span><span class="l">UK assets insured a year</span></div>
+    </article>
+    <article class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
+      <h3>Fire &amp; compliance</h3>
+      <p>A competent fire risk assessor, with asbestos, electrics, water and lift checks kept current, so the duties that carry personal liability for directors are actually met.</p>
+      <div class="stat"><span class="v">FRA</span><span class="l">commissioned within weeks</span></div>
     </article>
     <article class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
