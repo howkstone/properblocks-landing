@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Proper Blocks - independent block management for London RTM companies</title>
-<meta name="description" content="Independent London block management for RTM companies and residents' associations. Chartered accountant founder, proprietary leaseholder portal, RTM director since 2018.">
+<meta name="description" content="Independent London block management for RTM companies and residents' associations. Chartered accountant founder, independent of developers and freeholders, RTM director since 2018.">
 <meta name="theme-color" content="#155F66">
 
 <script type="application/ld+json">
@@ -69,7 +69,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Proper Blocks - block management, done properly">
-<meta property="og:description" content="Independent block management for London leaseholders who run their own building. Financial diligence on every pound, and a portal that shows you everything.">
+<meta property="og:description" content="Independent block management for London leaseholders who run their own building. Financial diligence on every pound, with every action visible to the people who pay for it.">
 <meta property="og:url" content="https://properblocks.co.uk/">
 <meta property="og:site_name" content="Proper Blocks">
 <meta name="twitter:card" content="summary_large_image">
@@ -264,14 +264,14 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 
 /* Casework - anonymised inherited-block problem patterns */
 .casework{background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.casework-inner{max-width:1100px;margin:0 auto;padding:88px 32px}
+.casework-inner{max-width:1100px;margin:0 auto;padding:88px 32px 28px}
 .section-sub{font-family:Fraunces,serif;font-style:italic;color:var(--ink-2);font-size:17px;margin-top:8px;line-height:1.5}
 
 /* Sticky-stack casework. Each card position:sticky at a staggered top so
    the next card slides up to cover the previous, leaving a 24px lip of
    each prior card visible like a deck of paper. CSS-only — no scroll JS.
    Pattern used by Linear, Stripe, Notion feature sections. */
-.casework-stack{background:var(--bg);padding:48px 24px 96px}
+.casework-stack{background:var(--bg);padding:20px 24px 96px}
 .casework-stack-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
 .case-stack-card{position:sticky;top:calc(96px + var(--stack-idx) * 24px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;padding:44px 44px 40px;box-shadow:0 24px 48px -16px rgba(31,27,23,0.18),0 6px 14px -6px rgba(31,27,23,0.08);transition:transform 0.4s ease}
 .case-stack-eyebrow{font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper-deep);font-weight:600;margin-bottom:28px}
@@ -486,7 +486,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
   <section class="hero">
     <div class="hero-text">
       <h1 class="hero-manifesto" id="hero-manifesto"><span class="phase phase-a">Block management.</span> <span class="phase phase-b">done <em>properly.</em></span></h1>
-      <p class="lede" id="hero-lede">Independent block management for London leaseholders who run their own building, by a chartered accountant, on a portal that shows you everything.</p>
+      <p class="lede" id="hero-lede">Independent block management for London leaseholders who run their own building, by a chartered accountant, with every pound and every action visible to the people who pay for it.</p>
       <div class="hero-ctas" id="hero-ctas">
         <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
         <a href="#approach" class="btn btn-ghost">How we work</a>
@@ -524,8 +524,8 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 <section class="portal-showcase" id="portal" aria-label="The leaseholder portal">
   <div class="section portal-grid">
     <div class="portal-copy" data-reveal-head>
-      <h2 data-words>See everything. So can every leaseholder.</h2>
-      <p>The portal logs every message, document and action on your block, each visible to the person it concerns. No chasing, no "we'll look into it", nothing kept from the people who pay for it.</p>
+      <h2 data-words>You see everything we do. So does every leaseholder.</h2>
+      <p>Every message, document and action on your block is logged and visible to the person it concerns. No chasing, no "we'll look into it", nothing kept from the people who pay for it.</p>
     </div>
     <div class="portal-window" data-reveal-children aria-hidden="true">
       <div class="pw-frame">
@@ -582,7 +582,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     <div class="trust-creds" data-reveal-children>
       <div class="c">Chartered Accountant <span class="ind">/ ICAEW</span></div>
       <div class="c">Active RTM director <span class="ind">/ since 2018</span></div>
-      <div class="c">Proprietary leaseholder portal <span class="ind">/ regular leaseholder comms</span></div>
+      <div class="c">Independent <span class="ind">/ answerable only to leaseholders</span></div>
     </div>
   </div>
 </section>
@@ -640,7 +640,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
           <span class="case-nail case-nail-tl"></span>
           <span class="case-nail case-nail-tr"></span>
           <span class="case-tape case-tape-3"></span>
-          <div class="case-sign-text">Inherited service-charge debtors, largest unpaid over ten years.</div>
+          <div class="case-sign-text">Inherited service-charge debtors, some unpaid for ten years.</div>
         </div>
         <div class="case-outcome">
           <div class="case-outcome-eyebrow">What we did</div>
@@ -670,11 +670,11 @@ footer .copy{font-size:13px;color:var(--ink-3)}
           <span class="case-nail case-nail-tl"></span>
           <span class="case-nail case-nail-tr"></span>
           <span class="case-tape case-tape-2"></span>
-          <div class="case-sign-text">Previous manager moving to charge &pound;55k a year for buildings insurance.</div>
+          <div class="case-sign-text">Previous manager moving to charge &pound;56k a year for buildings insurance.</div>
         </div>
         <div class="case-outcome">
           <div class="case-outcome-eyebrow">What we did</div>
-          <p>Challenged it, set the rebuild value properly, and the same cover came back at &pound;26k. Then consolidated every policy through one independent broker and added terrorism and directors' and officers' cover.</p>
+          <p>Challenged it, set the rebuild value properly, and the same cover came back at &pound;19k. Then consolidated every policy through one independent broker and added terrorism and directors' and officers' cover.</p>
         </div>
       </div>
     </article>
@@ -693,67 +693,6 @@ footer .copy{font-size:13px;color:var(--ink-3)}
         </div>
       </div>
     </article>
-    <article class="case-stack-card" style="--stack-idx:6">
-      <div class="case-stack-eyebrow">Taking back control</div>
-      <div class="case-stack-grid">
-        <div class="case-sign" aria-hidden="true">
-          <span class="case-nail case-nail-tl"></span>
-          <span class="case-nail case-nail-tr"></span>
-          <span class="case-tape case-tape"></span>
-          <div class="case-sign-text">A previous managing agent holding the block's money and its records.</div>
-        </div>
-        <div class="case-outcome">
-          <div class="case-outcome-eyebrow">What we did</div>
-          <p>Took the building into Right to Manage, recovered &pound;179,000 of leaseholders' funds, and chased the outstanding money and records hard, with the tribunal ready as backup if the handover stalled.</p>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="healthcheck-band" aria-label="Critical health check">
-  <div class="section" style="padding-top:84px;padding-bottom:84px">
-    <div class="section-head" data-reveal-head>
-      <h2 data-words>A 5-point critical health check.</h2>
-      <p>The first thing we run on any block we take on. Five checks that separate a sound building from one quietly storing up trouble.</p>
-    </div>
-    <div class="healthcheck-list" data-reveal-children>
-      <div class="check-row">
-        <div class="check-num">01</div>
-        <div class="check-body">
-          <h3>Fire and compliance</h3>
-          <p>A current Fire Risk Assessment with its actions closed off, plus asbestos, electrics, water and lifts: the checks that carry personal liability for directors.</p>
-        </div>
-      </div>
-      <div class="check-row">
-        <div class="check-num">02</div>
-        <div class="check-body">
-          <h3>Major works and reserves</h3>
-          <p>A costed, long-term plan for the big jobs, with Section 20 consultation run properly so the cost stays recoverable, and a reserve built steadily against it so leaseholders aren't hit with sudden, painful demands.</p>
-        </div>
-      </div>
-      <div class="check-row">
-        <div class="check-num">03</div>
-        <div class="check-body">
-          <h3>Insurance</h3>
-          <p>Insured for the full rebuild cost, not market value, with directors' &amp; officers', terrorism and crime cover all in place - giving directors assurance they're fully covered.</p>
-        </div>
-      </div>
-      <div class="check-row">
-        <div class="check-num">04</div>
-        <div class="check-body">
-          <h3>Arrears and recoverability</h3>
-          <p>Who owes what and how far back, and whether that debt can actually be collected: the limitation clock, the 18-month demand rule, certified accounts and correct apportionment.</p>
-        </div>
-      </div>
-      <div class="check-row">
-        <div class="check-num">05</div>
-        <div class="check-body">
-          <h3>Governance and company health</h3>
-          <p>Companies House filings, statutory registers and the confirmation statement kept current, so the company that controls your block can't be struck off from under you.</p>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -818,8 +757,8 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       <li class="jstep">
         <div class="jstep-num">01</div>
         <div class="jstep-body">
-          <h3>A conversation, and a health check</h3>
-          <p>We talk through what's going wrong, then run our 5-point health check across the documents you share, so you see exactly where you stand before committing to anything.</p>
+          <h3>A conversation, and a review</h3>
+          <p>We talk through what's going wrong, then review the documents you share, so you see exactly where you stand before committing to anything.</p>
         </div>
       </li>
       <li class="jstep">
