@@ -64,6 +64,14 @@ export async function onRequest(context) {
     return Response.redirect(reqUrl.toString(), 301);
   }
 
+  // properblocks.co.uk/issues -> the public issue-reporting form, which is
+  // served by the portal Worker (it needs the database + photo storage).
+  // The brand URL people see stays properblocks.co.uk/issues. 302 (not 301)
+  // so it can be repointed instantly if the form ever moves.
+  if (reqUrl.pathname === '/issues' || reqUrl.pathname === '/issues/') {
+    return Response.redirect('https://dennishouse.properblocks.co.uk/issues', 302);
+  }
+
   const response = await context.next();
 
   // Bail early for non-HTML responses - they get the static CSP from _headers.
