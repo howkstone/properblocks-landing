@@ -332,29 +332,46 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .who-inner p{font-family:Fraunces,Georgia,serif;font-size:clamp(19px,2.1vw,24px);font-weight:400;line-height:1.5;color:var(--ink);letter-spacing:-0.005em}
 .who-inner strong{color:var(--copper-deep);font-weight:600}
 
-/* Onboarding journey - 3-step "how taking us on works" stepper. Echoes the
-   numbered-token language of the 5-point health check, but laid out as a
-   connected horizontal path (numbered tokens joined by a directional copper
-   line) that folds into a vertical timeline on mobile. Reveals via the shared
-   data-reveal-children hook, so no new JS. */
+/* Onboarding journey - scroll-driven horizontal "how taking us on works".
+   Desktop (enhanced, .journey-ready added by JS): the three steps are pinned
+   for the height of #journey-scroll and the track slides left as the user
+   scrolls, so the steps travel left-to-right and light up one at a time as each
+   reaches centre, with a copper progress rail tracking scroll. Mobile: native
+   horizontal scroll-snap (swipe). No-JS / reduced-motion: a static wrapped row,
+   every card visible. Transform + opacity only; copy stays full-contrast (state
+   shows on the copper number token, copy is never dimmed). Driven by the
+   journey scroll handler in the page script. */
 .journey{background:var(--bg)}
-.journey-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1040px;margin:0 auto}
-.jstep{position:relative;display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateX(-24px);transition:opacity 0.6s ease,transform 0.6s cubic-bezier(0.22,1,0.36,1)}
-.jstep.in{opacity:1;transform:none}
-.jstep:nth-child(1){transition-delay:0s}
-.jstep:nth-child(2){transition-delay:0.12s}
-.jstep:nth-child(3){transition-delay:0.24s}
-.jstep-num{width:56px;height:56px;border-radius:10px;background:var(--copper-light);display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:22px;font-weight:500;color:var(--copper-deep);font-variant-numeric:tabular-nums;position:relative;z-index:1;flex-shrink:0;transition:background 0.3s ease,color 0.3s ease}
-.jstep:hover .jstep-num{background:var(--copper-deep);color:var(--copper-light)}
-.jstep:not(:last-child)::after{content:"";position:absolute;top:27px;left:56px;width:calc(100% - 30px);height:2px;background:linear-gradient(90deg,var(--copper),var(--copper-light));z-index:0;border-radius:2px}
-.jstep-body h3{font-family:Fraunces,serif;font-weight:500;font-size:21px;letter-spacing:-0.005em;color:var(--ink);margin-bottom:7px}
-.jstep-body p{font-size:15.5px;color:var(--ink-2);line-height:1.6}
+.journey-pin{display:flex;flex-direction:column;justify-content:center;gap:30px}
+.journey-head{max-width:1120px;margin:0 auto;padding:64px 32px 0;text-align:center}
+.journey-track{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:28px;padding:24px 32px 56px;margin:0}
+.jstep{position:relative;flex:0 0 clamp(280px,30%,360px);display:flex;flex-direction:column;gap:16px}
+.jstep-num{width:64px;height:64px;border-radius:12px;background:var(--copper-light);display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:24px;font-weight:500;color:var(--copper-deep);font-variant-numeric:tabular-nums;transition:background 0.45s ease,color 0.45s ease,transform 0.45s cubic-bezier(0.22,1,0.36,1)}
+.jstep.active .jstep-num{background:var(--copper-deep);color:var(--copper-light);transform:scale(1.06)}
+.jstep-body h3{font-family:Fraunces,serif;font-weight:500;font-size:clamp(21px,2.2vw,26px);letter-spacing:-0.005em;color:var(--ink);margin-bottom:8px}
+.jstep-body p{font-size:clamp(15.5px,1.4vw,17px);color:var(--ink-2);line-height:1.62;max-width:38ch}
+.journey-progress{display:none;width:min(320px,56vw);height:3px;border-radius:3px;background:var(--copper-light);margin:0 auto;overflow:hidden}
+.journey-progress > i{display:block;height:100%;width:0;background:var(--copper-deep);border-radius:3px}
+.journey-ready .journey-scroll{height:240vh}
+.journey-ready .journey-pin{position:sticky;top:0;height:100vh;overflow:hidden}
+.journey-ready .journey-viewport{width:100%;overflow:hidden}
+.journey-ready .journey-track{flex-wrap:nowrap;justify-content:flex-start;gap:48px;padding:0 clamp(24px,7vw,140px);will-change:transform}
+.journey-ready .jstep{flex:0 0 clamp(300px,44vw,620px);transform:translateY(8px) scale(0.985);transition:transform 0.6s cubic-bezier(0.22,1,0.36,1)}
+.journey-ready .jstep.active{transform:translateY(0) scale(1)}
+.journey-ready .journey-progress{display:block}
 @media (max-width:900px){
-  .journey-steps{grid-template-columns:1fr;gap:0;max-width:560px}
-  .jstep{flex-direction:row;gap:18px;padding-bottom:30px}
-  .jstep:last-child{padding-bottom:0}
-  .jstep:not(:last-child)::after{top:56px;left:27px;width:2px;height:calc(100% - 56px);background:linear-gradient(180deg,var(--copper),var(--copper-light))}
-  .jstep-body{padding-top:4px}
+  .journey-head{padding-top:56px}
+  .journey-viewport{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .journey-viewport::-webkit-scrollbar{display:none}
+  .journey-track{flex-wrap:nowrap;justify-content:flex-start;gap:16px;padding:8px 20px 16px}
+  .jstep{flex:0 0 84%;scroll-snap-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .journey-ready .journey-scroll{height:auto}
+  .journey-ready .journey-pin{position:static;height:auto;overflow:visible}
+  .journey-ready .journey-viewport{overflow:visible}
+  .journey-ready .journey-track{flex-wrap:wrap;justify-content:center;gap:28px;padding:24px 32px 56px;transform:none}
+  .journey-ready .jstep{flex:0 0 clamp(280px,30%,360px);transform:none}
 }
 
 /* Commitments — folded into the approach section, reusing the .pillar card
@@ -666,34 +683,39 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 </section>
 
 <section class="journey" id="how-it-works" aria-label="How taking us on works">
-  <div class="section" style="padding-top:96px;padding-bottom:96px">
-    <div class="section-head" data-reveal-head>
-      <h2 data-words>Taking us on, step by step.</h2>
-      <p>Changing managing agent feels daunting. We run the handover ourselves, so the switch is orderly and you're never left exposed.</p>
+  <div class="journey-scroll" id="journey-scroll">
+    <div class="journey-pin">
+      <div class="journey-head section-head" data-reveal-head>
+        <h2 data-words>Taking us on, step by step.</h2>
+        <p>Changing managing agent feels daunting. We run the handover ourselves, so the switch is orderly and you're never left exposed.</p>
+      </div>
+      <div class="journey-viewport">
+        <ol class="journey-track" id="journey-track">
+          <li class="jstep">
+            <div class="jstep-num">01</div>
+            <div class="jstep-body">
+              <h3>A conversation, and a review</h3>
+              <p>We talk through what's going wrong, then review the documents you share, so you see exactly where you stand before committing to anything.</p>
+            </div>
+          </li>
+          <li class="jstep">
+            <div class="jstep-num">02</div>
+            <div class="jstep-body">
+              <h3>An orderly handover</h3>
+              <p>We take over the records, funds, contracts and compliance from your current agent, so nothing is dropped as control passes to you.</p>
+            </div>
+          </li>
+          <li class="jstep">
+            <div class="jstep-num">03</div>
+            <div class="jstep-body">
+              <h3>Regular communication</h3>
+              <p>Quarterly reports, every action logged in your portal, and our partners already instructed, so the block is properly run and you can prove it.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="journey-progress" aria-hidden="true"><i id="journey-progress-bar"></i></div>
     </div>
-    <ol class="journey-steps" data-reveal-children>
-      <li class="jstep">
-        <div class="jstep-num">01</div>
-        <div class="jstep-body">
-          <h3>A conversation, and a review</h3>
-          <p>We talk through what's going wrong, then review the documents you share, so you see exactly where you stand before committing to anything.</p>
-        </div>
-      </li>
-      <li class="jstep">
-        <div class="jstep-num">02</div>
-        <div class="jstep-body">
-          <h3>An orderly handover</h3>
-          <p>We take over the records, funds, contracts and compliance from your current agent, so nothing is dropped as control passes to you.</p>
-        </div>
-      </li>
-      <li class="jstep">
-        <div class="jstep-num">03</div>
-        <div class="jstep-body">
-          <h3>Regular communication</h3>
-          <p>Quarterly reports, every action logged in your portal, and our partners already instructed, so the block is properly run and you can prove it.</p>
-        </div>
-      </li>
-    </ol>
   </div>
 </section>
 
@@ -834,6 +856,49 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     }
     window.addEventListener('scroll', onManifestoScroll, {passive:true});
     onManifestoScroll();
+  })();
+
+  // ---- Onboarding journey: scroll-driven horizontal travel ----
+  // Desktop (enhanced): the three steps are pinned for the height of
+  // #journey-scroll and the track slides left as the user scrolls, so the steps
+  // move left-to-right and light up one at a time as each reaches centre, with a
+  // copper progress rail. Mobile uses native scroll-snap and reduced-motion /
+  // no-JS shows a static wrapped row - both handled in CSS - so this runs only
+  // the enhanced desktop path, gated by the .journey-ready class.
+  (function(){
+    const section = document.querySelector('.journey');
+    const stage = document.getElementById('journey-scroll');
+    const track = document.getElementById('journey-track');
+    const bar = document.getElementById('journey-progress-bar');
+    if(!section || !stage || !track) return;
+    const steps = Array.prototype.slice.call(track.querySelectorAll('.jstep'));
+    let enhanced = false, ticking = false;
+    function apply(){
+      ticking = false;
+      if(!enhanced) return;
+      const vh = window.innerHeight;
+      const top = stage.getBoundingClientRect().top;
+      const travel = stage.offsetHeight - vh;
+      const progress = travel > 0 ? Math.max(0, Math.min(1, -top / travel)) : 0;
+      const maxShift = Math.max(0, track.scrollWidth - track.clientWidth);
+      track.style.transform = 'translate3d(' + (-progress * maxShift).toFixed(1) + 'px,0,0)';
+      const idx = Math.round(progress * (steps.length - 1));
+      steps.forEach((s,i)=>s.classList.toggle('active', i === idx));
+      if(bar) bar.style.width = (progress * 100).toFixed(1) + '%';
+    }
+    function setMode(){
+      const on = !prefersReduced && window.innerWidth >= 900;
+      if(on !== enhanced){
+        enhanced = on;
+        section.classList.toggle('journey-ready', on);
+        if(!on){ track.style.transform = ''; steps.forEach(s=>s.classList.add('active')); if(bar) bar.style.width = ''; }
+      }
+      if(on) apply();
+    }
+    function onScrollJourney(){ if(enhanced && !ticking){ ticking = true; requestAnimationFrame(apply); } }
+    window.addEventListener('scroll', onScrollJourney, {passive:true});
+    window.addEventListener('resize', function(){ setMode(); }, {passive:true});
+    setMode();
   })();
 
   if(prefersReduced){
