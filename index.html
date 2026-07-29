@@ -341,7 +341,11 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    every card visible. Transform + opacity only; copy stays full-contrast (state
    shows on the copper number token, copy is never dimmed). Driven by the
    journey scroll handler in the page script. */
-.journey{background:var(--bg)}
+/* scroll-margin-top: the header is position:fixed, so a jump to #how-it-works
+   would otherwise put the section top at y=0 and slide the heading under it.
+   Measured header height is 83px at desktop and 107px at 900px and below, so
+   the offsets are those rounded up to the 8px grid with a small gap. */
+.journey{background:var(--bg);scroll-margin-top:96px}
 .journey-pin{display:flex;flex-direction:column;justify-content:center;gap:30px}
 .journey-head{max-width:1120px;margin:0 auto;padding:64px 32px 0;text-align:center}
 .journey-track{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:28px;padding:24px 32px 56px;margin:0}
@@ -360,6 +364,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .journey-ready .jstep.active{transform:translateY(0) scale(1)}
 .journey-ready .journey-progress{display:block}
 @media (max-width:900px){
+  .journey{scroll-margin-top:120px}
   .journey-head{padding-top:56px}
   .journey-viewport{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .journey-viewport::-webkit-scrollbar{display:none}
@@ -441,6 +446,14 @@ footer .copy{font-size:13px;color:var(--ink-3)}
 .hero-pillars,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.jstep,.section-head h2 .w{
   opacity:1 !important;transform:none !important
 }
+/* The unravel wordmark is clipped away until the scroll handler steps it
+   through its five stages. With no script it would stay clipped for ever, so
+   show it outright. */
+.unravel-inner{clip-path:none !important}
+/* The header only turns opaque once the scroll handler adds .scrolled. With no
+   script that never happens, so every section's text runs under a transparent
+   bar. Give it the settled background outright. */
+header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-bottom-color:var(--rule)}
 </style>
 </noscript>
 </head>
@@ -479,7 +492,10 @@ footer .copy{font-size:13px;color:var(--ink-3)}
         <div class="unravel-glyph" aria-hidden="true">
           <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
         </div>
-        <div class="unravel-word" id="unravel-word" aria-label="Proper Blocks"></div>
+        <!-- The wordmark text lives in the markup so it is present with no
+             JavaScript at all. The script assigns the same string, which does
+             nothing once the text is already here. -->
+        <div class="unravel-word" id="unravel-word">Proper Blocks</div>
       </div>
     </div>
   </section>
@@ -690,22 +706,27 @@ footer .copy{font-size:13px;color:var(--ink-3)}
         <p>Changing managing agent feels daunting. We run the handover ourselves, so the switch is orderly and you're never left exposed.</p>
       </div>
       <div class="journey-viewport">
+        <!-- Every step ships with .active in the markup so the copper numbers
+             are lit before any script runs. The enhanced desktop path clears
+             the ones it does not want on its first apply(); every other layout
+             (phone, reduced motion, no JavaScript at all) keeps all three lit,
+             which is the only cue that the section is a sequence. -->
         <ol class="journey-track" id="journey-track">
-          <li class="jstep">
+          <li class="jstep active">
             <div class="jstep-num">01</div>
             <div class="jstep-body">
               <h3>A conversation, and a review</h3>
               <p>We talk through what's going wrong, then review the documents you share, so you see exactly where you stand before committing to anything.</p>
             </div>
           </li>
-          <li class="jstep">
+          <li class="jstep active">
             <div class="jstep-num">02</div>
             <div class="jstep-body">
               <h3>An orderly handover</h3>
               <p>We take over the records, funds, contracts and compliance from your current agent, so nothing is dropped as control passes to you.</p>
             </div>
           </li>
-          <li class="jstep">
+          <li class="jstep active">
             <div class="jstep-num">03</div>
             <div class="jstep-body">
               <h3>Regular communication</h3>
@@ -812,6 +833,18 @@ footer .copy{font-size:13px;color:var(--ink-3)}
       '<span class="phase phase-b">' + phaseB.map(w=>mkSpan(w,true)).join(' ') + '</span>';
     const wordsA = target.querySelectorAll('.phase-a .w');
     const wordsB = target.querySelectorAll('.phase-b .w');
+    // ---- Unravel wordmark: set up BEFORE the reduced-motion early return ----
+    // Wordmark text just renders flat - the 5-stage growth is driven by
+    // clip-path on .unravel-inner; no per-char animation needed. This block sat
+    // below the return until 29 Jul 2026, so a reduced-motion visitor got the
+    // glyph with an empty space where "Proper Blocks" belongs. The text now also
+    // ships in the markup, which covers the no-JavaScript case.
+    const unravelSection = document.getElementById('unravel');
+    const unravelWord = document.getElementById('unravel-word');
+    if(unravelWord) unravelWord.textContent = 'Proper Blocks';
+    if(prefersReduced && unravelSection){
+      for(let i=1;i<=5;i++) unravelSection.classList.add('stage-'+i);
+    }
     if(prefersReduced){
       wordsA.forEach(w=>w.classList.add('lit'));
       wordsB.forEach(w=>w.classList.add('lit'));
@@ -822,14 +855,6 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     const PRE_ROLL_MS = 350;
     wordsA.forEach((w,i)=>setTimeout(()=>w.classList.add('lit'), PRE_ROLL_MS + i*PER_WORD_MS));
     // ---- Phase B + unravel: chained scroll-driven reveals ----
-    // Wordmark text just renders flat - the 5-stage growth is driven by
-    // clip-path on .unravel-inner; no per-char animation needed.
-    const unravelSection = document.getElementById('unravel');
-    const unravelWord = document.getElementById('unravel-word');
-    if(unravelWord) unravelWord.textContent = 'Proper Blocks';
-    if(prefersReduced && unravelSection){
-      for(let i=1;i<=5;i++) unravelSection.classList.add('stage-'+i);
-    }
 
     function onManifestoScroll(){
       const vh = window.innerHeight;
@@ -872,7 +897,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     const bar = document.getElementById('journey-progress-bar');
     if(!section || !stage || !track) return;
     const steps = Array.prototype.slice.call(track.querySelectorAll('.jstep'));
-    let enhanced = false, ticking = false;
+    let enhanced = false, ticking = false, modeApplied = false;
     function apply(){
       ticking = false;
       if(!enhanced) return;
@@ -888,7 +913,15 @@ footer .copy{font-size:13px;color:var(--ink-3)}
     }
     function setMode(){
       const on = !prefersReduced && window.innerWidth >= 900;
-      if(on !== enhanced){
+      // modeApplied forces the branch to run once on load even when the new
+      // value already equals the starting value of enhanced. Both the phone
+      // width and reduced motion resolve to false, which is what enhanced
+      // starts as, so a change-only check skipped the static branch entirely
+      // and no step ever got .active - three grey tokens, and nothing to say
+      // the section is a sequence. No backticks in this file: the whole page
+      // is one template literal and a stray backtick ends it.
+      if(on !== enhanced || !modeApplied){
+        modeApplied = true;
         enhanced = on;
         section.classList.toggle('journey-ready', on);
         if(!on){ track.style.transform = ''; steps.forEach(s=>s.classList.add('active')); if(bar) bar.style.width = ''; }
