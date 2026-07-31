@@ -120,7 +120,7 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 
 ## Contact
 
-- Email: hello@properblocks.co.uk
+- Email: howard@properblocks.co.uk
 - Company: Big Brain Ltd (trading as Proper Blocks), Companies House 11209610, ICO ZC141151, registered in England and Wales.
 - Founder: Howard Stone, chartered accountant (ICAEW), RTM director since 2018.
 

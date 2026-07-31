@@ -27,7 +27,7 @@
 //   Environment: production
 //
 // Until the binding is wired the Function returns a 503 with a friendly
-// error directing the user to email hello@properblocks.co.uk - degrades
+// error directing the user to email howard@properblocks.co.uk - degrades
 // gracefully rather than 500ing.
 
 export async function onRequestPost(context) {
@@ -37,7 +37,7 @@ export async function onRequestPost(context) {
     return new Response(
       JSON.stringify({
         ok: false,
-        error: "We couldn't send your message right now. Please email hello@properblocks.co.uk directly and we'll reply within one working day.",
+        error: "We couldn't send your message right now. Please email howard@properblocks.co.uk directly and we'll reply within one working day.",
       }),
       {
         status: 503,
@@ -102,7 +102,7 @@ export async function onRequestPost(context) {
     return new Response(
       JSON.stringify({
         ok: false,
-        error: "We couldn't send your message right now. Please email hello@properblocks.co.uk directly and we'll reply within one working day.",
+        error: "We couldn't send your message right now. Please email howard@properblocks.co.uk directly and we'll reply within one working day.",
       }),
       {
         status: 502,

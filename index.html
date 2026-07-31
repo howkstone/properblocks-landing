@@ -39,7 +39,7 @@
       "areaServed": {"@type": "City", "name": "London"},
       "contactPoint": {
         "@type": "ContactPoint",
-        "email": "hello@properblocks.co.uk",
+        "email": "howard@properblocks.co.uk",
         "contactType": "customer service",
         "availableLanguage": "English"
       }
@@ -758,7 +758,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <button type="button" class="msg-modal-close" data-close-modal aria-label="Close">&times;</button>
     <div id="msg-modal-body">
       <h3 id="msg-modal-title">Message Proper Blocks</h3>
-      <p class="msg-modal-sub">Tell us about your block and we'll be in touch. Goes to <strong>hello@properblocks.co.uk</strong>; you'll get a copy in your inbox.</p>
+      <p class="msg-modal-sub">Tell us about your block and we'll be in touch. Goes to <strong>howard@properblocks.co.uk</strong>; you'll get a copy in your inbox.</p>
       <form id="msg-modal-form" novalidate>
         <label>Name<span class="req">*</span><input type="text" name="name" required maxlength="100" autocomplete="name"></label>
         <label>Email<span class="req">*</span><input type="email" name="email" required maxlength="200" autocomplete="email"></label>
@@ -793,7 +793,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <a href="/block-manager-london/">Service &amp; fees</a>
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
-      <a href="mailto:hello@properblocks.co.uk">Contact</a>
+      <a href="mailto:howard@properblocks.co.uk">Contact</a>
     </div>
   </div>
 </footer>
@@ -1146,7 +1146,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) {
-        errEl.textContent = (data && data.error) ? data.error : 'Something went wrong. Please email hello@properblocks.co.uk directly.';
+        errEl.textContent = (data && data.error) ? data.error : 'Something went wrong. Please email howard@properblocks.co.uk directly.';
         errEl.classList.add('is-error');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send message';
@@ -1154,10 +1154,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       }
       // Success
       const body = document.getElementById('msg-modal-body');
-      body.innerHTML = '<div class="msg-success"><div class="check">&#10003;</div><h3>Thanks, ' + escapeText(payload.name.split(' ')[0]) + '.</h3><p>Your message has gone to <strong>hello@properblocks.co.uk</strong>. A copy is on its way to your inbox. We typically reply within one working day.</p><div class="msg-actions" style="justify-content:center;margin-top:18px"><button type="button" class="btn btn-ghost" id="msg-close-after" style="border:none;cursor:pointer;font:inherit;padding:10px 22px">Close</button></div></div>';
+      body.innerHTML = '<div class="msg-success"><div class="check">&#10003;</div><h3>Thanks, ' + escapeText(payload.name.split(' ')[0]) + '.</h3><p>Your message has gone to <strong>howard@properblocks.co.uk</strong>. A copy is on its way to your inbox. We typically reply within one working day.</p><div class="msg-actions" style="justify-content:center;margin-top:18px"><button type="button" class="btn btn-ghost" id="msg-close-after" style="border:none;cursor:pointer;font:inherit;padding:10px 22px">Close</button></div></div>';
       document.getElementById('msg-close-after').addEventListener('click', closeModal);
     } catch (e) {
-      errEl.textContent = 'Network error. Please try again or email hello@properblocks.co.uk.';
+      errEl.textContent = 'Network error. Please try again or email howard@properblocks.co.uk.';
       errEl.classList.add('is-error');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Send message';
