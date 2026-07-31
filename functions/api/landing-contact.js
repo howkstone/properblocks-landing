@@ -37,7 +37,7 @@ export async function onRequestPost(context) {
     return new Response(
       JSON.stringify({
         ok: false,
-        error: "We couldn't send your message right now. Please email howard@properblocks.co.uk directly and we'll reply within one working day.",
+        error: "We couldn't send your message right now. Please email howard@properblocks.co.uk directly and we'll reply as soon as possible.",
       }),
       {
         status: 503,
@@ -102,7 +102,7 @@ export async function onRequestPost(context) {
     return new Response(
       JSON.stringify({
         ok: false,
-        error: "We couldn't send your message right now. Please email howard@properblocks.co.uk directly and we'll reply within one working day.",
+        error: "We couldn't send your message right now. Please email howard@properblocks.co.uk directly and we'll reply as soon as possible.",
       }),
       {
         status: 502,

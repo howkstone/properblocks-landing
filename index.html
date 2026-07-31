@@ -1154,7 +1154,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       }
       // Success
       const body = document.getElementById('msg-modal-body');
-      body.innerHTML = '<div class="msg-success"><div class="check">&#10003;</div><h3>Thanks, ' + escapeText(payload.name.split(' ')[0]) + '.</h3><p>Your message has gone to <strong>howard@properblocks.co.uk</strong>. A copy is on its way to your inbox. We typically reply within one working day.</p><div class="msg-actions" style="justify-content:center;margin-top:18px"><button type="button" class="btn btn-ghost" id="msg-close-after" style="border:none;cursor:pointer;font:inherit;padding:10px 22px">Close</button></div></div>';
+      body.innerHTML = '<div class="msg-success"><div class="check">&#10003;</div><h3>Thanks, ' + escapeText(payload.name.split(' ')[0]) + '.</h3><p>Your message has gone to <strong>howard@properblocks.co.uk</strong>. A copy is on its way to your inbox. We will reply as soon as possible.</p><div class="msg-actions" style="justify-content:center;margin-top:18px"><button type="button" class="btn btn-ghost" id="msg-close-after" style="border:none;cursor:pointer;font:inherit;padding:10px 22px">Close</button></div></div>';
       document.getElementById('msg-close-after').addEventListener('click', closeModal);
     } catch (e) {
       errEl.textContent = 'Network error. Please try again or email howard@properblocks.co.uk.';
