@@ -775,6 +775,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           <label class="cb"><input type="checkbox" name="issue" value="Other" id="issue-other"><span>Other</span></label>
         </fieldset>
         <label id="other-wrap" style="display:none">Details<input type="text" name="other_details" maxlength="300" placeholder="A line or two on what's going on"></label>
+        <label>How did you hear about us? <span class="opt">(optional)</span><select name="heard_from"><option value="">Prefer not to say</option><option>Google search</option><option>Google Maps</option><option>Word of mouth or a recommendation</option><option>A letter from us</option><option>LinkedIn</option><option>Another website or directory</option><option>Something else</option></select></label>
         <!-- Honeypot: bots fill all fields, humans don't see this -->
         <label class="msg-hp" aria-hidden="true" tabindex="-1">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
         <div class="msg-actions">
@@ -1133,6 +1134,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       rtm_company: (fd.get('rtm_company') || '').toString().trim(),
       issues: issues,
       other_details: (fd.get('other_details') || '').toString().trim(),
+      heard_from: (fd.get('heard_from') || '').toString().trim(),
       website: (fd.get('website') || '').toString().trim(), // honeypot
     };
     if (!payload.name || payload.name.length < 2) { errEl.textContent = 'Please tell us your name.'; errEl.classList.add('is-error'); submitBtn.disabled = false; submitBtn.textContent = 'Send message'; return; }
