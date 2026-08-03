@@ -5,17 +5,24 @@
 <style>body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,"Helvetica Neue",Arial,sans-serif;background:#FAF9F6;color:#1E293B;line-height:1.55;margin:0}.wrap{max-width:720px;margin:0 auto;padding:48px 24px}h1{font-size:32px;font-weight:600;letter-spacing:-0.01em;margin:0 0 8px;color:#1E293B}h2{font-size:20px;font-weight:600;margin:32px 0 8px;color:#1E293B}p,li{font-size:15px;color:#475569;line-height:1.65}ul{padding-left:20px}a{color:#155F66;text-decoration:underline;text-decoration-color:#CFCBC1}a:hover{text-decoration-color:#475569}.meta{color:#64748B;font-size:13px;margin-bottom:24px}.back{display:inline-block;margin-top:32px;color:#64748B;font-size:13px}footer{border-top:1px solid #E6E3DC;margin-top:48px;padding-top:16px;color:#94A3B8;font-size:12px;line-height:1.7}</style>
 </head><body><div class="wrap">
 <h1>Cookies</h1>
-<p class="meta">Big Brain Company Ltd, trading as Proper Blocks · Last updated 18 May 2026</p>
+<p class="meta">Big Brain Company Ltd, trading as Proper Blocks · Last updated 1 August 2026</p>
 
-<p>The portal uses one cookie. It is strictly necessary for you to stay signed in, so we don't ask your consent for it - ICO and PECR guidance permits strictly-necessary cookies without a banner.</p>
+<p>The portal uses two cookies, and only if they apply to you. Both are strictly necessary for signing in, so we don't ask your consent for them - ICO and PECR guidance permits strictly-necessary cookies without a banner.</p>
 
-<h2>The one cookie we set</h2>
+<h2>The cookies we set</h2>
 <ul>
   <li><strong>Name:</strong> <code>session</code></li>
   <li><strong>Purpose:</strong> keeps you signed in between requests</li>
   <li><strong>Flags:</strong> HttpOnly, Secure, SameSite=Lax</li>
   <li><strong>Expires:</strong> 14 days after you sign in, or immediately when you sign out</li>
   <li><strong>Third parties:</strong> none - the cookie is only readable by our own server</li>
+</ul>
+<ul>
+  <li><strong>Name:</strong> <code>dh_trust</code></li>
+  <li><strong>Purpose:</strong> set only if you tick "Remember me on this device for 30 days" when entering your two-factor code. It lets this browser skip the code screen. Your password is still typed and checked every time you sign in</li>
+  <li><strong>Flags:</strong> HttpOnly, Secure, SameSite=Lax</li>
+  <li><strong>Expires:</strong> 30 days after you tick the box, and using it does not extend that. It also stops working the moment you change or reset your password, turn two-factor off, or forget the device under Account &gt; Remembered devices</li>
+  <li><strong>Third parties:</strong> none. We store only a one-way scrambled copy of the cookie's value, plus a rough device label ("Windows PC - Chrome") so you can recognise it in that list</li>
 </ul>
 
 <h2>Cookies we do not set</h2>
