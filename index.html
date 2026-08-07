@@ -403,8 +403,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 #msg-modal-form label{display:block;font-size:13px;color:var(--ink-2);font-weight:500;margin-bottom:12px}
 #msg-modal-form .req{color:var(--copper-deep);margin-left:3px}
 #msg-modal-form .opt{color:var(--ink-3);font-weight:400;font-size:12px}
-#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel]{display:block;width:100%;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
-#msg-modal-form input:focus{outline:none;border-color:var(--copper);background:var(--panel);box-shadow:0 0 0 3px var(--copper-light)}
+#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel],#msg-modal-form textarea{display:block;width:100%;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
+#msg-modal-form textarea{resize:vertical;min-height:96px;line-height:1.5}
+#msg-modal-form input:focus,#msg-modal-form textarea:focus{outline:none;border-color:var(--copper);background:var(--panel);box-shadow:0 0 0 3px var(--copper-light)}
 .msg-issues{border:1px solid var(--rule);border-radius:11px;padding:14px 16px;margin-bottom:14px;background:var(--alt)}
 .msg-issues legend{font-size:13px;font-weight:500;color:var(--ink-2);padding:0 6px}
 .msg-issues .cb{display:flex;align-items:center;gap:12px;margin:4px 0;min-height:44px;font-size:14px;color:var(--ink);cursor:pointer;font-weight:400;padding:4px 0}
@@ -774,7 +775,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           <label class="cb"><input type="checkbox" name="issue" value="Lift, common parts or general maintenance"><span>Lift, common parts or general maintenance</span></label>
           <label class="cb"><input type="checkbox" name="issue" value="Other" id="issue-other"><span>Other</span></label>
         </fieldset>
-        <label id="other-wrap" style="display:none">Details<input type="text" name="other_details" maxlength="300" placeholder="A line or two on what's going on"></label>
+        <label id="other-wrap">Anything else you'd like to tell us <span class="opt">(optional)</span><textarea name="other_details" maxlength="2000" rows="5" placeholder="Tell us what's going on at the block, in as much detail as you like"></textarea></label>
         <label>How did you hear about us? <span class="opt">(optional)</span><select name="heard_from"><option value="">Prefer not to say</option><option>Google search</option><option>Google Maps</option><option>Word of mouth or a recommendation</option><option>A letter from us</option><option>LinkedIn</option><option>Another website or directory</option><option>Something else</option></select></label>
         <!-- Honeypot: bots fill all fields, humans don't see this -->
         <label class="msg-hp" aria-hidden="true" tabindex="-1">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
@@ -1107,13 +1108,13 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
+  // The message box is always visible - an enquirer must never have to find a
+  // checkbox before they can type. Ticking "Other" just jumps them into it.
   if (otherCb && otherWrap) {
     otherCb.addEventListener('change', () => {
-      otherWrap.style.display = otherCb.checked ? 'block' : 'none';
-      if (otherCb.checked) {
-        const det = otherWrap.querySelector('input');
-        if (det) det.focus();
-      }
+      if (!otherCb.checked) return;
+      const det = otherWrap.querySelector('textarea');
+      if (det) det.focus();
     });
   }
 
