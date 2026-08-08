@@ -85,6 +85,16 @@ const FACTS = [
     banned: [/seven years/i],
   },
   {
+    // Management Agreement cl 4.8 (read-only access to the accounting records)
+    // + cl 6.7 (bank reconciliation each month). The cadence is the guard: it
+    // is what stops a director reading an unposted mid-month ledger as a
+    // backlog. Never promise a live or real-time picture.
+    name: "director read-only accounts access",
+    probe: /read-only (login|access) to the (block's |Property's )?(accounting|ledger)/i,
+    required: [/monthly/i],
+    banned: [/real[- ]?time/i, /weekly/i, /updated daily/i, /live picture/i],
+  },
+  {
     name: "fire risk assessment casework",
     probe: /Fire Risk Assessment (several months|on file)/i,
     required: [/several months overdue/i],
