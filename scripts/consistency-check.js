@@ -92,7 +92,15 @@ const FACTS = [
     name: "director read-only accounts access",
     probe: /read-only (login|access) to the (block's |Property's )?(accounting|ledger)/i,
     required: [/monthly/i],
-    banned: [/real[- ]?time/i, /weekly/i, /updated daily/i, /live picture/i],
+    // Cadence-scoped rather than a bare /weekly/: a page is free to mention a
+    // weekly newsletter, it just may not claim the accounts reconcile weekly.
+    banned: [
+      /real[- ]?time/i,
+      /reconcil\w*\s+(the accounts\s+)?weekly/i,
+      /weekly\s+reconcil/i,
+      /updated daily/i,
+      /live picture/i,
+    ],
   },
   {
     name: "fire risk assessment casework",
