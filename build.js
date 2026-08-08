@@ -156,3 +156,11 @@ console.log('Built:');
   const stat = fs.statSync(path.join(OUT, f));
   console.log(`  ${f.padEnd(28)} ${stat.size.toString().padStart(7)} bytes`);
 });
+
+// Cross-page fact check. The hand-maintained pages (pricing, FAQs,
+// block-manager-london, contractor) are not generated here, so nothing else
+// catches the same fact being stated two ways on two pages. Fails the build.
+require('child_process').execFileSync(
+  process.execPath, [path.join(__dirname, 'scripts', 'consistency-check.js')],
+  { stdio: 'inherit' }
+);
