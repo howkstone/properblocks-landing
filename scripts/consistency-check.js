@@ -85,15 +85,14 @@ const FACTS = [
     banned: [/seven years/i],
   },
   {
-    // Management Agreement cl 4.8 (read-only access to the accounting records)
-    // + cl 6.7 (bank reconciliation each month). The cadence is the guard: it
-    // is what stops a director reading an unposted mid-month ledger as a
-    // backlog. Never promise a live or real-time picture.
+    // Management Agreement cl 4.8 (read-only access to the accounting records).
+    // The page states the access and nothing about how often the records are
+    // brought up to date. Never promise a live or real-time picture.
     name: "director read-only accounts access",
     probe: /read-only (login|access) to the (block's |Property's )?(accounting|ledger)/i,
-    required: [/monthly/i],
-    // Cadence-scoped rather than a bare /weekly/: a page is free to mention a
-    // weekly newsletter, it just may not claim the accounts reconcile weekly.
+    // Howard, 8 Aug 2026: no cadence on the page. The guard is now only the
+    // ban list below, which stops the opposite overclaim.
+    required: [],
     banned: [
       /real[- ]?time/i,
       /reconcil\w*\s+(the accounts\s+)?weekly/i,
