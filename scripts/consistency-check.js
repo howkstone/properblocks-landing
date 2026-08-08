@@ -29,11 +29,6 @@ const PAGES = [
   "terms/index.html",
 ];
 
-// Pages where Big Brain Ltd is the correct entity: it is the data controller
-// registered with the ICO, and that is a statement of fact about the notice,
-// not the trading identity in a footer.
-const CONTROLLER_PAGES = new Set(["privacy/index.html", "cookies/index.html"]);
-
 const failures = [];
 
 function fail(file, msg) {
@@ -115,11 +110,17 @@ for (const rel of PAGES) {
   if (/Big Brain Company Ltd/.test(html)) {
     fail(rel, 'names "Big Brain Company Ltd", which is not a registered company. 11209610 is BIG BRAIN LTD.');
   }
-  if (!CONTROLLER_PAGES.has(rel) && /11209610/.test(html) && !/parentOrganization/.test(html)) {
-    fail(rel, "carries Big Brain Ltd (11209610) as the trading entity. Public pages trade as Proper Blocks Ltd, Co. No. 17301605.");
+  // Big Brain Ltd trades as Proper Blocks and is the contracting entity, so it
+  // is the only company number that may appear anywhere on the site. Proper
+  // Blocks Ltd (17301605) holds the brand and must stay dormant: naming it as
+  // the trader would put the wrong company on the contract, outside the
+  // professional indemnity policy and the ombudsman membership, and would end
+  // its dormancy for the associated-company corporation tax limits.
+  if (/Co\. No\. \d+/.test(html) && !/Co\. No\. 11209610/.test(html)) {
+    fail(rel, "states a company number that is not Big Brain Ltd (11209610).");
   }
-  if (/Co\. No\. \d+/.test(html) && !CONTROLLER_PAGES.has(rel) && !/17301605/.test(html)) {
-    fail(rel, "states a company number that is not Proper Blocks Ltd (17301605).");
+  if (/17301605/.test(html)) {
+    fail(rel, "names Proper Blocks Ltd (17301605) as a trading entity. It holds the brand only.");
   }
 
   // --- house style -----------------------------------------------------
