@@ -42,13 +42,13 @@ const FACTS = [
   {
     name: "residential fee",
     probe: /per flat,? per year|per flat per year/i,
-    required: [/(£|&pound;)375/],
+    required: [/(£|&pound;)350/],
     banned: [],
   },
   {
     name: "commercial fee",
     probe: /commercial unit[\s\S]{0,200}?per unit,? per year|per commercial unit/i,
-    required: [/(£|&pound;)187\.50/],
+    required: [/(£|&pound;)150/],
     banned: [],
   },
   {
