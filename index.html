@@ -222,7 +222,8 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 
 /* Pillars */
 .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.pillars.two-up{grid-template-columns:repeat(2,1fr);gap:28px;max-width:980px;margin:0 auto}
+.pillars.two-up,.pillars.four-up{grid-template-columns:repeat(2,1fr);gap:28px;max-width:980px;margin:0 auto}
+.pillars.four-up .pillar:nth-child(4){transition-delay:0.36s}
 .pillar{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:32px 30px;display:flex;flex-direction:column;gap:14px;position:relative;transition:transform 0.32s cubic-bezier(0.4,0,0.2,1),box-shadow 0.32s ease,border-color 0.32s ease;opacity:0;transform:translateY(22px);overflow:hidden}
 .pillar.in{opacity:1;transform:translateY(0)}
 .pillar:nth-child(1){transition-delay:0s}
@@ -435,7 +436,7 @@ footer .copy{font-size:13px;color:var(--ink-3)}
   .unravel-glyph{width:64px;height:64px}
   .unravel-word{font-size:clamp(42px,11vw,72px)}
   .pillars-intro{padding:72px 24px 16px}
-  .pillars,.pillars.two-up{grid-template-columns:1fr}
+  .pillars,.pillars.two-up,.pillars.four-up{grid-template-columns:1fr}
   nav.head{gap:14px}
   nav.head a:not(.btn){display:none}
 }
@@ -482,7 +483,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   <section class="hero">
     <div class="hero-text">
       <h1 class="hero-manifesto" id="hero-manifesto"><span class="phase phase-a">Block management.</span> <span class="phase phase-b">done <em>properly.</em></span></h1>
-      <p class="lede" id="hero-lede">We're independent, London-based, and out to shake up the block management industry. We work with RTM companies, offering unbeatable transparency: every pound and every action visible to the leaseholders who pay for it.</p>
+      <p class="lede" id="hero-lede">We're independent, London-based, and out to shake up the block management industry. We work with RTM companies, offering market-leading transparency: every pound and every action visible to the leaseholders who pay for it.</p>
       <div class="hero-ctas" id="hero-ctas">
         <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
         <a href="#approach" class="btn btn-ghost">How we work</a>
@@ -523,7 +524,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <h3>And four things you can <em>hold us to</em>.</h3>
     <p>Written into how we work, for every block we manage.</p>
   </div>
-  <div class="pillars two-up" data-reveal-children>
+  <div class="pillars four-up" data-reveal-children>
     <div class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg></div>
       <h3>Every invoice reviewed</h3>
@@ -535,14 +536,14 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p>A manager visits your building no less than once a month, arranged in advance so any director can walk it with us, and it can double as the board meeting. Small problems get caught in person, early.</p>
     </div>
     <div class="pillar">
-      <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10"/><path d="M11 9h6"/><path d="M11 13h4"/><circle cx="7.5" cy="9" r="0.9" fill="currentColor" stroke="none"/><circle cx="7.5" cy="13" r="0.9" fill="currentColor" stroke="none"/></svg></div>
-      <h3>The books, open to you</h3>
-      <p>Directors get a read-only login to the block's accounting records, so nothing is hidden. You can see the financial position at any time.</p>
-    </div>
-    <div class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="7"/><rect x="12" y="7" width="3" height="11"/><rect x="17" y="14" width="3" height="4"/></svg></div>
       <h3>A full report every quarter</h3>
       <p>Right to Manage directors get a written financial and operational update four times a year.</p>
+    </div>
+    <div class="pillar">
+      <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <h3>The accounts, open to you</h3>
+      <p>Directors get a read-only login to the block's accounting records, so you can see the financial position at any time without asking for it.</p>
     </div>
   </div>
 </section>
