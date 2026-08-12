@@ -31,6 +31,27 @@ const PAGES = [
 
 const failures = [];
 
+// Claims a marketing page may not make, because we cannot evidence them.
+// Every entry here is a wording that actually shipped and had to be pulled.
+const UNPROVABLE_CLAIMS = [
+  {
+    pattern: /nobody else (offers|does|can|provides)|no one else (offers|does|can|provides)|unbeatable|best in (class|london|the market)|the only (agent|manager|firm)/i,
+    why: "says something about every competitor, which we have not checked and cannot check.",
+  },
+  {
+    pattern: /orderly handover|handover is orderly|switch is orderly/i,
+    why: "promises how the OUTGOING agent will behave, which is not ours to promise. Say managed handover.",
+  },
+  {
+    pattern: /you can prove it|so you can prove/i,
+    why: "promises the reader an outcome in a dispute. Say what the record contains instead.",
+  },
+  {
+    pattern: /financial and operational (report|update)/i,
+    why: "the quarterly report is expenditure only (Howard, 12 Aug 2026). Operational reporting is not committed to.",
+  },
+];
+
 function fail(file, msg) {
   failures.push(`${file}: ${msg}`);
 }
@@ -153,6 +174,17 @@ for (const rel of PAGES) {
   // --- house style -----------------------------------------------------
   if (prose.includes("—")) {
     fail(rel, "contains an em dash.");
+  }
+
+  // --- claims we cannot stand behind -----------------------------------
+  // Howard, 12 Aug 2026, after four of these shipped: a marketing page may
+  // only promise what we control and can evidence. Anything about a
+  // competitor, an outgoing agent's conduct, or a reader's ability to prove
+  // something is a claim we cannot keep.
+  for (const claim of UNPROVABLE_CLAIMS) {
+    if (claim.pattern.test(prose)) {
+      fail(rel, `unprovable claim: ${claim.why} ${claim.pattern}`);
+    }
   }
 
   // --- cross-page facts ------------------------------------------------
