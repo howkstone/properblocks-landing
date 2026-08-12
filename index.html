@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Proper Blocks - independent block management for London RTM companies</title>
-<meta name="description" content="Independent London block management for RTM companies and residents' associations. Chartered accountant founder, independent of developers and freeholders, RTM director since 2018.">
+<meta name="description" content="Independent London block management for RTM companies and residents' associations. Chartered accountant founder, independent of developers and freeholders.">
 <meta name="theme-color" content="#155F66">
 
 <script type="application/ld+json">
@@ -198,6 +198,8 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 /* Trust strip */
 .trust{padding:32px 32px;background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;z-index:2}
 .trust-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+/* Credentials band: markup parked 12 Aug 2026 until the ombudsman and
+   professional-body registrations are complete. Styles kept for its return. */
 .trust-label{font-size:12px;letter-spacing:0.14em;color:var(--ink-3);font-weight:600}
 .trust-creds{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
 .trust-creds .c{font-family:Fraunces,serif;font-size:17px;color:var(--ink);font-weight:500;letter-spacing:-0.005em;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:0;transform:translateY(8px);transition:opacity 0.6s ease,transform 0.6s ease;text-align:center}
@@ -238,8 +240,6 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .deliver-item:nth-child(6){transition-delay:0.30s}
 .deliver-item:nth-child(7){transition-delay:0.36s}
 .deliver-item:nth-child(8){transition-delay:0.42s}
-.deliver-item:nth-child(9){transition-delay:0.48s}
-.deliver-item:nth-child(10){transition-delay:0.54s}
 .deliver-tick{display:flex;color:var(--copper);margin-top:3px}
 .deliver-tick svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .deliver-item h4{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:17.5px;letter-spacing:-0.005em;color:var(--ink);margin:0 0 4px}
@@ -296,9 +296,12 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    the next card slides up to cover the previous, leaving a 24px lip of
    each prior card visible like a deck of paper. CSS-only — no scroll JS.
    Pattern used by Linear, Stripe, Notion feature sections. */
-.casework-stack{background:var(--bg);padding:20px 24px 96px}
+/* --case-top clears the pinned heading, which is 93px tall at desktop and
+   shorter on narrow screens. Cards pin below it, never under it. */
+.casework-stack{background:var(--bg);padding:20px 24px 96px;--case-top:121px}
 .casework-stack-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
-.case-stack-card{position:sticky;top:calc(96px + var(--stack-idx) * 24px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;padding:44px 44px 40px;box-shadow:0 24px 48px -16px rgba(31,27,23,0.18),0 6px 14px -6px rgba(31,27,23,0.08);transition:transform 0.4s ease}
+.casework-head{position:sticky;top:16px;z-index:3;background:var(--bg);padding:10px 0 14px;margin-bottom:10px}
+.case-stack-card{position:sticky;top:calc(var(--case-top) + var(--stack-idx) * 24px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;padding:44px 44px 40px;box-shadow:0 24px 48px -16px rgba(31,27,23,0.18),0 6px 14px -6px rgba(31,27,23,0.08);transition:transform 0.4s ease}
 .case-stack-eyebrow{font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper-deep);font-weight:600;margin-bottom:28px}
 .case-stack-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 
@@ -325,7 +328,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 @media (max-width:760px){
   .casework-stack{padding:32px 16px 64px}
   .casework-stack-inner{gap:24px}
-  .case-stack-card{padding:28px 24px 26px;top:calc(72px + var(--stack-idx) * 18px);border-radius:14px}
+  .casework-stack{--case-top:92px}
+  .case-stack-card{padding:28px 24px 26px;top:calc(var(--case-top) + var(--stack-idx) * 18px);border-radius:14px}
+  .casework-head{top:8px}
   .case-stack-grid{grid-template-columns:1fr;gap:24px}
   .case-sign{padding:32px 20px 26px;min-height:0}
   .case-sign-text{font-size:17px}
@@ -334,6 +339,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 
 @media (prefers-reduced-motion:reduce){
   .case-stack-card{position:static;top:auto}
+  .casework-head{position:static;top:auto}
 }
 
 /* CTA band */
@@ -544,7 +550,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <div class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
       <h3>Transparency</h3>
-      <p>Real transparency, which means you see what we see: the same figures, the same records, the same open jobs. That is what makes a board and its manager work as one. We need you, and we want you to need us.</p>
+      <p>Real transparency, which means you see what we see: the same figures, the same records. That's how the block and manager stay aligned.</p>
     </div>
   </div>
 
@@ -585,27 +591,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
       <div><h4>A quarterly expenditure report</h4><p>A written account of what your block has spent, every quarter, and director meetings minuted.</p></div>
     </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>Full financial transparency</h4><p>Your own read-only login to the block's accounting records, so you can see the position at any time without asking for it.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>Active communication</h4><p>You hear from us before you have to ask, and every message is logged in the portal where the leaseholder it concerns can see it.</p></div>
-    </div>
   </div>
-  <p class="deliver-close" data-reveal-head><span>That is how Proper Blocks operates: collaboratively and honourably.</span></p>
-</section>
-
-<section class="trust">
-  <div class="trust-inner">
-    <div class="trust-label">Credentials</div>
-    <div class="trust-creds" data-reveal-children>
-      <div class="c">Chartered Accountant <span class="ind">/ ICAEW</span></div>
-      <div class="c">Active RTM director <span class="ind">/ since 2018</span></div>
-      <div class="c">Independent <span class="ind">/ answerable only to leaseholders</span></div>
-    </div>
-  </div>
+  <p class="deliver-close" data-reveal-head><span>Our mission: to be the most honourable and effective block managers in London.</span></p>
 </section>
 
 <!-- Sticky-stack casework. Each card position:sticky at a staggered top
@@ -615,7 +602,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
      no JS scroll driver. -->
 <section class="casework-stack" id="casework" aria-label="Inherited problems and how we addressed them">
   <div class="casework-stack-inner">
-    <div class="section-head" data-reveal-head>
+    <div class="section-head casework-head" data-reveal-head>
       <h2 data-words>What we've taken on:</h2>
     </div>
     <article class="case-stack-card" style="--stack-idx:0">
@@ -625,7 +612,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           <span class="case-nail case-nail-tl"></span>
           <span class="case-nail case-nail-tr"></span>
           <span class="case-tape case-tape-3"></span>
-          <div class="case-sign-text">Inherited service-charge debtors, some unpaid for ten years.</div>
+          <div class="case-sign-text">Inherited service-charge debtors who hadn't paid for over ten years.</div>
         </div>
         <div class="case-outcome">
           <div class="case-outcome-eyebrow">What we did</div>
@@ -634,21 +621,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       </div>
     </article>
     <article class="case-stack-card" style="--stack-idx:1">
-      <div class="case-stack-eyebrow">Communication</div>
-      <div class="case-stack-grid">
-        <div class="case-sign" aria-hidden="true">
-          <span class="case-nail case-nail-tl"></span>
-          <span class="case-nail case-nail-tr"></span>
-          <span class="case-tape case-tape-4"></span>
-          <div class="case-sign-text">Months of unanswered leaseholder correspondence.</div>
-        </div>
-        <div class="case-outcome">
-          <div class="case-outcome-eyebrow">What we did</div>
-          <p>Absolute refusal from the previous agent to share more than the legally required minimum. The portal logs every message, every action, every response, visible to its leaseholder.</p>
-        </div>
-      </div>
-    </article>
-    <article class="case-stack-card" style="--stack-idx:2">
       <div class="case-stack-eyebrow">Insurance</div>
       <div class="case-stack-grid">
         <div class="case-sign" aria-hidden="true">
@@ -663,7 +635,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
         </div>
       </div>
     </article>
-    <article class="case-stack-card" style="--stack-idx:3">
+    <article class="case-stack-card" style="--stack-idx:2">
       <div class="case-stack-eyebrow">Building safety</div>
       <div class="case-stack-grid">
         <div class="case-sign" aria-hidden="true">
@@ -678,6 +650,21 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
         </div>
       </div>
     </article>
+    <article class="case-stack-card" style="--stack-idx:3">
+      <div class="case-stack-eyebrow">Communication</div>
+      <div class="case-stack-grid">
+        <div class="case-sign" aria-hidden="true">
+          <span class="case-nail case-nail-tl"></span>
+          <span class="case-nail case-nail-tr"></span>
+          <span class="case-tape case-tape-4"></span>
+          <div class="case-sign-text">Months of unanswered leaseholder correspondence.</div>
+        </div>
+        <div class="case-outcome">
+          <div class="case-outcome-eyebrow">What we did</div>
+          <p>Absolute refusal from the previous agent to share more than the legally required minimum. The portal logs every message, every action, every response, visible to its leaseholder.</p>
+        </div>
+      </div>
+    </article>
     <article class="case-stack-card" style="--stack-idx:4">
       <div class="case-stack-eyebrow">Major works</div>
       <div class="case-stack-grid">
@@ -685,7 +672,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           <span class="case-nail case-nail-tl"></span>
           <span class="case-nail case-nail-tr"></span>
           <span class="case-tape"></span>
-          <div class="case-sign-text">Asbestos identified mid £250k Section 20 works.</div>
+          <div class="case-sign-text">Asbestos identified mid £250k Section 20 works, risking project and cost extensions.</div>
         </div>
         <div class="case-outcome">
           <div class="case-outcome-eyebrow">What we did</div>
@@ -743,8 +730,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 
 <section class="who" id="who">
   <div class="who-inner" data-reveal-head>
-    <p>I became the director in 2018, after over a decade of company turnarounds - small businesses in distress. Three things were key: sensible <strong>financial decisions</strong>, good <strong>communication</strong>, absolute <strong>persistence</strong> to put things right. I set up Proper Blocks to apply this to buildings, and help improve lives.</p>
-    <p style="margin-top:1.4em">We're <strong>independent</strong>, so we only have a duty to the leaseholders of our blocks. We work with residential and mixed-use blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: a better-run block for everyone who owns, lives in or works there.</p>
+    <p>I set up Proper Blocks in 2025, after over a decade turning around small businesses in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right. I set up Proper Blocks to apply this to buildings, and help improve lives.</p>
+    <p style="margin-top:1.4em">We're <strong><u>independent</u></strong>, so we only have a duty to the leaseholders of our blocks. We work with <strong><u>residential and mixed-use</u></strong> blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: <strong><u>a better run block for everyone</u></strong> who owns, lives in or works there.</p>
   </div>
 </section>
 
