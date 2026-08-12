@@ -67,10 +67,20 @@ const FACTS = [
     banned: [/\b(10|12|15)% of the contract/i],
   },
   {
-    name: "response-time commitment",
-    probe: /answered within|acknowledge[sd]? (your )?(email|message)/i,
-    required: [/two working days/i],
-    banned: [/answered within one working day/i, /same day response/i],
+    // Howard, 12 Aug 2026: no reply-time promise on any marketing page. Naming
+    // a number reads as "we will take that long", and the promise we make is
+    // active communication instead. The two-working-day backstop stays in the
+    // management agreement, which is a contract and is not one of these pages.
+    name: "no reply-time promise on marketing pages",
+    probe: /./,
+    required: [],
+    banned: [
+      /answered within (one|two|three|\d+) working days?/i,
+      /repl(y|ies) within (one|two|three|\d+) working days?/i,
+      /respon(d|se) within (one|two|three|\d+) working days?/i,
+      /within (one|two|three|\d+) working days? of (receipt|your)/i,
+      /same day response/i,
+    ],
   },
   {
     name: "site visit cadence",
