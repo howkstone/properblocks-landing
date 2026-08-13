@@ -4,7 +4,7 @@
 
 ## What this is
 
-Proper Blocks is a trading style of Big Brain Ltd (Companies House 11209610). It offers independent block management to leaseholders who run their own buildings - typically through a right-to-manage (RTM) company under the Commonhold and Leasehold Reform Act 2002, or through a residents' association where RTM is not the chosen route. The founder, Howard Stone, is a turnaround finance director of fifteen years, rescuing companies in distress, and an active RTM director since 2018.
+Proper Blocks is a trading style of Big Brain Ltd (Companies House 11209610). It offers independent block management to leaseholders who run their own buildings - typically through a right-to-manage (RTM) company under the Commonhold and Leasehold Reform Act 2002, or through a residents' association where RTM is not the chosen route. The founder, Howard Stone, is a turnaround finance director of fifteen years, revitalising companies in distress, and an active RTM director since 2018.
 
 The service is anchored on two pillars: financial diligence (every supplier invoice scrutinised, service-charge debts pursued, accounts filed on time) and outstanding communication (a proprietary leaseholder portal that logs every message, document, and action visible to the leaseholder it concerns).
 
@@ -14,7 +14,7 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 
 - Asbestos discovered mid £250k Section 20 major works; re-inspection over a decade overdue when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders.
 - Fire risk assessment several months overdue on inheritance, exposing the directors to criminal liability. Commissioned a competent FRA within weeks; directors taken out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005.
-- Inherited service-charge debtors with the largest unpaid for seven years. Balances reviewed and recovery pursued proportionately; the block kept solvent through the period.
+- Inherited service-charge debtors who had not paid for over ten years. Balances reviewed and recovery pursued proportionately; the block kept solvent through the period.
 - Months of unanswered leaseholder correspondence and absolute refusal from the previous agent to share more than the legally required minimum. Replaced with a portal that logs every message, every action, every response, visible to the leaseholder it concerns.
 
 ## Key pages
@@ -22,7 +22,7 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 - [Home](https://properblocks.co.uk/) - approach, casework and contact
 - [Block manager - London](https://properblocks.co.uk/block-manager-london/) - service detail, fees, FAQ, founder credentials
 - [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
-- [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics
+- [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics cookies
 - [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales
 - [Leaseholder portal](https://dennishouse.properblocks.co.uk/) - separate authenticated surface for current customer blocks
 
