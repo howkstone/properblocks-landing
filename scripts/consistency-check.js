@@ -55,6 +55,14 @@ const UNPROVABLE_CLAIMS = [
     why: "claims a professional accountancy qualification that is not currently held.",
   },
   {
+    // 13 Aug 2026: both fonts came from fonts.googleapis.com, which put two
+    // DNS and TLS handshakes in front of the first paint. Real visitors saw
+    // 2,624ms at the 75th percentile. They are self-hosted now, and any
+    // third-party font host coming back would silently undo it.
+    pattern: /fonts\.googleapis\.com|fonts\.gstatic\.com/i,
+    why: "loads fonts from a third party, which blocks the first paint and leaks visitor IPs. Self-host them under /fonts/.",
+  },
+  {
     pattern: /financial and operational (report|update)/i,
     why: "the quarterly report is expenditure only (Howard, 12 Aug 2026). Operational reporting is not committed to.",
   },
