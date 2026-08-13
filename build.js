@@ -147,7 +147,10 @@ fs.writeFileSync(path.join(OUT, '_headers'),
   '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800\n' +
   '\n' +
   '/fonts/*\n' +
-  '  Cache-Control: public, max-age=31536000, immutable\n');
+  '  Cache-Control: public, max-age=31536000, immutable\n' +
+  // The portal (dennishouse.properblocks.co.uk) loads the same two files from
+  // here, and a cross-origin font needs CORS or the browser refuses it.
+  '  Access-Control-Allow-Origin: *\n');
 
 // _redirects - canonicalise www to apex.
 fs.writeFileSync(path.join(OUT, '_redirects'),
