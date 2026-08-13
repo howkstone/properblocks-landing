@@ -141,10 +141,13 @@ fs.writeFileSync(path.join(OUT, '_headers'),
   '  X-Content-Type-Options: nosniff\n' +
   '  Referrer-Policy: strict-origin-when-cross-origin\n' +
   '  Strict-Transport-Security: max-age=31536000; includeSubDomains\n' +
-  "  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev https://api.qrserver.com; media-src 'self' https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'\n" +
+  "  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev https://api.qrserver.com; media-src 'self' https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'\n" +
   '\n' +
   '/brand/*\n' +
-  '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800\n');
+  '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800\n' +
+  '\n' +
+  '/fonts/*\n' +
+  '  Cache-Control: public, max-age=31536000, immutable\n');
 
 // _redirects - canonicalise www to apex.
 fs.writeFileSync(path.join(OUT, '_redirects'),

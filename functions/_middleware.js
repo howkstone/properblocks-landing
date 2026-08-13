@@ -41,8 +41,8 @@ function buildCsp(nonce) {
   return [
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}'`,
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src https://fonts.gstatic.com",
+    "style-src 'self' 'unsafe-inline'",
+    "font-src 'self'",
     `img-src 'self' data: ${R2_PUBLIC} https://api.qrserver.com`,
     `media-src 'self' ${R2_PUBLIC}`,
     "connect-src 'self'",
