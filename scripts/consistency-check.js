@@ -47,6 +47,14 @@ const UNPROVABLE_CLAIMS = [
     why: "promises the reader an outcome in a dispute. Say what the record contains instead.",
   },
   {
+    // Howard, 12 Aug 2026: his body was CIMA, not ICAEW, and that membership
+    // lapsed in 2012. Neither designation may appear until he is a reinstated
+    // member in good standing, and CIMA's title is Chartered Management
+    // Accountant, never "Chartered Accountant".
+    pattern: /chartered accountant|ICAEW|Institute of Chartered Accountants|chartered management accountant|ACMA|FCMA/i,
+    why: "claims a professional accountancy qualification that is not currently held.",
+  },
+  {
     pattern: /financial and operational (report|update)/i,
     why: "the quarterly report is expenditure only (Howard, 12 Aug 2026). Operational reporting is not committed to.",
   },
