@@ -27,6 +27,10 @@ const PAGES = [
   "privacy/index.html",
   "cookies/index.html",
   "terms/index.html",
+  // Published, and the file AI assistants are pointed at by robots.txt. It
+  // carries the same fee, casework and founder facts as the HTML pages and was
+  // read by nothing until 13 Aug 2026.
+  "llms.txt",
 ];
 
 const failures = [];
@@ -149,6 +153,23 @@ const FACTS = [
     ],
   },
   {
+    // Companies House, officer 2BsH7S4BJVDNZ_-mKm3M6pf9Lbk: appointed a director
+    // of DENNIS HOUSE RTM COMPANY LTD (11620031) on 12 October 2018, not
+    // resigned. Four pages said 2018 in their visible copy while the founder's
+    // JSON-LD on the homepage said 2025 - the year Proper Blocks itself was set
+    // up. Nothing noticed, because until 13 Aug 2026 this gate never read
+    // structured data. A claim about how long somebody has done something is
+    // exactly the kind a machine quotes back.
+    name: "RTM director since 2018",
+    // Anchored on "director since <year>", never on the words "RTM director"
+    // alone: a page explaining what an RTM director does, or naming the
+    // directors of an RTM company, is not making this claim and must not be
+    // asked to carry a date.
+    probe: /(RTM|right-to-manage company) director since/i,
+    required: [/(RTM|right-to-manage company) director since 2018/i],
+    banned: [/(RTM|right-to-manage company) director since (?!2018\b)\d{4}/i],
+  },
+  {
     name: "fire risk assessment casework",
     probe: /Fire Risk Assessment (several months|on file)/i,
     required: [/several months overdue/i],
@@ -163,10 +184,24 @@ for (const rel of PAGES) {
     continue;
   }
   const html = fs.readFileSync(file, "utf8");
-  // Prose only: drop scripts, styles and comments so a note to a developer is
-  // never read as a claim to a leaseholder.
+  // TWO TEXTS, AND THE DIFFERENCE MATTERS (13 Aug 2026).
+  //
+  // `prose` is what a reader sees: scripts, styles and comments dropped, so a
+  // note to a developer is never read as a claim to a leaseholder. That is the
+  // right scope for a house-style rule about words on a page.
+  //
+  // `published` is everything a reader OR A MACHINE is given: comments dropped
+  // and nothing else, so JSON-LD, meta descriptions and titles are read. A claim
+  // is published wherever it is published. Checking prose alone is how
+  // "Chartered Accountant (ICAEW)" sat in the founder's structured data on
+  // theken.uk for twelve weeks after the visible version came off the page -
+  // six instances across two pages, invisible to a gate of exactly this shape.
+  // Every claim and cross-page fact below therefore reads `published`.
   const prose = html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ");
+  const published = html
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<!--[\s\S]*?-->/g, " ");
 
@@ -198,7 +233,7 @@ for (const rel of PAGES) {
   // competitor, an outgoing agent's conduct, or a reader's ability to prove
   // something is a claim we cannot keep.
   for (const claim of UNPROVABLE_CLAIMS) {
-    if (claim.pattern.test(prose)) {
+    if (claim.pattern.test(published)) {
       fail(rel, `unprovable claim: ${claim.why} ${claim.pattern}`);
     }
   }
@@ -206,11 +241,11 @@ for (const rel of PAGES) {
   // --- cross-page facts ------------------------------------------------
   for (const fact of FACTS) {
     for (const bad of fact.banned) {
-      if (bad.test(prose)) fail(rel, `${fact.name}: stale or contradictory wording ${bad}`);
+      if (bad.test(published)) fail(rel, `${fact.name}: stale or contradictory wording ${bad}`);
     }
-    if (!fact.probe.test(prose)) continue;
+    if (!fact.probe.test(published)) continue;
     for (const need of fact.required) {
-      if (!need.test(prose)) {
+      if (!need.test(published)) {
         fail(rel, `${fact.name}: page discusses it but does not carry the agreed figure ${need}`);
       }
     }
