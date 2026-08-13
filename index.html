@@ -229,7 +229,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 /* What we deliver - the standing commitment list. Two columns of ticked rows;
    the reveal delay is defined for every child, so no row arrives unanimated. */
 .deliver-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 44px;max-width:1000px;margin:0 auto}
-.deliver-item{display:grid;grid-template-columns:22px 1fr;gap:14px;padding:17px 2px;border-bottom:1px solid var(--rule);align-items:start;opacity:0;transform:translateY(14px);transition:opacity 0.55s ease,transform 0.55s cubic-bezier(0.22,1,0.36,1)}
+.deliver-item{border-bottom:1px solid var(--rule);opacity:0;transform:translateY(14px);transition:opacity 0.55s ease,transform 0.55s cubic-bezier(0.22,1,0.36,1)}
 .deliver-item.in{opacity:1;transform:none}
 .deliver-item:nth-child(1){transition-delay:0s}
 .deliver-item:nth-child(2){transition-delay:0.06s}
@@ -239,10 +239,19 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .deliver-item:nth-child(6){transition-delay:0.30s}
 .deliver-item:nth-child(7){transition-delay:0.36s}
 .deliver-item:nth-child(8){transition-delay:0.42s}
-.deliver-tick{display:flex;color:var(--copper);margin-top:3px}
+.deliver-item:nth-child(9){transition-delay:0.48s}
+.deliver-item > summary{display:grid;grid-template-columns:22px 1fr 18px;gap:14px;align-items:center;padding:17px 2px;cursor:pointer;list-style:none}
+.deliver-item > summary::-webkit-details-marker{display:none}
+.deliver-item > summary:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
+.deliver-label{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:17.5px;letter-spacing:-0.005em;color:var(--ink)}
+.deliver-plus{position:relative;width:14px;height:14px;justify-self:end}
+.deliver-plus::before,.deliver-plus::after{content:"";position:absolute;background:var(--copper);transition:transform 0.25s ease}
+.deliver-plus::before{top:6px;left:0;width:14px;height:2px}
+.deliver-plus::after{left:6px;top:0;width:2px;height:14px}
+.deliver-item[open] .deliver-plus::after{transform:rotate(90deg)}
+.deliver-item > p{font-size:15px;color:var(--ink-2);line-height:1.55;padding:0 22px 18px 36px}
+.deliver-tick{display:flex;color:var(--copper)}
 .deliver-tick svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.deliver-item h4{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:17.5px;letter-spacing:-0.005em;color:var(--ink);margin:0 0 4px}
-.deliver-item p{font-size:15px;color:var(--ink-2);line-height:1.55}
 .deliver-close{max-width:1000px;margin:34px auto 0;text-align:center}
 .deliver-close span{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:19px;color:var(--copper-deep);opacity:0;transform:translateY(8px);display:inline-block;transition:opacity 0.6s ease,transform 0.6s ease}
 .deliver-close span.in{opacity:1;transform:none}
@@ -298,6 +307,14 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 /* --case-top clears the pinned heading, which is 93px tall at desktop and
    shorter on narrow screens. Cards pin below it, never under it. */
 .casework-stack{background:var(--bg);padding:20px 24px 96px;--case-top:121px}
+.casework-reveal{max-width:1080px;margin:0 auto;width:100%}
+.casework-reveal > summary{display:inline-flex;align-items:center;gap:10px;cursor:pointer;list-style:none;font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:var(--copper-deep);padding:10px 0}
+.casework-reveal > summary::-webkit-details-marker{display:none}
+.casework-reveal > summary:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
+.casework-reveal-label{border-bottom:1px solid var(--copper-light)}
+.casework-chev{width:9px;height:9px;border-right:2px solid var(--copper);border-bottom:2px solid var(--copper);transform:rotate(45deg);margin-bottom:3px;transition:transform 0.25s ease}
+.casework-reveal[open] > summary .casework-chev{transform:rotate(-135deg);margin-bottom:-2px}
+.casework-body{display:flex;flex-direction:column;gap:32px;padding-top:8px}
 .casework-stack-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
 .casework-head{position:sticky;top:16px;z-index:3;background:var(--bg);padding:10px 0 14px;margin-bottom:10px}
 .case-stack-card{position:sticky;top:calc(var(--case-top) + var(--stack-idx) * 24px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;padding:44px 44px 40px;box-shadow:0 24px 48px -16px rgba(31,27,23,0.18),0 6px 14px -6px rgba(31,27,23,0.08);transition:transform 0.4s ease}
@@ -558,38 +575,42 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <p>Written into how we work, for every block we manage.</p>
   </div>
   <div class="deliver-grid" data-reveal-children>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>Your money protected in trust</h4><p>Service charges are held in a client account, separate from our own money, with a ledger for your block.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>Collection that is effective and fair</h4><p>Arrears chased from the first missed payment, with a monthly list of who owes what and what has been done about it.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>Contractors held to standard</h4><p>Poor work is not signed off, and every open job stays on one list with who is holding it.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>A return on every pound</h4><p>No supplier invoice is auto-approved. Each one is checked against the work done and the lease before a pound leaves your account.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>Service charge accounts filed on time</h4><p>Certified by a qualified accountant, every year.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>A modern, secure portal</h4><p>Everything about your block in one place, with a login of your own and one for every leaseholder.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>Monthly walk-around visits</h4><p>A manager visits your building no less than once a month, arranged in advance so any director can walk it with us, and it doubles as the board meeting.</p></div>
-    </div>
-    <div class="deliver-item">
-      <span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-      <div><h4>A quarterly expenditure report</h4><p>A written account of what your block has spent, every quarter, and director meetings minuted.</p></div>
-    </div>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Your money protected in trust</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Service charges are held in a client account, separate from our own money, with a ledger for your block.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Collection that is effective and fair</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Arrears chased from the first missed payment, with a monthly list of who owes what and what has been done about it.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Contractors held to standard</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Poor work is not signed off, and every open job stays on one list with who is holding it.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">A return on every pound</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>No supplier invoice is auto-approved. Each one is checked against the work done and the lease before a pound leaves your account.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">The right insurance, in force</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Cover checked against the rebuild value and the lease, so the building is properly insured and the directors are not personally exposed by a gap in it.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Service charge accounts filed on time</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Certified by a qualified accountant, every year.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">A modern, secure portal</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Everything about your block in one place, with a login of your own and one for every leaseholder.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Monthly walk-around visits</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>A manager visits your building no less than once a month, arranged in advance so any director can walk it with us, and it doubles as the board meeting.</p>
+    </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">A quarterly expenditure report</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>A written account of what your block has spent, every quarter, and director meetings minuted.</p>
+    </details>
   </div>
   <p class="deliver-close" data-reveal-head><span>Our mission: to be the most honourable and effective block managers in London.</span></p>
 </section>
@@ -601,84 +622,89 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
      no JS scroll driver. -->
 <section class="casework-stack" id="casework" aria-label="Inherited problems and how we addressed them">
   <div class="casework-stack-inner">
-    <div class="section-head casework-head" data-reveal-head>
+    <details class="casework-reveal">
+      <summary><span class="casework-reveal-label">See what problems we've resolved</span><span class="casework-chev" aria-hidden="true"></span></summary>
+      <div class="casework-body">
+        <div class="section-head casework-head" data-reveal-head>
       <h2 data-words>What we've taken on:</h2>
     </div>
-    <article class="case-stack-card" style="--stack-idx:0">
-      <div class="case-stack-eyebrow">Financial diligence</div>
-      <div class="case-stack-grid">
-        <div class="case-sign" aria-hidden="true">
-          <span class="case-nail case-nail-tl"></span>
-          <span class="case-nail case-nail-tr"></span>
-          <span class="case-tape case-tape-3"></span>
-          <div class="case-sign-text">Inherited service-charge debtors who hadn't paid for over ten years.</div>
-        </div>
-        <div class="case-outcome">
-          <div class="case-outcome-eyebrow">What we did</div>
-          <p>Balances reviewed and brought under proper control, the block kept solvent through the period, and every charge checked against the lease rather than taken from the prior agent's figures.</p>
-        </div>
+        <article class="case-stack-card" style="--stack-idx:0">
+          <div class="case-stack-eyebrow">Financial diligence</div>
+          <div class="case-stack-grid">
+            <div class="case-sign" aria-hidden="true">
+              <span class="case-nail case-nail-tl"></span>
+              <span class="case-nail case-nail-tr"></span>
+              <span class="case-tape case-tape-3"></span>
+              <div class="case-sign-text">Inherited service-charge debtors who hadn't paid for over ten years.</div>
+            </div>
+            <div class="case-outcome">
+              <div class="case-outcome-eyebrow">What we did</div>
+              <p>Balances reviewed and brought under proper control, the block kept solvent through the period, and every charge checked against the lease rather than taken from the prior agent's figures.</p>
+            </div>
+          </div>
+        </article>
+        <article class="case-stack-card" style="--stack-idx:1">
+          <div class="case-stack-eyebrow">Insurance</div>
+          <div class="case-stack-grid">
+            <div class="case-sign" aria-hidden="true">
+              <span class="case-nail case-nail-tl"></span>
+              <span class="case-nail case-nail-tr"></span>
+              <span class="case-tape case-tape-2"></span>
+              <div class="case-sign-text">60% insurance increase in 2 years</div>
+            </div>
+            <div class="case-outcome">
+              <div class="case-outcome-eyebrow">What we did</div>
+              <p>Challenged it, verified the rebuild value, then the suitability of the cover, and the appropriateness of the premium given those facts, securing a &pound;37k (66%) discount on an inflated insurance policy. Then consolidated every policy through one independent broker and added terrorism and directors' and officers' cover.</p>
+            </div>
+          </div>
+        </article>
+        <article class="case-stack-card" style="--stack-idx:2">
+          <div class="case-stack-eyebrow">Building safety</div>
+          <div class="case-stack-grid">
+            <div class="case-sign" aria-hidden="true">
+              <span class="case-nail case-nail-tl"></span>
+              <span class="case-nail case-nail-tr"></span>
+              <span class="case-tape case-tape-2"></span>
+              <div class="case-sign-text">Fire Risk Assessment several months overdue, putting the directors at criminal risk.</div>
+            </div>
+            <div class="case-outcome">
+              <div class="case-outcome-eyebrow">What we did</div>
+              <p>Commissioned a competent FRA within weeks of taking over. Got directors out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005; remediation actions on a tracked plan.</p>
+            </div>
+          </div>
+        </article>
+        <article class="case-stack-card" style="--stack-idx:3">
+          <div class="case-stack-eyebrow">Communication</div>
+          <div class="case-stack-grid">
+            <div class="case-sign" aria-hidden="true">
+              <span class="case-nail case-nail-tl"></span>
+              <span class="case-nail case-nail-tr"></span>
+              <span class="case-tape case-tape-4"></span>
+              <div class="case-sign-text">Months of unanswered leaseholder correspondence.</div>
+            </div>
+            <div class="case-outcome">
+              <div class="case-outcome-eyebrow">What we did</div>
+              <p>Absolute refusal from the previous agent to share more than the legally required minimum. The portal logs every message, every action, every response, visible to its leaseholder.</p>
+            </div>
+          </div>
+        </article>
+        <article class="case-stack-card" style="--stack-idx:4">
+          <div class="case-stack-eyebrow">Major works</div>
+          <div class="case-stack-grid">
+            <div class="case-sign" aria-hidden="true">
+              <span class="case-nail case-nail-tl"></span>
+              <span class="case-nail case-nail-tr"></span>
+              <span class="case-tape"></span>
+              <div class="case-sign-text">Asbestos identified mid £250k Section 20 works, risking project and cost extensions.</div>
+            </div>
+            <div class="case-outcome">
+              <div class="case-outcome-eyebrow">What we did</div>
+              <p>Re-inspection overdue for over a decade when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders, works completed safely.</p>
+            </div>
+          </div>
+        </article>
       </div>
-    </article>
-    <article class="case-stack-card" style="--stack-idx:1">
-      <div class="case-stack-eyebrow">Insurance</div>
-      <div class="case-stack-grid">
-        <div class="case-sign" aria-hidden="true">
-          <span class="case-nail case-nail-tl"></span>
-          <span class="case-nail case-nail-tr"></span>
-          <span class="case-tape case-tape-2"></span>
-          <div class="case-sign-text">60% insurance increase in 2 years</div>
-        </div>
-        <div class="case-outcome">
-          <div class="case-outcome-eyebrow">What we did</div>
-          <p>Challenged it, verified the rebuild value, then the suitability of the cover, and the appropriateness of the premium given those facts, securing a &pound;37k (66%) discount on an inflated insurance policy. Then consolidated every policy through one independent broker and added terrorism and directors' and officers' cover.</p>
-        </div>
-      </div>
-    </article>
-    <article class="case-stack-card" style="--stack-idx:2">
-      <div class="case-stack-eyebrow">Building safety</div>
-      <div class="case-stack-grid">
-        <div class="case-sign" aria-hidden="true">
-          <span class="case-nail case-nail-tl"></span>
-          <span class="case-nail case-nail-tr"></span>
-          <span class="case-tape case-tape-2"></span>
-          <div class="case-sign-text">Fire Risk Assessment several months overdue, putting the directors at criminal risk.</div>
-        </div>
-        <div class="case-outcome">
-          <div class="case-outcome-eyebrow">What we did</div>
-          <p>Commissioned a competent FRA within weeks of taking over. Got directors out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005; remediation actions on a tracked plan.</p>
-        </div>
-      </div>
-    </article>
-    <article class="case-stack-card" style="--stack-idx:3">
-      <div class="case-stack-eyebrow">Communication</div>
-      <div class="case-stack-grid">
-        <div class="case-sign" aria-hidden="true">
-          <span class="case-nail case-nail-tl"></span>
-          <span class="case-nail case-nail-tr"></span>
-          <span class="case-tape case-tape-4"></span>
-          <div class="case-sign-text">Months of unanswered leaseholder correspondence.</div>
-        </div>
-        <div class="case-outcome">
-          <div class="case-outcome-eyebrow">What we did</div>
-          <p>Absolute refusal from the previous agent to share more than the legally required minimum. The portal logs every message, every action, every response, visible to its leaseholder.</p>
-        </div>
-      </div>
-    </article>
-    <article class="case-stack-card" style="--stack-idx:4">
-      <div class="case-stack-eyebrow">Major works</div>
-      <div class="case-stack-grid">
-        <div class="case-sign" aria-hidden="true">
-          <span class="case-nail case-nail-tl"></span>
-          <span class="case-nail case-nail-tr"></span>
-          <span class="case-tape"></span>
-          <div class="case-sign-text">Asbestos identified mid £250k Section 20 works, risking project and cost extensions.</div>
-        </div>
-        <div class="case-outcome">
-          <div class="case-outcome-eyebrow">What we did</div>
-          <p>Re-inspection overdue for over a decade when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders, works completed safely.</p>
-        </div>
-      </div>
-    </article>
+    </details>
   </div>
 </section>
 
