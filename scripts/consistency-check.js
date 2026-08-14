@@ -55,7 +55,7 @@ const UNPROVABLE_CLAIMS = [
     // lapsed in 2012. Neither designation may appear until he is a reinstated
     // member in good standing, and CIMA's title is Chartered Management
     // Accountant, never "Chartered Accountant".
-    pattern: /chartered accountant|ICAEW|Institute of Chartered Accountants|chartered management accountant|ACMA|FCMA/i,
+    pattern: /chartered accountant|\bICAEW\b|Institute of Chartered Accountants|chartered management accountant|\bACMA\b|\bFCMA\b/i,
     why: "claims a professional accountancy qualification that is not currently held.",
   },
   {
