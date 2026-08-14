@@ -185,13 +185,19 @@ const FACTS = [
     banned: [/(ombudsman|membership)[\s\S]{0,60}?\bT(?!14754\b)\d{4,6}\b/i],
   },
   {
-    // The cover figure, not the fact of cover. FAQs and block-manager-london
-    // both say we carry professional indemnity insurance with no figure, which
-    // is fine and stays fine: this only bites once a page names an amount.
-    name: "professional indemnity cover",
-    probe: /professional indemnity[\s\S]{0,80}?(£|&pound;)|(£|&pound;)[\s\S]{0,80}?professional indemnity/i,
-    required: [/(£|&pound;)500,000/],
-    banned: [],
+    // 14 Aug 2026: the credentials band published "professional indemnity
+    // insurance, 500,000 of cover" while the policy underneath is the Hiscox
+    // TECHNOLOGY-COMPANIES professional indemnity section (see
+    // memory/reference_bbl_insurance_position.md), and the broker has never
+    // been asked whether it reaches block management for third-party clients -
+    // an open question since 11 Aug 2026. A board reads that row as cover for
+    // THIS work. The row is off the site until the broker confirms scope in
+    // writing; until then no page may state a professional indemnity figure.
+    name: "no professional indemnity figure until the broker confirms scope",
+    probe: /./,
+    required: [],
+    banned: [/professional indemnity[\s\S]{0,120}?(£|&pound;)\s?[\d,]+/i,
+             /(£|&pound;)\s?[\d,]+[\s\S]{0,120}?professional indemnity/i],
   },
   {
     // Already on privacy, cookies and llms.txt before the band existed. One
