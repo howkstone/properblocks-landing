@@ -170,6 +170,35 @@ const FACTS = [
     banned: [/(RTM|right-to-manage company) director since (?!2018\b)\d{4}/i],
   },
   {
+    // Restored to the site 14 Aug 2026 with the credentials band. A membership
+    // number is the one fact on that band a board will actually type into the
+    // ombudsman's own member search, so a stale or mistyped one is worse than
+    // saying nothing. The probe fires only where the page claims OUR membership,
+    // never where it signposts the ombudsman as a consumer route.
+    name: "ombudsman membership number",
+    probe: /ombudsman[\s\S]{0,80}?(membership|member no|scheme member)|((membership|member no)[\s\S]{0,80}?ombudsman)/i,
+    required: [/T14754/],
+    banned: [/\bT(?!14754\b)\d{4,6}\b/],
+  },
+  {
+    // The cover figure, not the fact of cover. FAQs and block-manager-london
+    // both say we carry professional indemnity insurance with no figure, which
+    // is fine and stays fine: this only bites once a page names an amount.
+    name: "professional indemnity cover",
+    probe: /professional indemnity[\s\S]{0,80}?(£|&pound;)|(£|&pound;)[\s\S]{0,80}?professional indemnity/i,
+    required: [/(£|&pound;)500,000/],
+    banned: [],
+  },
+  {
+    // Already on privacy, cookies and llms.txt before the band existed. One
+    // registration, one number, and a wrong one is a false statement to the
+    // regulator's own register.
+    name: "ICO registration reference",
+    probe: /ICO (reg\.?|reference|ZC)|registered with the (ICO|Information Commissioner)/i,
+    required: [/ZC141151/],
+    banned: [/\bZ(?!C141151\b)[A-Z]?\d{6,7}\b/],
+  },
+  {
     name: "fire risk assessment casework",
     probe: /Fire Risk Assessment (several months|on file)/i,
     required: [/several months overdue/i],

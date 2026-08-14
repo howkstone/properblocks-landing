@@ -197,8 +197,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 /* Trust strip */
 .trust{padding:32px 32px;background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;z-index:2}
 .trust-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
-/* Credentials band: markup parked 12 Aug 2026 until the ombudsman and
-   professional-body registrations are complete. Styles kept for its return. */
+/* Credentials band: parked 12 Aug 2026 pending the ombudsman number and the
+   professional-body position, restored 14 Aug 2026 now both are settled. Every
+   row carries a number a board can look up, so nothing goes in without one. */
 .trust-label{font-size:12px;letter-spacing:0.14em;color:var(--ink-3);font-weight:600}
 .trust-creds{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
 .trust-creds .c{font-family:Fraunces,serif;font-size:17px;color:var(--ink);font-weight:500;letter-spacing:-0.005em;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:0;transform:translateY(8px);transition:opacity 0.6s ease,transform 0.6s ease;text-align:center}
@@ -546,6 +547,17 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       </div>
     </div>
   </section>
+</section>
+
+<section class="trust" aria-label="Our registrations and insurance cover">
+  <div class="trust-inner">
+    <p class="trust-label">Registered and covered</p>
+    <div class="trust-creds" data-reveal-children>
+      <div class="c">The Property Ombudsman<span class="ind">Membership T14754</span></div>
+      <div class="c">Professional indemnity insurance<span class="ind">&pound;500,000 of cover</span></div>
+      <div class="c">Registered with the ICO<span class="ind">Reference ZC141151</span></div>
+    </div>
+  </div>
 </section>
 
 <section class="section" id="approach">
