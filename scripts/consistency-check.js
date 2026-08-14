@@ -270,6 +270,38 @@ for (const rel of PAGES) {
     fail(rel, "contains an em dash.");
   }
 
+  // Howard, 14 Aug 2026: the serial comma is his house style and he uses it.
+  // He caught a letter where his own "attention, responsiveness, and diligence"
+  // had been silently reduced to the British-optional form; the site was then
+  // found running fifteen lists without it. British style leaves it optional,
+  // so this is a preference, and his preference wins on his own surfaces.
+  //
+  // SCOPE, deliberately narrow: only lists of four or more items, where two
+  // commas are followed by a bare "and". The three-item form ("X, Y and Z")
+  // shares its shape with ordinary two-item clauses ("the fee, quotable from
+  // memory and published in full"), and a regex cannot tell them apart - it
+  // returned 40 hits here, most of them not lists at all. Widening this rule
+  // would make it noise, and a noisy gate gets ignored. Three-item lists are
+  // governed by the writing rule in CLAUDE.md instead.
+  const visible = prose.replace(/<[^>]+>/g, " ").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ");
+  const SERIAL_COMMA_ALLOWED = [
+    // Reviewed 14 Aug 2026 and NOT lists: each is a two-part clause that only
+    // looks like one because a comma-separated aside sits in front of it.
+    "vet, and chase, already in place and i",
+    "roof, façade, structural Building safety and c",
+    "per unit per year, usually plus VAT, plus an uplift on major works and a",
+    "managing agent or contractor, provided the request is reasonable and t",
+  ];
+  for (const m of visible.matchAll(/[A-Za-z0-9][^,.;:!?()]{0,40}, [^,.;:!?()]{1,40}, [^,.;:!?()]{1,40} and [a-z]/g)) {
+    // A window that already contains ", and " is a correctly-punctuated list
+    // whose closing item happens to be followed by another "and" clause
+    // ("every message, action, and response logged and visible"). The match
+    // starts mid-list; the comma it wants is already there.
+    if (m[0].includes(", and ")) continue;
+    if (SERIAL_COMMA_ALLOWED.some(a => m[0].includes(a) || a.includes(m[0]))) continue;
+    fail(rel, `list of four or more items with no serial comma before "and": "${m[0].trim()}". Howard's house style takes one. If it is not a list, add it to SERIAL_COMMA_ALLOWED with the reason.`);
+  }
+
   // --- claims we cannot stand behind -----------------------------------
   // Howard, 12 Aug 2026, after four of these shipped: a marketing page may
   // only promise what we control and can evidence. Anything about a
