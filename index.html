@@ -203,9 +203,11 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    query adds no specificity, so this block must sit AFTER the .hero, .lede and
    .hero-ctas base rules or the base values win and the overrides do nothing. */
 @media (max-height:640px){
-  .hero{justify-content:flex-start;padding-top:84px;gap:14px}
+  .hero{justify-content:flex-start;padding-top:96px;gap:14px}
   .hero .lede{font-size:15px;margin-bottom:12px}
   .hero-ctas{margin-bottom:6px}
+  .unravel-word{font-size:clamp(30px,8vh,60px)}
+  .unravel-glyph{width:clamp(36px,8vh,60px);height:clamp(36px,8vh,60px)}
 }
 
 /* Trust strip */
