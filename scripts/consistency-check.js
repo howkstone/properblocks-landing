@@ -295,9 +295,53 @@ for (const rel of PAGES) {
   }
 }
 
+// --- the commitments, off the site and on paper ------------------------
+// The commitment labels live in three places: this site, the RTM outreach
+// letters and the noticeboard notice. On 14 Aug 2026 the site relabelled one
+// commitment and gained a tenth while both Word builders still carried the old
+// wording, so a board could have been handed a letter that disagreed with the
+// page it points at. The builders sit in OneDrive, outside this repo, so this
+// runs only where they exist (a laptop, not CI) and says so when it skips.
+const BUILDERS = [
+  "C:\\Users\\user\\OneDrive\\Documents\\Big Brain Ltd\\Proper Blocks Ltd\\Prospects\\builders\\build_pb_letters.py",
+  "C:\\Users\\user\\OneDrive\\Documents\\Big Brain Ltd\\Proper Blocks Ltd\\Prospects\\builders\\build_pb_notice.py",
+];
+const indexFile = path.join(ROOT, "index.html");
+let builderNote = "builders not present, skipped";
+if (fs.existsSync(indexFile)) {
+  const siteLabels = [...fs.readFileSync(indexFile, "utf8")
+    .matchAll(/<span class="deliver-label">([^<]+)<\/span>/g)].map(m => m[1].trim());
+  if (siteLabels.length) {
+    const present = BUILDERS.filter(f => fs.existsSync(f));
+    for (const f of present) {
+      const src = fs.readFileSync(f, "utf8");
+      // Read ONLY the commitment list (PROMISES in the letters, SIX in the
+      // notice). Both files carry other tuple lists - block names, addresses -
+      // and a regex loose enough to catch those turns the gate into noise.
+      const block = (src.match(/^(?:PROMISES|SIX)\s*=\s*\[([\s\S]*?)^\]/m) || [])[1];
+      if (!block) {
+        fail(path.basename(f), "no PROMISES/SIX commitment list found - the gate cannot see the labels.");
+        continue;
+      }
+      // Each commitment is a ("Label.", " explanation") tuple. Take the first
+      // string of each tuple, drop the trailing full stop, and require the site
+      // to carry the same label.
+      const labels = [...block.matchAll(/\(\s*"([^"]{12,90}?)\.?\s*",\s*\n?\s*"/g)]
+        .map(m => m[1].replace(/\.$/, "").trim())
+        .filter(l => /^[A-Z]/.test(l) && !l.includes("://"));
+      for (const label of labels) {
+        if (!siteLabels.some(s => s.replace(/,? in force$/, "") === label.replace(/,? in force$/, ""))) {
+          fail(path.basename(f), `commitment "${label}" is not on the site. Change one, change all.`);
+        }
+      }
+    }
+    builderNote = present.length ? `${present.length} builders checked` : builderNote;
+  }
+}
+
 if (failures.length) {
   console.error("consistency-check: FAILED");
   for (const f of failures) console.error("  - " + f);
   process.exit(1);
 }
-console.log(`consistency-check: OK (${PAGES.length} pages, ${FACTS.length} cross-page facts)`);
+console.log(`consistency-check: OK (${PAGES.length} pages, ${FACTS.length} cross-page facts, ${builderNote})`);
