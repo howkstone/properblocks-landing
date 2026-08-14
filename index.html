@@ -553,9 +553,17 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   <div class="trust-inner">
     <p class="trust-label">Registered and covered</p>
     <div class="trust-creds" data-reveal-children>
-      <div class="c">The Property Ombudsman<span class="ind">Membership T14754</span></div>
-      <div class="c">Professional indemnity insurance<span class="ind">&pound;500,000 of cover</span></div>
-      <div class="c">Registered with the ICO<span class="ind">Reference ZC141151</span></div>
+      <!-- The line break before each .ind span is load-bearing. Without it the
+           two runs concatenate in the accessibility tree and in any text
+           extraction, so a screen reader says "The Property OmbudsmanMembership
+           T14754" and an AI assistant quoting the page copies that. Flex column
+           separates them visually; only whitespace separates them in text. -->
+      <div class="c">The Property Ombudsman
+        <span class="ind">Membership T14754</span></div>
+      <div class="c">Professional indemnity insurance
+        <span class="ind">&pound;500,000 of cover</span></div>
+      <div class="c">Registered with the ICO
+        <span class="ind">Reference ZC141151</span></div>
     </div>
   </div>
 </section>

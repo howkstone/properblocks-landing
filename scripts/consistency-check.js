@@ -178,7 +178,11 @@ const FACTS = [
     name: "ombudsman membership number",
     probe: /ombudsman[\s\S]{0,80}?(membership|member no|scheme member)|((membership|member no)[\s\S]{0,80}?ombudsman)/i,
     required: [/T14754/],
-    banned: [/\bT(?!14754\b)\d{4,6}\b/],
+    // Anchored on the claim, not on the shape of the string. `banned` is tested
+    // on every page regardless of `probe`, so a bare /T\d{4,6}/ would fail the
+    // build on any unrelated reference that happened to look like one, and a
+    // gate that cries wolf gets weakened rather than obeyed.
+    banned: [/(ombudsman|membership)[\s\S]{0,60}?\bT(?!14754\b)\d{4,6}\b/i],
   },
   {
     // The cover figure, not the fact of cover. FAQs and block-manager-london
