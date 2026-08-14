@@ -136,7 +136,19 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .hero-stage{position:relative;min-height:160vh;z-index:2;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
 .hero-wrap{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--alt) 100%)}
 .hero-particles-bg{position:absolute;inset:0;pointer-events:none;opacity:0.5}
-.hero{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:48px;padding:64px 32px 48px;max-width:960px;margin:0 auto;text-align:center}
+/* Top padding clears the fixed header (61px tall) with room to spare, and
+   every type size below is capped in vh as well as vw, so the hero block
+   fits inside 100vh on a short laptop viewport instead of overflowing
+   upwards and putting the top of the H1 behind the header (14 Aug 2026). */
+.hero{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(18px,4.5vh,48px);padding:92px 32px 40px;max-width:960px;margin:0 auto;text-align:center}
+/* Short viewports (laptop at high zoom, phone in landscape): anchor the hero
+   block to the top so the padding that clears the header is always honoured,
+   and tighten the type so the whole block still fits above the fold. */
+@media (max-height:640px){
+  .hero{justify-content:flex-start;padding-top:84px;gap:14px}
+  .hero .lede{font-size:15px;margin-bottom:12px}
+  .hero-ctas{margin-bottom:6px}
+}
 .hero-text{display:flex;flex-direction:column;align-items:center}
 .hero .lede,.hero-static-fallback{margin-left:auto;margin-right:auto}
 .hero-ctas,.hero-meta{justify-content:center}
@@ -146,7 +158,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 
 /* Manifesto H1 - two-phase reveal (Ken-style). Phase A on load timer,
    Phase B word-lit by scrollY progress through the .hero-stage. */
-.hero-manifesto{font-family:Fraunces,serif;font-weight:400;font-size:clamp(46px,5.4vw,68px);line-height:1.05;letter-spacing:-0.025em;color:var(--ink);margin:0 auto 32px;max-width:760px;text-wrap:balance}
+.hero-manifesto{font-family:Fraunces,serif;font-weight:400;font-size:clamp(34px,min(5.4vw,7.4vh),68px);line-height:1.05;letter-spacing:-0.025em;color:var(--ink);margin:0 auto clamp(16px,3vh,32px);max-width:760px;text-wrap:balance}
 .hero-manifesto .phase{display:block}
 .hero-manifesto .phase-b{margin-top:0.18em}
 .hero-manifesto .w{display:inline-block;margin-right:0.2em;color:rgba(31,27,23,0.18);transition:color 0.45s ease}
@@ -164,9 +176,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .unravel{padding:0}
 .hero-unravel{padding:0;margin-top:8px}
 .unravel-inner{max-width:920px;margin:0 auto;display:flex;align-items:flex-end;justify-content:center;gap:22px;flex-wrap:nowrap;clip-path:inset(100% 0 0 0);transition:clip-path 0.32s cubic-bezier(0.4,0,0.2,1)}
-.unravel-glyph{width:80px;height:80px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.unravel-glyph{width:clamp(48px,8vh,80px);height:clamp(48px,8vh,80px);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .unravel-glyph svg{width:100%;height:100%;overflow:visible}
-.unravel-word{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(54px,7.4vw,94px);letter-spacing:-0.025em;color:var(--ink);line-height:1;padding:0.04em 0;white-space:nowrap}
+.unravel-word{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(40px,min(7.4vw,9.5vh),94px);letter-spacing:-0.025em;color:var(--ink);line-height:1;padding:0.04em 0;white-space:nowrap}
 
 /* Five discrete stages — clip-path reveals from the bottom (100% top-inset
    = fully clipped; 0% = fully visible). 20% per stage. */
@@ -189,9 +201,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .hero-pillars em{font-style:italic;color:var(--copper-deep);font-weight:500}
 .hero-pillars.in{opacity:1;transform:translateY(0)}
 
-.hero .lede{font-size:17px;color:var(--ink-2);line-height:1.55;max-width:520px;margin-bottom:32px;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.5s,transform 0.7s ease 0.5s}
+.hero .lede{font-size:17px;color:var(--ink-2);line-height:1.55;max-width:520px;margin-bottom:clamp(16px,3vh,32px);opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.5s,transform 0.7s ease 0.5s}
 .hero .lede.in{opacity:1;transform:translateY(0)}
-.hero-ctas{display:flex;gap:12px;align-items:center;margin-bottom:38px;flex-wrap:wrap;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.7s,transform 0.7s ease 0.7s}
+.hero-ctas{display:flex;gap:12px;align-items:center;margin-bottom:clamp(10px,2vh,38px);flex-wrap:wrap;opacity:0;transform:translateY(8px);transition:opacity 0.7s ease 0.7s,transform 0.7s ease 0.7s}
 .hero-ctas.in{opacity:1;transform:translateY(0)}
 
 /* Trust strip */
@@ -214,6 +226,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .section{max-width:1200px;margin:0 auto;padding:96px 32px;position:relative}
 #approach{padding-bottom:40px}
 .section-head{max-width:760px;margin-bottom:56px}
+/* Partners intro is centred on the page (Howard, 14 Aug 2026) */
+#partners .section-head{margin-left:auto;margin-right:auto;text-align:center}
+#partners .section-head p{margin-left:auto;margin-right:auto}
 .section-head h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(34px,3.8vw,46px);letter-spacing:-0.02em;line-height:1.1;color:var(--ink);margin-bottom:18px;text-wrap:balance}
 .section-head h2 .w{display:inline-block;opacity:0;transform:translateY(20px);color:var(--ink);transition:opacity 0.95s cubic-bezier(0.22,1,0.36,1),transform 0.95s cubic-bezier(0.22,1,0.36,1),color 0.95s cubic-bezier(0.22,1,0.36,1)}
 .section-head h2 .w.in{opacity:1;transform:translateY(0)}
@@ -241,6 +256,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .deliver-item:nth-child(7){transition-delay:0.36s}
 .deliver-item:nth-child(8){transition-delay:0.42s}
 .deliver-item:nth-child(9){transition-delay:0.48s}
+.deliver-item:nth-child(10){transition-delay:0.54s}
 .deliver-item > summary{display:grid;grid-template-columns:22px 1fr 18px;gap:14px;align-items:center;padding:17px 2px;cursor:pointer;list-style:none}
 .deliver-item > summary::-webkit-details-marker{display:none}
 .deliver-item > summary:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
@@ -255,6 +271,12 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .deliver-tick svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .deliver-close{max-width:1000px;margin:34px auto 0;text-align:center}
 .deliver-close span{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:19px;color:var(--copper-deep);opacity:0;transform:translateY(8px);display:inline-block;transition:opacity 0.6s ease,transform 0.6s ease}
+/* Mission band - the mission line as its own section, with the casework
+   opener centred underneath it (the casework section that follows carries
+   almost no top padding, so the two sit together as one block). */
+.mission-band{background:var(--bg);padding:72px 32px 0;text-align:center}
+.mission-band .deliver-close{margin:0 auto}
+.mission-band .deliver-close span{font-size:clamp(22px,2.3vw,28px);line-height:1.3;max-width:760px}
 .deliver-close span.in{opacity:1;transform:none}
 @media (max-width:860px){.deliver-grid{grid-template-columns:1fr;gap:0}}
 
@@ -307,9 +329,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    Pattern used by Linear, Stripe, Notion feature sections. */
 /* --case-top clears the pinned heading, which is 93px tall at desktop and
    shorter on narrow screens. Cards pin below it, never under it. */
-.casework-stack{background:var(--bg);padding:20px 24px 96px;--case-top:121px}
+.casework-stack{background:var(--bg);padding:6px 24px 96px;--case-top:121px}
 .casework-reveal{max-width:1080px;margin:0 auto;width:100%}
-.casework-reveal > summary{display:inline-flex;align-items:center;gap:10px;cursor:pointer;list-style:none;font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:var(--copper-deep);padding:10px 0}
+.casework-reveal > summary{display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;list-style:none;font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:var(--copper-deep);padding:14px 0}
 .casework-reveal > summary::-webkit-details-marker{display:none}
 .casework-reveal > summary:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
 .casework-reveal-label{border-bottom:1px solid var(--copper-light)}
@@ -528,7 +550,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   </div>
   <section class="hero">
     <div class="hero-text">
-      <h1 class="hero-manifesto" id="hero-manifesto"><span class="phase phase-a">Block management.</span> <span class="phase phase-b">done <em>properly.</em></span></h1>
+      <h1 class="hero-manifesto" id="hero-manifesto"><span class="phase phase-a">Block management.</span> <span class="phase phase-b">Done <em>properly.</em></span></h1>
       <p class="lede" id="hero-lede">We're independent, London-based, and out to shake up the block management industry. We work with RTM companies, offering market-leading transparency: every pound and every action visible to the leaseholders who pay for it.</p>
       <div class="hero-ctas" id="hero-ctas">
         <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
@@ -560,6 +582,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
            separates them visually; only whitespace separates them in text. -->
       <div class="c">The Property Ombudsman
         <span class="ind">Membership T14754</span></div>
+      <div class="c">Professional indemnity insurance
+        <span class="ind">&pound;500,000 of cover</span></div>
       <div class="c">Registered with the ICO
         <span class="ind">Reference ZC141151</span></div>
     </div>
@@ -590,7 +614,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 
   <div class="commit-intro" data-reveal-head>
     <h3>Things can be better. <em>This is what we deliver.</em></h3>
-    <p>Written into how we work, for every block we manage.</p>
   </div>
   <div class="deliver-grid" data-reveal-children>
     <details class="deliver-item">
@@ -598,8 +621,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p>Service charges are held in a client account, separate from our own money, with a ledger for your block.</p>
     </details>
     <details class="deliver-item">
-      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Collection that is effective and fair</span><span class="deliver-plus" aria-hidden="true"></span></summary>
-      <p>Arrears chased from the first missed payment, with a monthly list of who owes what and what has been done about it.</p>
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Monthly walk-around visits</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>A manager visits your building no less than once a month, arranged in advance so any director can walk it with us, and it doubles as the board meeting.</p>
     </details>
     <details class="deliver-item">
       <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Contractors held to standard</span><span class="deliver-plus" aria-hidden="true"></span></summary>
@@ -610,7 +633,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p>No supplier invoice is auto-approved. Each one is checked against the work done and the lease before a pound leaves your account.</p>
     </details>
     <details class="deliver-item">
-      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">The right insurance, in force</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Full insurance coverage, in force</span><span class="deliver-plus" aria-hidden="true"></span></summary>
       <p>Cover checked against the rebuild value and the lease, so the building is properly insured and the directors are not personally exposed by a gap in it.</p>
     </details>
     <details class="deliver-item">
@@ -622,14 +645,23 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p>Everything about your block in one place, with a login of your own and one for every leaseholder.</p>
     </details>
     <details class="deliver-item">
-      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Monthly walk-around visits</span><span class="deliver-plus" aria-hidden="true"></span></summary>
-      <p>A manager visits your building no less than once a month, arranged in advance so any director can walk it with us, and it doubles as the board meeting.</p>
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Collection that is effective and fair</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Arrears chased from the first missed payment, with a monthly list of who owes what and what has been done about it.</p>
     </details>
     <details class="deliver-item">
       <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">A quarterly expenditure report</span><span class="deliver-plus" aria-hidden="true"></span></summary>
       <p>A written account of what your block has spent, every quarter, and director meetings minuted.</p>
     </details>
+    <details class="deliver-item">
+      <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Safety and compliance kept in date</span><span class="deliver-plus" aria-hidden="true"></span></summary>
+      <p>Fire risk assessment, lift, asbestos, electrical and water checks each held with their due date, and re-done before that date passes.</p>
+    </details>
   </div>
+</section>
+
+<!-- Mission band: the mission line stands on its own, with the casework
+     opener centred directly beneath it so the two read as one block. -->
+<section class="mission-band" aria-label="Our mission">
   <p class="deliver-close" data-reveal-head><span>Our mission: to be the most honourable and effective block managers in London.</span></p>
 </section>
 
@@ -729,7 +761,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 <section class="section" id="partners" aria-label="Proper Blocks partner network">
   <div class="section-head" data-reveal-head>
     <h2 data-words>Every block inherits our partners.</h2>
-    <p>The professionals an RTM board would otherwise have to find, vet and chase, already in place and instructed through us. No introduction fees for any partner, and no kickbacks! Every one of them contracts directly with your company, so the agreement and the money sit between you and them.</p>
+    <p>The professionals an RTM board would otherwise have to find, vet, and chase, already in place and instructed through us. No introduction fees for any partner, and no kickbacks! Every one of them contracts directly with your company, so the agreement and the money sit between you and them.</p>
   </div>
   <div class="pillars partners-grid" data-reveal-children>
     <article class="pillar">
@@ -741,7 +773,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <article class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></svg></div>
       <h3>Surveying &amp; major works</h3>
-      <p>Chartered building surveyors for Section 20 works, roofs and fabric, so the biggest spend a block makes is scoped and administered properly.</p>
+      <p>Chartered building surveyors for Section 20 works, roofs, and fabric, so the biggest spend a block makes is scoped and administered properly.</p>
       <div class="stat"><span class="v">7,000+</span><span class="l">instructions in five years</span></div>
     </article>
     <article class="pillar">
@@ -759,7 +791,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <article class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
       <h3>Vetted contractor network</h3>
-      <p>Maintenance, cleaning, grounds, lifts and fire, every contractor checked for insurance, accreditation and references before they touch your block.</p>
+      <p>Maintenance, cleaning, grounds, lifts and fire, every contractor checked for insurance, accreditation, and references before they touch your block.</p>
       <div class="stat"><span class="v">100%</span><span class="l">checked before instruction</span></div>
     </article>
     <article class="pillar">
@@ -803,7 +835,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
             <div class="jstep-num">02</div>
             <div class="jstep-body">
               <h3>Managed handover</h3>
-              <p>We take over the records, funds, contracts and compliance from your current agent, so nothing is dropped as control passes to you.</p>
+              <p>We take over the records, funds, contracts, and compliance from your current agent, so nothing is dropped as control passes to you.</p>
             </div>
           </li>
           <li class="jstep active">
@@ -907,7 +939,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     if(!target) return;
     // Two phases: phase-a (timer) and phase-b (scroll). Each is a separate row.
     const phaseA = ['Block','management.'];
-    const phaseB = ['done','properly.'];
+    const phaseB = ['Done','properly.'];
     const mkSpan = (word, em) => '<span class="w'+(em?' em':'')+'">'+word+'</span>';
     target.innerHTML =
       '<span class="phase phase-a">' + phaseA.map(w=>mkSpan(w,false)).join(' ') + '</span>' +

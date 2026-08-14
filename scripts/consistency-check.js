@@ -185,19 +185,23 @@ const FACTS = [
     banned: [/(ombudsman|membership)[\s\S]{0,60}?\bT(?!14754\b)\d{4,6}\b/i],
   },
   {
-    // 14 Aug 2026: the credentials band published "professional indemnity
-    // insurance, 500,000 of cover" while the policy underneath is the Hiscox
-    // TECHNOLOGY-COMPANIES professional indemnity section (see
-    // memory/reference_bbl_insurance_position.md), and the broker has never
-    // been asked whether it reaches block management for third-party clients -
-    // an open question since 11 Aug 2026. A board reads that row as cover for
-    // THIS work. The row is off the site until the broker confirms scope in
-    // writing; until then no page may state a professional indemnity figure.
-    name: "no professional indemnity figure until the broker confirms scope",
-    probe: /./,
-    required: [],
-    banned: [/professional indemnity[\s\S]{0,120}?(£|&pound;)\s?[\d,]+/i,
-             /(£|&pound;)\s?[\d,]+[\s\S]{0,120}?professional indemnity/i],
+    // The row was held off the site earlier on 14 Aug 2026 because the policy
+    // underneath is the Hiscox TECHNOLOGY-COMPANIES professional indemnity
+    // section (see memory/reference_bbl_insurance_position.md) and the broker
+    // had not been asked whether it reaches block management for third-party
+    // clients. Howard put it back the same day and is settling the scope with
+    // the broker directly. The gate therefore guards the NUMBER: £500,000 is
+    // the limit on the certificate (doc 372, policy PL-PSC10003948119/01), and
+    // any other figure beside a professional indemnity claim fails the build.
+    // Probe fires only where a page puts a MONEY figure against the claim (the
+    // credentials band). The FAQ and London pages mention the cover with no
+    // figure, which stays legitimate, so anchoring on the bare phrase would
+    // fail the build on them.
+    name: "professional indemnity cover figure",
+    probe: /professional indemnity[\s\S]{0,80}?(£|&pound;)/i,
+    required: [/(£|&pound;)\s?500,000/],
+    banned: [/professional indemnity[\s\S]{0,120}?(£|&pound;)\s?(?!500,000)[\d,]+/i,
+             /(£|&pound;)\s?(?!500,000)[\d,]+\s?(of cover)?[\s\S]{0,60}?professional indemnity/i],
   },
   {
     // Already on privacy, cookies and llms.txt before the band existed. One
