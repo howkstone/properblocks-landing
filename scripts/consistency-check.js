@@ -407,6 +407,58 @@ if (fs.existsSync(indexFile)) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// FORM CONTROLS (15 Aug 2026). Howard: the "how did you hear about us?" field
+// was "ugly ... a lazy implementation". The enquiry form styled input, email,
+// tel and textarea by name and never added select, so one control kept the
+// browser's 19px grey OS dropdown while its six neighbours were 44px, rounded
+// and on-brand. Naming control types one at a time is what let it happen, so
+// the gate now checks the rendered page: every control the form contains has
+// to appear in the field rule and in the focus rule. A new control type fails
+// here rather than shipping unstyled.
+// Rule: memory/feedback_one_control_is_painted_in_one_place.md
+if (fs.existsSync(indexFile)) {
+  const html = fs.readFileSync(indexFile, "utf8");
+  const form = (html.match(/<form id="msg-modal-form"[\s\S]*?<\/form>/) || [])[0];
+  if (!form) {
+    fail("index.html", "the enquiry form is gone - the control gate cannot see it.");
+  } else {
+    // What the form actually contains, as CSS selectors.
+    const used = new Set();
+    for (const m of form.matchAll(/<input[^>]*type=["']?([a-z]+)/g)) {
+      if (!["checkbox", "radio", "hidden", "submit"].includes(m[1])) used.add(`input[type=${m[1]}]`);
+    }
+    if (/<textarea/.test(form)) used.add("textarea");
+    if (/<select/.test(form)) used.add("select");
+
+    const ruleFor = re => (html.match(re) || [])[0] || "";
+    const fieldRule = ruleFor(/#msg-modal-form input\[type=text\][^{]*\{[^}]*border-radius[^}]*\}/);
+    const focusRule = ruleFor(/#msg-modal-form input:focus[^{]*\{[^}]*\}/);
+    if (!fieldRule) fail("index.html", "the shared enquiry-field rule is gone; controls would fall back to the browser's own styling.");
+    if (!focusRule) fail("index.html", "the shared enquiry-focus rule is gone; controls would lose the focus ring.");
+
+    for (const sel of used) {
+      // The honeypot is deliberately off-screen and unstyled.
+      if (fieldRule && !fieldRule.includes(sel)) {
+        fail("index.html", `the enquiry form has a ${sel} the field styling does not cover, so it renders as a raw browser control next to branded ones.`);
+      }
+      const focusSel = sel.startsWith("input") ? "input:focus" : sel + ":focus";
+      if (focusRule && !focusRule.includes(focusSel)) {
+        fail("index.html", `the enquiry form's ${sel} gets no focus ring, so a keyboard user cannot see where they are.`);
+      }
+    }
+    // A select with no chevron is the OS dropdown wearing our border.
+    if (used.has("select") && !/#msg-modal-form select\{[^}]*appearance:none[^}]*background-image:url/.test(html)) {
+      fail("index.html", "the enquiry form's dropdown has no chevron of ours; it falls back to the operating system's arrow.");
+    }
+    // Controls patched inline cannot be measured by this gate at all.
+    const inlineCtl = [...form.matchAll(/<(?:button|select|input|textarea)[^>]*\sstyle="/g)];
+    if (inlineCtl.length) {
+      fail("index.html", `${inlineCtl.length} control(s) in the enquiry form are styled inline instead of by class, so nothing can check how they look.`);
+    }
+  }
+}
+
 if (failures.length) {
   console.error("consistency-check: FAILED");
   for (const f of failures) console.error("  - " + f);

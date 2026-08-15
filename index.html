@@ -120,6 +120,11 @@ nav.head a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-
 nav.head a:not(.btn):hover{color:var(--copper-deep)}
 nav.head a:not(.btn):hover::after{transform:scaleX(1)}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:all 0.22s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
+button.btn{border:none;cursor:pointer;font:inherit}
+.btn-lg{padding:14px 30px;font-size:15px}
+.btn-md{padding:12px 26px;font-size:15px}
+.btn-sm{padding:10px 22px}
+.msg-actions.is-centred{justify-content:center;margin-top:18px}
 .btn:focus{outline:none}
 .btn:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
 nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:3px}
@@ -476,9 +481,12 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 #msg-modal-form label{display:block;font-size:13px;color:var(--ink-2);font-weight:500;margin-bottom:12px}
 #msg-modal-form .req{color:var(--copper-deep);margin-left:3px}
 #msg-modal-form .opt{color:var(--ink-3);font-weight:400;font-size:12px}
-#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel],#msg-modal-form textarea{display:block;width:100%;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
+#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel],#msg-modal-form textarea,#msg-modal-form select{display:block;width:100%;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
 #msg-modal-form textarea{resize:vertical;min-height:96px;line-height:1.5}
-#msg-modal-form input:focus,#msg-modal-form textarea:focus{outline:none;border-color:var(--copper);background:var(--panel);box-shadow:0 0 0 3px var(--copper-light)}
+#msg-modal-form input:focus,#msg-modal-form textarea:focus,#msg-modal-form select:focus{outline:none;border-color:var(--copper);background:var(--panel);box-shadow:0 0 0 3px var(--copper-light)}
+#msg-modal-form select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center}
+#msg-modal-form select:hover{border-color:var(--ink-3)}
+@media (max-width:600px){#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel],#msg-modal-form textarea,#msg-modal-form select{font-size:16px}}
 .msg-issues{border:1px solid var(--rule);border-radius:11px;padding:14px 16px;margin-bottom:14px;background:var(--alt)}
 .msg-issues legend{font-size:13px;font-weight:500;color:var(--ink-2);padding:0 6px}
 .msg-issues .cb{display:flex;align-items:center;gap:12px;margin:4px 0;min-height:44px;font-size:14px;color:var(--ink);cursor:pointer;font-weight:400;padding:4px 0}
@@ -543,7 +551,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     </a>
     <nav class="head">
       <a href="https://dennishouse.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
-      <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
+      <button type="button" class="btn btn-primary js-open-message-modal">Message us</button>
     </nav>
   </div>
 </header>
@@ -557,7 +565,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <h1 class="hero-manifesto" id="hero-manifesto"><span class="phase phase-a">Block management.</span> <span class="phase phase-b">Done <em>properly.</em></span></h1>
       <p class="lede" id="hero-lede">We're independent, London-based, and out to shake up the block management industry. We work with RTM companies, offering market-leading transparency: every pound and every action visible to the leaseholders who pay for it.</p>
       <div class="hero-ctas" id="hero-ctas">
-        <button type="button" class="btn btn-primary js-open-message-modal" style="border:none;cursor:pointer;font:inherit">Message us</button>
+        <button type="button" class="btn btn-primary js-open-message-modal">Message us</button>
         <a href="#approach" class="btn btn-ghost">How we work</a>
       </div>
     </div>
@@ -860,8 +868,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   <div class="cta-band-inner">
     <h2>We're <strong>independent</strong>, and we're judged on <strong>your block</strong>.</h2>
     <div class="cta-row">
-      <button type="button" class="btn btn-primary js-open-message-modal" style="padding:14px 30px;font-size:15px;border:none;cursor:pointer;font:inherit">Message us</button>
-      <a href="/block-manager-london/" class="btn btn-ghost" style="padding:14px 30px;font-size:15px">See our service &amp; fees</a>
+      <button type="button" class="btn btn-primary btn-lg js-open-message-modal">Message us</button>
+      <a href="/block-manager-london/" class="btn btn-ghost btn-lg">See our service &amp; fees</a>
     </div>
     <p>We only take on a small number of buildings each year, to ensure each client receives the attention required.</p>
   </div>
@@ -895,7 +903,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
         <!-- Honeypot: bots fill all fields, humans don't see this -->
         <label class="msg-hp" aria-hidden="true" tabindex="-1">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
         <div class="msg-actions">
-          <button type="submit" class="btn btn-primary" id="msg-submit" style="border:none;cursor:pointer;font:inherit;padding:12px 26px;font-size:15px">Send message</button>
+          <button type="submit" class="btn btn-primary btn-md" id="msg-submit">Send message</button>
         </div>
         <div id="msg-error" class="msg-error" aria-live="polite"></div>
       </form>
@@ -1272,7 +1280,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       }
       // Success
       const body = document.getElementById('msg-modal-body');
-      body.innerHTML = '<div class="msg-success"><div class="check">&#10003;</div><h3>Thanks, ' + escapeText(payload.name.split(' ')[0]) + '.</h3><p>Your message has gone to <strong>howard@properblocks.co.uk</strong>. A copy is on its way to your inbox. We will reply as soon as possible.</p><div class="msg-actions" style="justify-content:center;margin-top:18px"><button type="button" class="btn btn-ghost" id="msg-close-after" style="border:none;cursor:pointer;font:inherit;padding:10px 22px">Close</button></div></div>';
+      body.innerHTML = '<div class="msg-success"><div class="check">&#10003;</div><h3>Thanks, ' + escapeText(payload.name.split(' ')[0]) + '.</h3><p>Your message has gone to <strong>howard@properblocks.co.uk</strong>. A copy is on its way to your inbox. We will reply as soon as possible.</p><div class="msg-actions is-centred"><button type="button" class="btn btn-ghost btn-sm" id="msg-close-after">Close</button></div></div>';
       document.getElementById('msg-close-after').addEventListener('click', closeModal);
     } catch (e) {
       errEl.textContent = 'Network error. Please try again or email howard@properblocks.co.uk.';
