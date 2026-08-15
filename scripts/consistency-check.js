@@ -361,9 +361,26 @@ if (fs.existsSync(indexFile)) {
       const labels = [...block.matchAll(/\(\s*"([^"]{12,90}?)\.?\s*",\s*\n?\s*"/g)]
         .map(m => m[1].replace(/\.$/, "").trim())
         .filter(l => /^[A-Z]/.test(l) && !l.includes("://"));
+      const norm = t => t.replace(/,? in force$/, "");
       for (const label of labels) {
-        if (!siteLabels.some(s => s.replace(/,? in force$/, "") === label.replace(/,? in force$/, ""))) {
+        if (!siteLabels.some(s => norm(s) === norm(label))) {
           fail(path.basename(f), `commitment "${label}" is not on the site. Change one, change all.`);
+        }
+      }
+      // ORDER, not just presence (15 Aug 2026). Presence alone passed while the
+      // site, the letters and the notice each ran a different order: the site
+      // put monthly visits second, the letter buried it eighth, and the notice
+      // led on it. A reader who takes the notice off the wall, scans the QR and
+      // is later posted a letter meets the same ten promises ranked three ways,
+      // which reads as three different firms. The paper is a SUBSET of the site
+      // (the notice carries six), so the test is that the labels it does carry
+      // appear in the site's relative order.
+      const rank = labels.map(l => siteLabels.findIndex(s => norm(s) === norm(l)));
+      for (let i = 1; i < rank.length; i++) {
+        if (rank[i - 1] === -1 || rank[i] === -1) continue;
+        if (rank[i] < rank[i - 1]) {
+          fail(path.basename(f), `"${labels[i]}" is promoted above "${labels[i - 1]}" here, and below it on the site. One order, everywhere.`);
+          break;
         }
       }
     }
