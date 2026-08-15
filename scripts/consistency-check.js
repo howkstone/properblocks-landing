@@ -383,6 +383,25 @@ if (fs.existsSync(indexFile)) {
           break;
         }
       }
+
+      // CREDENTIALS, all three or none (15 Aug 2026). Howard: "I told you to
+      // include insurance, please restore everywhere." The letters carried the
+      // ten commitments and no registrations at all while the site and the
+      // notice both showed them, so a posted letter made a weaker firm of us
+      // than the sheet on the wall. Any outbound paper that names one of the
+      // three must name all three, with the site's own figures.
+      const creds = [
+        ["The Property Ombudsman number", /T14754/],
+        ["the ICO registration", /ZC141151/],
+        ["the professional indemnity cover", /(£|&pound;)\s?500,000|£500k/],
+      ];
+      const shown = creds.filter(([, re]) => re.test(src));
+      if (shown.length && shown.length < creds.length) {
+        const missing = creds.filter(([, re]) => !re.test(src)).map(([n]) => n);
+        fail(path.basename(f), `carries some registrations but not ${missing.join(" or ")}. All three, on every piece of paper that leaves us.`);
+      } else if (!shown.length) {
+        fail(path.basename(f), "carries no registrations at all. The Ombudsman number, the ICO reference and the indemnity cover go on everything we send out.");
+      }
     }
     builderNote = present.length ? `${present.length} builders checked` : builderNote;
   }
