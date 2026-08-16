@@ -216,6 +216,13 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 }
 
 /* Trust strip */
+/* The slim band directly under the opening screen: the three names only, no
+   membership numbers. Those live in the full section further down the page,
+   so a stranger sees the credentials at once without the page opening on
+   paperwork (A+, Howard, 15 Aug 2026). */
+.trust-strip{padding:14px 32px;background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;z-index:2}
+.trust-strip-inner{max-width:1200px;margin:0 auto;display:flex;gap:14px 40px;flex-wrap:wrap;align-items:center;justify-content:center;text-align:center}
+.trust-strip-inner span{font-size:13px;letter-spacing:0.02em;color:var(--ink-2);font-weight:500}
 .trust{padding:32px 32px;background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;z-index:2}
 .trust-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
 /* Credentials band: parked 12 Aug 2026 pending the ombudsman number and the
@@ -280,10 +287,11 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .deliver-tick svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .deliver-close{max-width:1000px;margin:34px auto 0;text-align:center}
 .deliver-close span{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:19px;color:var(--copper-deep);opacity:0;transform:translateY(8px);display:inline-block;transition:opacity 0.6s ease,transform 0.6s ease}
-/* Mission band - the mission line as its own section, with the casework
-   opener centred underneath it (the casework section that follows carries
-   almost no top padding, so the two sit together as one block). */
-.mission-band{background:var(--bg);padding:72px 32px 0;text-align:center}
+/* Mission band - the mission line stands on its own between who we are and
+   the partners. It used to sit directly above the casework with no bottom
+   padding so the two read as one block; the 15 Aug reorder separated them,
+   so it now closes itself. */
+.mission-band{background:var(--bg);padding:72px 32px 72px;text-align:center}
 .mission-band .deliver-close{margin:0 auto}
 .mission-band .deliver-close span{font-size:clamp(22px,2.3vw,28px);line-height:1.3;max-width:760px}
 .deliver-close span.in{opacity:1;transform:none}
@@ -338,7 +346,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    Pattern used by Linear, Stripe, Notion feature sections. */
 /* --case-top clears the pinned heading, which is 93px tall at desktop and
    shorter on narrow screens. Cards pin below it, never under it. */
-.casework-stack{background:var(--bg);padding:6px 24px 96px;--case-top:121px}
+.casework-stack{background:var(--bg);padding:72px 24px 96px;--case-top:121px}
 .casework-reveal{max-width:1080px;margin:0 auto;width:100%}
 .casework-reveal > summary{display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;list-style:none;font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:var(--copper-deep);padding:14px 0}
 .casework-reveal > summary::-webkit-details-marker{display:none}
@@ -586,22 +594,14 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   </section>
 </section>
 
-<section class="trust" aria-label="Our registrations and insurance cover">
-  <div class="trust-inner">
-    <p class="trust-label">Registered and covered</p>
-    <div class="trust-creds" data-reveal-children>
-      <!-- The line break before each .ind span is load-bearing. Without it the
-           two runs concatenate in the accessibility tree and in any text
-           extraction, so a screen reader says "The Property OmbudsmanMembership
-           T14754" and an AI assistant quoting the page copies that. Flex column
-           separates them visually; only whitespace separates them in text. -->
-      <div class="c">The Property Ombudsman
-        <span class="ind">Membership T14754</span></div>
-      <div class="c">Professional indemnity insurance
-        <span class="ind">&pound;500,000 of cover</span></div>
-      <div class="c">Registered with the ICO
-        <span class="ind">Reference ZC141151</span></div>
-    </div>
+<!-- A+ (Howard, 15 Aug 2026): the names stay directly under the opening
+     screen so a stranger arriving from a search sees them at once; the full
+     section with the membership numbers now sits below the partners. -->
+<section class="trust-strip" aria-label="Our registrations and insurance cover">
+  <div class="trust-strip-inner">
+    <span>The Property Ombudsman</span>
+    <span>Professional indemnity insurance</span>
+    <span>Registered with the ICO</span>
   </div>
 </section>
 
@@ -672,12 +672,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p>Fire risk assessment, lift, asbestos, electrical, and water checks each held with their due date, and re-done before that date passes.</p>
     </details>
   </div>
-</section>
-
-<!-- Mission band: the mission line stands on its own, with the casework
-     opener centred directly beneath it so the two read as one block. -->
-<section class="mission-band" aria-label="Our mission">
-  <p class="deliver-close" data-reveal-head><span>Our mission: to be the most honourable and effective block managers in London.</span></p>
 </section>
 
 <!-- Sticky-stack casework. Each card position:sticky at a staggered top
@@ -773,6 +767,19 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   </div>
 </section>
 
+<section class="who" id="who">
+  <div class="who-inner" data-reveal-head>
+    <p>I set up Proper Blocks in 2025, after 15 years revitalising companies in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right. I set up Proper Blocks to apply this to buildings, and help improve lives.</p>
+    <p style="margin-top:1.4em">We're <strong><u>independent</u></strong>, so we only have a duty to the leaseholders of our blocks. We work with <strong><u>residential and mixed-use</u></strong> blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: <strong><u>a better run block for everyone</u></strong> who owns, lives in or works there.</p>
+  </div>
+</section>
+
+<!-- Mission band: the mission line stands on its own, with the casework
+     opener centred directly beneath it so the two read as one block. -->
+<section class="mission-band" aria-label="Our mission">
+  <p class="deliver-close" data-reveal-head><span>Our mission: to be the most honourable and effective block managers in London.</span></p>
+</section>
+
 <section class="section" id="partners" aria-label="Proper Blocks partner network">
   <div class="section-head" data-reveal-head>
     <h2 data-words>Every block inherits our partners.</h2>
@@ -818,12 +825,26 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   </div>
 </section>
 
-<section class="who" id="who">
-  <div class="who-inner" data-reveal-head>
-    <p>I set up Proper Blocks in 2025, after 15 years revitalising companies in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right. I set up Proper Blocks to apply this to buildings, and help improve lives.</p>
-    <p style="margin-top:1.4em">We're <strong><u>independent</u></strong>, so we only have a duty to the leaseholders of our blocks. We work with <strong><u>residential and mixed-use</u></strong> blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: <strong><u>a better run block for everyone</u></strong> who owns, lives in or works there.</p>
+<section class="trust" aria-label="Our registrations and insurance cover">
+  <div class="trust-inner">
+    <p class="trust-label">Registered and covered</p>
+    <div class="trust-creds" data-reveal-children>
+      <!-- The line break before each .ind span is load-bearing. Without it the
+           two runs concatenate in the accessibility tree and in any text
+           extraction, so a screen reader says "The Property OmbudsmanMembership
+           T14754" and an AI assistant quoting the page copies that. Flex column
+           separates them visually; only whitespace separates them in text. -->
+      <div class="c">The Property Ombudsman
+        <span class="ind">Membership T14754</span></div>
+      <div class="c">Professional indemnity insurance
+        <span class="ind">&pound;500,000 of cover</span></div>
+      <div class="c">Registered with the ICO
+        <span class="ind">Reference ZC141151</span></div>
+    </div>
   </div>
 </section>
+
+
 
 <section class="journey" id="how-it-works" aria-label="How taking us on works">
   <div class="journey-scroll" id="journey-scroll">
