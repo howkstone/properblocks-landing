@@ -451,6 +451,15 @@ if (fs.existsSync(indexFile)) {
     if (used.has("select") && !/#msg-modal-form select\{[^}]*appearance:none[^}]*background-image:url/.test(html)) {
       fail("index.html", "the enquiry form's dropdown has no chevron of ours; it falls back to the operating system's arrow.");
     }
+    // The `background` shorthand resets background-image. In a :focus or
+    // :hover rule that lands on a control carrying a chevron, that wipes the
+    // chevron the instant the control is used - which is exactly when the
+    // user is looking at it. Seen live 16 Aug 2026; background-color only.
+    for (const m of html.matchAll(/#msg-modal-form[^{]*(?::focus|:hover)[^{]*\{([^}]*)\}/g)) {
+      if (/(^|;)\s*background\s*:/.test(m[1])) {
+        fail("index.html", "an enquiry-form focus or hover rule uses the background shorthand, which erases the dropdown's chevron while it is in use. Use background-color.");
+      }
+    }
     // Controls patched inline cannot be measured by this gate at all.
     const inlineCtl = [...form.matchAll(/<(?:button|select|input|textarea)[^>]*\sstyle="/g)];
     if (inlineCtl.length) {
