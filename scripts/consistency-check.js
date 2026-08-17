@@ -110,8 +110,10 @@ const FACTS = [
   {
     // Howard, 12 Aug 2026: no reply-time promise on any marketing page. Naming
     // a number reads as "we will take that long", and the promise we make is
-    // active communication instead. The two-working-day backstop stays in the
-    // management agreement, which is a contract and is not one of these pages.
+    // active communication instead. Widened 17 Aug 2026 on his instruction -
+    // it is not true and it is not a promise, so it now goes everywhere,
+    // including the management agreement (Schedule 4's answer, phone-call and
+    // emergency rows deleted, and clause 2.4's one-working-day deadline).
     name: "no reply-time promise on marketing pages",
     probe: /./,
     required: [],
@@ -121,6 +123,12 @@ const FACTS = [
       /respon(d|se) within (one|two|three|\d+) working days?/i,
       /within (one|two|three|\d+) working days? of (receipt|your)/i,
       /same day response/i,
+      // The phrasings the 12 Aug list missed: "we answer everything in two
+      // working days", "answered in 2 working days", "returned within one
+      // working day", "attended the same day".
+      /answer(s|ed)? (everything |all (enquiries|messages) )?(in|within) (one|two|three|\d+) working days?/i,
+      /(returned|acknowledged|attended) (in|within) (one|two|three|\d+) working days?/i,
+      /(attended|instructed) the same day/i,
     ],
   },
   {
