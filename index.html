@@ -913,6 +913,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
         <label>Phone <span class="opt">(optional)</span><input type="tel" name="phone" maxlength="40" autocomplete="tel"></label>
         <label>Block address<span class="req">*</span><input type="text" name="block_address" required maxlength="200" placeholder="e.g. E3, London"></label>
         <label>RTM company <span class="opt">(optional)</span><input type="text" name="rtm_company" maxlength="150" placeholder="If your block has an RTM"></label>
+        <label>Existing managing agent <span class="opt">(optional)</span><input type="text" name="managing_agent" maxlength="150" placeholder="Who manages the block at the moment"></label>
         <fieldset class="msg-issues">
           <legend>What's on your mind? <span class="opt">(tick all that apply)</span></legend>
           <label class="cb"><input type="checkbox" name="issue" value="Service charge transparency or questions on what you're being charged"><span>Service charge transparency, or questions on what you're being charged</span></label>
@@ -1280,6 +1281,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       phone: (fd.get('phone') || '').toString().trim(),
       block_address: (fd.get('block_address') || '').toString().trim(),
       rtm_company: (fd.get('rtm_company') || '').toString().trim(),
+      managing_agent: (fd.get('managing_agent') || '').toString().trim(),
       issues: issues,
       other_details: (fd.get('other_details') || '').toString().trim(),
       heard_from: (fd.get('heard_from') || '').toString().trim(),
