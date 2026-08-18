@@ -290,10 +290,19 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 /* Mission band - the mission line stands on its own between who we are and
    the partners. It used to sit directly above the casework with no bottom
    padding so the two read as one block; the 15 Aug reorder separated them,
-   so it now closes itself. */
-.mission-band{background:var(--bg);padding:72px 32px 72px;text-align:center}
-.mission-band .deliver-close{margin:0 auto}
-.mission-band .deliver-close span{font-size:clamp(22px,2.3vw,28px);line-height:1.3;max-width:760px}
+   so it now closes itself.
+   NO scroll-reveal on this one. Everything else on the page starts at
+   opacity 0 and is revealed by the IntersectionObserver, which means it stays
+   invisible if that script ever fails. For the sentence that states what the
+   company is FOR, that trade is wrong: it is painted on, always. */
+.mission-band{background:var(--copper-deep);padding:96px 32px 100px;text-align:center;position:relative;overflow:hidden}
+.mission-band::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 140% at 50% 0%,rgba(255,255,255,0.10),transparent 62%);pointer-events:none}
+.mission-inner{position:relative;max-width:900px;margin:0 auto}
+.mission-kicker{margin:0 0 14px}
+.mission-kicker span{display:inline-block;font-family:Inter,system-ui,sans-serif;font-style:normal;font-weight:600;font-size:15px;letter-spacing:0.06em;color:rgba(255,255,255,0.78)}
+.mission-quote{margin:0;border:0;padding:0}
+.mission-quote span{display:inline-block;font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(25px,3.4vw,40px);line-height:1.2;letter-spacing:-0.015em;color:#fff;text-wrap:balance}
+@media (max-width:640px){.mission-band{padding:72px 24px 76px}}
 .deliver-close span.in{opacity:1;transform:none}
 @media (max-width:860px){.deliver-grid{grid-template-columns:1fr;gap:0}}
 
@@ -346,13 +355,14 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    Pattern used by Linear, Stripe, Notion feature sections. */
 /* --case-top clears the pinned heading, which is 93px tall at desktop and
    shorter on narrow screens. Cards pin below it, never under it. */
-.casework-stack{background:var(--bg);padding:72px 24px 96px;--case-top:121px}
+.casework-stack{background:var(--bg);padding:72px 24px 36px;--case-top:121px}
+.casework-reveal[open]{margin-bottom:60px}
 .casework-reveal{max-width:1080px;margin:0 auto;width:100%}
-.casework-reveal > summary{display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;list-style:none;font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:var(--copper-deep);padding:14px 0}
+.casework-reveal > summary{display:flex;justify-content:center;align-items:center;gap:12px;cursor:pointer;list-style:none;font-family:Inter,sans-serif;font-size:21px;font-weight:600;letter-spacing:-0.01em;color:var(--copper-deep);padding:14px 0}
 .casework-reveal > summary::-webkit-details-marker{display:none}
 .casework-reveal > summary:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
 .casework-reveal-label{border-bottom:1px solid var(--copper-light)}
-.casework-chev{width:9px;height:9px;border-right:2px solid var(--copper);border-bottom:2px solid var(--copper);transform:rotate(45deg);margin-bottom:3px;transition:transform 0.25s ease}
+.casework-chev{width:11px;height:11px;border-right:2px solid var(--copper);border-bottom:2px solid var(--copper);transform:rotate(45deg);margin-bottom:3px;transition:transform 0.25s ease}
 .casework-reveal[open] > summary .casework-chev{transform:rotate(-135deg);margin-bottom:-2px}
 .casework-body{display:flex;flex-direction:column;gap:32px;padding-top:8px}
 .casework-stack-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
@@ -382,7 +392,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .case-outcome p{font-size:16px;color:var(--ink);line-height:1.6;margin:0}
 
 @media (max-width:760px){
-  .casework-stack{padding:32px 16px 64px}
+  .casework-stack{padding:32px 16px 28px}
   .casework-stack-inner{gap:24px}
   .casework-stack{--case-top:92px}
   .case-stack-card{padding:28px 24px 26px;top:calc(var(--case-top) + var(--stack-idx) * 18px);border-radius:14px}
@@ -553,18 +563,21 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 <body>
 
 <header id="hd">
-  <div class="inner">
-    <a href="/" class="mark">
-      <span class="mark-glyph">
-        <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
-      </span>
-      <span class="mark-name">Proper Blocks</span>
-    </a>
-    <nav class="head">
-      <a href="https://dennishouse.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
-      <button type="button" class="btn btn-primary js-open-message-modal">Message us</button>
-    </nav>
-  </div>
+<div class="inner">
+<a href="/" class="mark">
+<span class="mark-glyph">
+<svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
+</span>
+<span class="mark-name">Proper Blocks</span>
+</a>
+<nav class="head">
+<a href="/block-manager-london/">About</a>
+<a href="/fees/">Fees</a>
+<a href="/FAQs/">FAQs</a>
+<a href="https://dennishouse.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
+<button type="button" class="btn btn-primary js-open-message-modal">Message us</button>
+</nav>
+</div>
 </header>
 
 <section class="hero-stage" id="hero-stage">
@@ -613,17 +626,17 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <div class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
       <h3>Financial diligence</h3>
-      <p>The money is the job. A turnaround finance director of 15 years decides what your building spends and what it does not, and answers for it at the year end.</p>
+      <p>Financial diligence is paramount, and we are run by a turnaround finance director of 15 years who understands cash must be spent wisely.</p>
     </div>
     <div class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="7" cy="7" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.5" cy="7" r="0.6" fill="currentColor" stroke="none"/></svg></div>
       <h3>Communication</h3>
-      <p>A block goes wrong quietly, in the gap between something happening and anyone being told. We close that gap, and we write things down so nobody has to take our word for it.</p>
+      <p>Poor communication drives a wedge between the RTM and the block manager - we want every interaction with you to be an opportunity to impress, so you spread the word.</p>
     </div>
     <div class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
       <h3>Transparency</h3>
-      <p>You see what we see: the same figures, the same records.</p>
+      <p>We believe in absolute transparency, so we will provide a login to the live financial records - same figures, same records, available at any time.</p>
     </div>
   </div>
 
@@ -682,11 +695,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 <section class="casework-stack" id="casework" aria-label="Inherited problems and how we addressed them">
   <div class="casework-stack-inner">
     <details class="casework-reveal">
-      <summary><span class="casework-reveal-label">See what problems we've resolved</span><span class="casework-chev" aria-hidden="true"></span></summary>
+      <summary><span class="casework-reveal-label">See what we've resolved</span><span class="casework-chev" aria-hidden="true"></span></summary>
       <div class="casework-body">
-        <div class="section-head casework-head" data-reveal-head>
-      <h2 data-words>What we've taken on:</h2>
-    </div>
         <article class="case-stack-card" style="--stack-idx:0">
           <div class="case-stack-eyebrow">Financial diligence</div>
           <div class="case-stack-grid">
@@ -739,7 +749,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
               <span class="case-nail case-nail-tl"></span>
               <span class="case-nail case-nail-tr"></span>
               <span class="case-tape case-tape-4"></span>
-              <div class="case-sign-text">Months of unanswered leaseholder correspondence.</div>
+              <div class="case-sign-text">Months of unanswered leaseholder correspondence and uncooperative handover.</div>
             </div>
             <div class="case-outcome">
               <div class="case-outcome-eyebrow">What we did</div>
@@ -769,7 +779,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 
 <section class="who" id="who">
   <div class="who-inner" data-reveal-head>
-    <p>I set up Proper Blocks in 2025, after 15 years revitalising companies in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right. I set up Proper Blocks to apply this to buildings, and help improve lives.</p>
+    <p>I set up Proper Blocks in 2025, after 15 years revitalising companies in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right.</p>
+    <p style="margin-top:1.4em">Effective running of a building requires these same three things - we're out to restore people's trust in block management.</p>
     <p style="margin-top:1.4em">We're <strong><u>independent</u></strong>, so we only have a duty to the leaseholders of our blocks. We work with <strong><u>residential and mixed-use</u></strong> blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: <strong><u>a better run block for everyone</u></strong> who owns, lives in or works there.</p>
   </div>
 </section>
@@ -777,13 +788,16 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 <!-- Mission band: the mission line stands on its own, with the casework
      opener centred directly beneath it so the two read as one block. -->
 <section class="mission-band" aria-label="Our mission">
-  <p class="deliver-close" data-reveal-head><span>Our mission: to be the most honourable and effective block managers in London.</span></p>
+  <div class="mission-inner">
+    <p class="mission-kicker"><span>Our mission:</span></p>
+    <blockquote class="mission-quote"><span>&ldquo;To be the most effective and honourable block manager in London.&rdquo;</span></blockquote>
+  </div>
 </section>
 
 <section class="section" id="partners" aria-label="Proper Blocks partner network">
   <div class="section-head" data-reveal-head>
     <h2 data-words>Every block inherits our partners.</h2>
-    <p>The professionals an RTM board would otherwise have to find, vet, and chase, already in place and instructed through us. No introduction fees for any partner, and no kickbacks! Every one of them contracts directly with your company, so the agreement and the money sit between you and them.</p>
+    <p>The professionals an RTM board would otherwise have to find, vet, and chase, already in place and instructed through us. We don't charge any introduction fees for any partner, and we receive no kickbacks!</p>
   </div>
   <div class="pillars partners-grid" data-reveal-children>
     <article class="pillar">
@@ -893,7 +907,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <h2>We're <strong>independent</strong>, and we're judged on <strong>your block</strong>.</h2>
     <div class="cta-row">
       <button type="button" class="btn btn-primary btn-lg js-open-message-modal">Message us</button>
-      <a href="/block-manager-london/" class="btn btn-ghost btn-lg">See our service &amp; fees</a>
+      <a href="/fees/" class="btn btn-ghost btn-lg">See our fees</a>
     </div>
     <p>We only take on a small number of buildings each year, to ensure each client receives the attention required.</p>
   </div>
@@ -937,15 +951,20 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 </div>
 
 <footer>
-  <div class="inner">
-    <div class="copy">&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610 &middot; Registered in England &amp; Wales</div>
-    <div class="links">
-      <a href="/block-manager-london/">Service &amp; fees</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
-      <a href="mailto:howard@properblocks.co.uk">Contact</a>
-    </div>
-  </div>
+<div class="inner">
+<div class="copy">&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610 &middot; Registered in England &amp; Wales</div>
+<div class="links">
+<a href="/block-manager-london/">About</a>
+<a href="/fees/">Fees</a>
+<a href="/FAQs/">FAQs</a>
+<a href="/contractor/">Contractors</a>
+<a href="/privacy/">Privacy</a>
+<a href="/terms/">Terms</a>
+<a href="/cookies/">Cookies</a>
+<a href="https://dennishouse.properblocks.co.uk">Portal login</a>
+<a href="mailto:howard@properblocks.co.uk">Contact</a>
+</div>
+</div>
 </footer>
 
 <script>
@@ -1214,6 +1233,11 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   // IIFE owns the ambient particles, scroll reveals and morph video.
   const modal = document.getElementById('msg-modal');
   const openBtns = document.querySelectorAll('.js-open-message-modal');
+  // The fees and FAQ pages are separate static files with no modal of their
+  // own, so their "Message us" button links here with #message. Without this
+  // the button dropped the visitor on the home page with no form and nothing
+  // to do - a control that does not do what its label says.
+  const wantsMessage = () => window.location.hash === '#message';
   const form = document.getElementById('msg-modal-form');
   const errEl = document.getElementById('msg-error');
   const otherCb = document.getElementById('issue-other');
@@ -1242,6 +1266,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
   if (modal) openBtns.forEach(b => b.addEventListener('click', openModal));
+  if (modal && wantsMessage()) openModal();
+  window.addEventListener('hashchange', () => { if (modal && wantsMessage()) openModal(); });
   if (modal) modal.querySelectorAll('[data-close-modal]').forEach(el => el.addEventListener('click', closeModal));
   document.addEventListener('keydown', (e) => {
     if (!modal || modal.getAttribute('aria-hidden') !== 'false') return;

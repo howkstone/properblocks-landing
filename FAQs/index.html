@@ -46,12 +46,12 @@
       "mainEntity": [
         {"@type":"Question","name":"What is Proper Blocks?","acceptedAnswer":{"@type":"Answer","text":"Proper Blocks is independent block management for London leaseholders who run their own building: right-to-manage companies, residents' associations, and organised leaseholder groups. It is founded and run by a turnaround finance director of 15 years who has been an active RTM director since 2018. The leaseholder portal is the tool we use to run a block openly; the service itself is the management."}},
         {"@type":"Question","name":"Are you really independent?","acceptedAnswer":{"@type":"Answer","text":"Yes. We are not owned by a developer, a freeholder or a contractor, so the only people we answer to are the leaseholders who appoint us. We take no introduction fees or commissions from the contractors or partners we instruct, and every one of them contracts directly with your company."}},
-        {"@type":"Question","name":"How do your fees work?","acceptedAnswer":{"@type":"Answer","text":"One flat fee per unit per year, quotable from memory and published in full on our pricing page. Every charge is listed there, the annual fee and each specific extra, with its price."}},
+        {"@type":"Question","name":"How do your fees work?","acceptedAnswer":{"@type":"Answer","text":"One flat fee per unit per year, published in full on our fees page. Every charge is listed there, the annual fee and each specific extra, with its price."}},
         {"@type":"Question","name":"Why a flat fee and not a percentage?","acceptedAnswer":{"@type":"Answer","text":"A fee that rises with spending rewards a manager for spending more of your money. A flat fee per unit does not, so our incentive is to run the block well rather than to run up the bill."}},
         {"@type":"Question","name":"How does switching managing agent work?","acceptedAnswer":{"@type":"Answer","text":"Three steps: a conversation and a review of your documents so you see exactly where you stand; a managed handover of records, funds, contracts, and compliance from your current agent; then full visibility from day one. We run the handover ourselves so nothing is dropped."}},
         {"@type":"Question","name":"What compliance do you handle?","acceptedAnswer":{"@type":"Answer","text":"Fire risk assessment, asbestos, electrical, water hygiene, lifts, and fire doors, the duties that carry personal liability for directors, kept current on a tracked plan."}},
         {"@type":"Question","name":"What is Section 20?","acceptedAnswer":{"@type":"Answer","text":"Section 20 of the Landlord and Tenant Act 1985 is the consultation a block must run before carrying out qualifying major works or entering a long-term agreement. Run properly it keeps the cost recoverable from leaseholders; run badly, recovery can be capped."}},
-        {"@type":"Question","name":"Do you use your own surveyors for major works?","acceptedAnswer":{"@type":"Answer","text":"No, deliberately. The surveyor who scopes major works and certifies their cost should be independent of whoever administers them. We use external chartered building surveyors, appointed by the RTM, never an in-house team, so the Section 20 consultation stays a genuine independent check on cost. Our 3% administration fee covers running the programme and the consultation; the surveyor is a separate, transparent appointment."}},
+        {"@type":"Question","name":"Do you use your own surveyors for major works?","acceptedAnswer":{"@type":"Answer","text":"No, deliberately. The surveyor who scopes major works and certifies their cost should be independent of whoever administers them. We use external chartered building surveyors, appointed by the RTM, never an in-house team, so the Section 20 consultation stays a genuine independent check on cost. Our 5% administration fee covers running the programme and the consultation; the surveyor is a separate, transparent appointment."}},
         {"@type":"Question","name":"How is RTM block management different from a freeholder-appointed agent?","acceptedAnswer":{"@type":"Answer","text":"A right-to-manage company is a leaseholder-controlled company that acquires the freeholder's management functions under the Commonhold and Leasehold Reform Act 2002. The leaseholders elect the directors, so management passes from the freeholder to the people who live there. Proper Blocks works for the RTM company, accountable to its leaseholder-elected board."}},
         {"@type":"Question","name":"What is the leaseholder portal?","acceptedAnswer":{"@type":"Answer","text":"A proprietary portal that logs every message, every action, and every response, visible to the leaseholder it concerns, with director meetings minuted, contractor visits documented and a regular newsletter to approved residents and directors."}},
         {"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. The RTM company is the data controller for leaseholder information and we handle it under UK data-protection law. Our full privacy notice is published on the site."}}
@@ -140,24 +140,48 @@ footer a:hover{color:var(--teal-deep)}
   nav.head .hide-sm{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
-</style>
+/* chrome:build.js */
+header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,0.94);backdrop-filter:blur(12px);border-bottom:1px solid #E6E3DC}
+header .inner{max-width:1200px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.mark{display:flex;align-items:center;gap:9px;text-decoration:none;color:#1E293B}
+.mark-glyph{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.mark-glyph svg{width:100%;height:100%}
+.mark-name{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:500;letter-spacing:-0.01em}
+nav.head{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+nav.head a:not(.btn){text-decoration:none;color:#475569;font-size:14px;font-weight:500}
+nav.head a:not(.btn):hover,nav.head a:not(.btn)[aria-current]{color:#155F66}
+nav.head .btn{display:inline-flex;align-items:center;padding:11px 22px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer}
+nav.head .btn-ghost{background:transparent;color:#1E293B;border-color:#CFCBC1}
+nav.head .btn-ghost:hover{background:rgba(30,41,59,0.05)}
+nav.head .btn-primary{background:#1E293B;color:#fff}
+nav.head .btn-primary:hover{background:#103E43}
+footer{padding:44px 32px;border-top:1px solid #E6E3DC;background:#FFFFFF;margin-top:0}
+footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+footer .links{display:flex;gap:20px;flex-wrap:wrap}
+footer .copy,footer a{font-size:13px;color:#64748B;text-decoration:none;line-height:1.7}
+footer a:hover{color:#155F66}
+@media (max-width:760px){header .inner{padding:14px 18px}nav.head{gap:14px}nav.head a:not(.btn){font-size:13px}nav.head .btn{padding:9px 14px;font-size:13px}footer{padding:32px 18px}}
+@media (max-width:520px){.mark-name{display:none}nav.head .btn-ghost{display:none}}
+/* /chrome */</style>
 </head>
 <body>
 
 <header>
-  <div class="inner">
-    <a href="/" class="mark">
-      <span class="mark-glyph">
-        <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
-      </span>
-      <span class="mark-name">Proper Blocks</span>
-    </a>
-    <nav class="head">
-      <a href="/block-manager-london/" class="hide-sm">Service &amp; fees</a>
-      <a href="/FAQs/" aria-current="page">FAQs</a>
-      <a href="https://dennishouse.properblocks.co.uk">Portal login</a>
-    </nav>
-  </div>
+<div class="inner">
+<a href="/" class="mark">
+<span class="mark-glyph">
+<svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
+</span>
+<span class="mark-name">Proper Blocks</span>
+</a>
+<nav class="head">
+<a href="/block-manager-london/">About</a>
+<a href="/fees/">Fees</a>
+<a href="/FAQs/" aria-current="page">FAQs</a>
+<a href="https://dennishouse.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
+<a href="/#message" class="btn btn-primary">Message us</a>
+</nav>
+</div>
 </header>
 
 <main>
@@ -197,10 +221,10 @@ footer a:hover{color:var(--teal-deep)}
 
     <section class="cat" data-cat>
       <h2 id="fees">Fees &amp; transparency</h2>
-      <details class="qa"><summary>How do your fees work?</summary><div class="a"><p>One flat fee per unit per year, quotable from memory and published in full on our pricing page. Every charge is listed there, the annual fee and each specific extra, with its price.</p></div></details>
-      <details class="qa"><summary>Why a flat fee and not a percentage?</summary><div class="a"><p>A fee that rises with spending rewards a manager for spending more of your money. A flat fee per unit does not, so our incentive is to run the block well rather than to run up the bill. Major works carry a transparent 3% administration charge, against the 10-15% large firms typically take, and every other charge is listed on the pricing page with its price.</p></div></details>
+      <details class="qa"><summary>How do your fees work?</summary><div class="a"><p>One flat fee per unit per year, published in full on our fees page. Every charge is listed there, the annual fee and each specific extra, with its price.</p></div></details>
+      <details class="qa"><summary>Why a flat fee and not a percentage?</summary><div class="a"><p>A fee that rises with spending rewards a manager for spending more of your money. A flat fee per unit does not, so our incentive is to run the block well rather than to run up the bill. Major works carry a transparent 5% administration charge, against the 10-15% large firms typically take, and every other charge is listed on the fees page with its price.</p></div></details>
       <details class="qa"><summary>Do you take commission from contractors or insurers?</summary><div class="a"><p>No. We take no introduction fees or commissions from the contractors or partners we instruct. Insurance is placed through an independent broker, and we do not take a cut of the premium out of your service charge. Every partner we introduce contracts directly with your company, so the agreement and the money are between you and them.</p></div></details>
-      <details class="qa"><summary>What is not included in the annual fee?</summary><div class="a"><p>A small number of specific items are charged separately and listed openly: administering major works (3% of the works value, against the 10-15% large firms charge), advisory work such as tribunal and legal preparation (&pound;50 an hour, timesheeted and agreed in advance), and a sales enquiry pack when a flat is sold. The full list and rates are on our <a href="/pricing/">pricing page</a>.</p></div></details>
+      <details class="qa"><summary>What is not included in the annual fee?</summary><div class="a"><p>A small number of specific items are charged separately and listed openly: administering major works (5% of the works value, against the 10-15% large firms charge), advisory work such as tribunal and legal preparation (&pound;50 an hour, timesheeted and agreed in advance), and a sales enquiry pack when a flat is sold. The full list and rates are on our <a href="/fees/">fees page</a>.</p></div></details>
     </section>
 
     <section class="cat" data-cat>
@@ -220,7 +244,7 @@ footer a:hover{color:var(--teal-deep)}
       <h2 id="major-works">Major works &amp; Section 20</h2>
       <details class="qa"><summary>What is Section 20?</summary><div class="a"><p>Section 20 of the Landlord and Tenant Act 1985 is the consultation a block must run before carrying out qualifying major works or entering a long-term agreement. Run properly, it keeps the cost recoverable from leaseholders; run badly, recovery can be capped.</p></div></details>
       <details class="qa"><summary>How do you handle major works?</summary><div class="a"><p>Works are scoped and administered with chartered building surveyors, with the Section 20 consultation run properly so the cost stays recoverable, and a reserve built steadily against the big jobs so leaseholders are not hit with sudden, painful demands.</p></div></details>
-      <details class="qa"><summary>Do you use your own surveyors for major works?</summary><div class="a"><p>No, and that is deliberate. The surveyor who scopes major works and checks what they should cost shouldn't work for the firm running them. So we use independent external chartered surveyors, appointed by the RTM. Our 3% administration fee covers running the programme and the consultation; the surveyor is a separate appointment.</p></div></details>
+      <details class="qa"><summary>Do you use your own surveyors for major works?</summary><div class="a"><p>No, and that is deliberate. The surveyor who scopes major works and checks what they should cost shouldn't work for the firm running them. So we use independent external chartered surveyors, appointed by the RTM. Our 5% administration fee covers running the programme and the consultation; the surveyor is a separate appointment.</p></div></details>
     </section>
 
     <section class="cat" data-cat>
@@ -251,20 +275,25 @@ footer a:hover{color:var(--teal-deep)}
   <div class="cta-band">
     <h2>Didn't find your answer?</h2>
     <p>Tell us about your block. We'll reply as soon as possible.</p>
-    <a href="/" class="btn">Message us</a>
+    <a href="/#message" class="btn">Message us</a>
   </div>
 </main>
 
 <footer>
-  <div class="inner">
-    <div>&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610</div>
-    <div class="links">
-      <a href="/block-manager-london/">Service &amp; fees</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
-      <a href="mailto:howard@properblocks.co.uk">Contact</a>
-    </div>
-  </div>
+<div class="inner">
+<div class="copy">&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610 &middot; Registered in England &amp; Wales</div>
+<div class="links">
+<a href="/block-manager-london/">About</a>
+<a href="/fees/">Fees</a>
+<a href="/FAQs/">FAQs</a>
+<a href="/contractor/">Contractors</a>
+<a href="/privacy/">Privacy</a>
+<a href="/terms/">Terms</a>
+<a href="/cookies/">Cookies</a>
+<a href="https://dennishouse.properblocks.co.uk">Portal login</a>
+<a href="mailto:howard@properblocks.co.uk">Contact</a>
+</div>
+</div>
 </footer>
 
 <script>

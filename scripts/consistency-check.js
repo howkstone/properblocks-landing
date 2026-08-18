@@ -2,7 +2,7 @@
 // Cross-page fact check for properblocks.co.uk.
 //
 // Why this exists: index/privacy/cookies/terms are generated from the DH repo's
-// ui/*.js, but pricing, FAQs, block-manager-london and contractor are hand-
+// ui/*.js, but fees, FAQs and contractor are hand-
 // maintained standalone HTML. Nothing else notices when the same fact is stated
 // two different ways on two different pages. On 7 Aug 2026 the site was
 // simultaneously claiming the smallest block it takes is 10 units and 20 units,
@@ -20,9 +20,9 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const PAGES = [
   "index.html",
-  "pricing/index.html",
-  "FAQs/index.html",
   "block-manager-london/index.html",
+  "FAQs/index.html",
+  "fees/index.html",
   "contractor/index.html",
   "privacy/index.html",
   "cookies/index.html",
@@ -102,10 +102,14 @@ const FACTS = [
     ],
   },
   {
+    // 18 Aug 2026: 5%, not 3%. Dennis House pays 3% because Howard owns a flat
+    // there, so that rate belongs to that block's own agreement and must never
+    // be the published rate again.
     name: "major works administration",
     probe: /major works administration|Section 20 consultation and running/i,
-    required: [/\b3%/],
-    banned: [/\b(10|12|15)% of the contract/i],
+    required: [/\b5%/],
+    banned: [/\b3% (of|on) (the )?(works|major works|contract)/i, /\b3% administration/i,
+             /\b(10|12|15)% of the contract/i],
   },
   {
     // Howard, 12 Aug 2026: no reply-time promise on any marketing page. Naming
@@ -342,6 +346,23 @@ for (const rel of PAGES) {
 // wording, so a board could have been handed a letter that disagreed with the
 // page it points at. The builders sit in OneDrive, outside this repo, so this
 // runs only where they exist (a laptop, not CI) and says so when it skips.
+// The mission reads "Our mission:" as a label and the rest as a quotation, so
+// on the page it is split across elements and wrapped in curly quotes, while on
+// paper it is one plain sentence. Compare the WORDS, not the markup: strip
+// tags, quotes and punctuation, then look for the phrase. Checking the raw
+// string would have passed the documents and failed the page it came from.
+const MISSION_TEXT = "Our mission: to be the most effective and honourable block manager in London.";
+const MISSION_WORDS = /our mission,? to be the most effective and honourable block manager in london/;
+function statesMission(src) {
+  const flat = src
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&[a-z]+;|&#\d+;/gi, " ")
+    .replace(/[‘’“”"'`.:;!]/g, " ")
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+  return MISSION_WORDS.test(flat);
+}
+
 const BUILDERS = [
   "C:\\Users\\user\\OneDrive\\Documents\\Big Brain Ltd\\Proper Blocks Ltd\\Prospects\\builders\\build_pb_letters.py",
   "C:\\Users\\user\\OneDrive\\Documents\\Big Brain Ltd\\Proper Blocks Ltd\\Prospects\\builders\\build_pb_notice.py",
@@ -351,6 +372,10 @@ let builderNote = "builders not present, skipped";
 if (fs.existsSync(indexFile)) {
   const siteLabels = [...fs.readFileSync(indexFile, "utf8")
     .matchAll(/<span class="deliver-label">([^<]+)<\/span>/g)].map(m => m[1].trim());
+  const indexSrc = fs.readFileSync(indexFile, "utf8");
+  if (!statesMission(indexSrc)) {
+    fail("index.html", "does not carry the mission line exactly: " + MISSION_TEXT);
+  }
   if (siteLabels.length) {
     const present = BUILDERS.filter(f => fs.existsSync(f));
     for (const f of present) {
@@ -409,6 +434,15 @@ if (fs.existsSync(indexFile)) {
         fail(path.basename(f), `carries some registrations but not ${missing.join(" or ")}. All three, on every piece of paper that leaves us.`);
       } else if (!shown.length) {
         fail(path.basename(f), "carries no registrations at all. The Ombudsman number, the ICO reference and the indemnity cover go on everything we send out.");
+      }
+
+      // THE MISSION LINE, word for word (18 Aug 2026). Howard dictated it as
+      // "the most effective and honourable block manager in London"; the site
+      // had been carrying "honourable and effective ... block managers", so the
+      // page and the paper stated the mission differently. One wording, on all
+      // three surfaces, or this fails.
+      if (!statesMission(src)) {
+        fail(path.basename(f), "does not carry the mission line exactly: " + MISSION_TEXT);
       }
     }
     builderNote = present.length ? `${present.length} builders checked` : builderNote;
@@ -472,6 +506,42 @@ if (fs.existsSync(indexFile)) {
     const inlineCtl = [...form.matchAll(/<(?:button|select|input|textarea)[^>]*\sstyle="/g)];
     if (inlineCtl.length) {
       fail("index.html", `${inlineCtl.length} control(s) in the enquiry form are styled inline instead of by class, so nothing can check how they look.`);
+    }
+  }
+}
+
+// ---- Every internal link has to land somewhere ---------------------------
+// A page linking to a URL this project does not serve is a 404 in front of a
+// customer, and nothing else notices: a redirect can be retired, a page can be
+// renamed, and the link that pointed at it just rots. Checked against the
+// built output and the redirect table, so the answer is what Cloudflare will
+// actually serve.
+{
+  const redirects = fs.readFileSync(path.join(ROOT, "_redirects"), "utf8")
+    .split("\n").filter(Boolean)
+    .map(l => l.trim().split(/\s+/)[0])
+    .filter(p => p.startsWith("/"))
+    .map(p => p.replace(/\*$/, ""));
+
+  const serves = (url) => {
+    const clean = url.split("#")[0].split("?")[0];
+    if (clean === "" || clean === "/") return true;
+    const rel = clean.replace(/^\//, "").replace(/\/$/, "");
+    if (fs.existsSync(path.join(ROOT, rel, "index.html"))) return true;
+    if (fs.existsSync(path.join(ROOT, rel))) return true;
+    return redirects.some(r => clean === r || (r.endsWith("/") && clean.startsWith(r)));
+  };
+
+  for (const rel of PAGES) {
+    const file = path.join(ROOT, rel);
+    if (!fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, "utf8");
+    const seen = new Set();
+    for (const m of html.matchAll(/href="(\/[^"]*)"/g)) {
+      const href = m[1];
+      if (seen.has(href)) continue;
+      seen.add(href);
+      if (!serves(href)) fail(rel, `links to ${href}, which this site does not serve.`);
     }
   }
 }

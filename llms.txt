@@ -20,7 +20,8 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 ## Key pages
 
 - [Home](https://properblocks.co.uk/) - approach, casework and contact
-- [Block manager - London](https://properblocks.co.uk/block-manager-london/) - service detail, fees, FAQ, founder credentials
+- [About](https://properblocks.co.uk/block-manager-london/) - what independent block management means here, casework, founder, common questions
+- [Fees](https://properblocks.co.uk/fees/) - what we charge, with a calculator for your own block
 - [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
 - [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics cookies
 - [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales

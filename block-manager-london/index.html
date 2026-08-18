@@ -58,7 +58,7 @@
           "name": "How are Proper Blocks fees different from a managed-agent firm?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Proper Blocks charges one flat fee per unit per year, quotable from memory, plus a transparent 3% on major works (against the 10-15% large firms typically charge) and a few clearly-listed extras. The big managed-agent firms stack a management fee, an uplift on project work that is commonly 10% or more, and a string of per-document charges, so a leaseholder paying a low headline fee can pay substantially more across the year. We publish every charge in full."
+            "text": "Proper Blocks charges one flat fee per unit per year, plus a transparent 5% on major works (against the 10-15% large firms typically charge) and a few clearly-listed extras. The big managed-agent firms stack a management fee, an uplift on project work that is commonly 10% or more, and a string of per-document charges, so a leaseholder paying a low headline fee can pay substantially more across the year. We publish every charge in full."
           }
         },
         {
@@ -186,23 +186,48 @@ footer a:hover{color:var(--copper-deep)}
   main{padding:48px 24px 72px}
   nav.head{gap:14px}
 }
-</style>
+/* chrome:build.js */
+header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,0.94);backdrop-filter:blur(12px);border-bottom:1px solid #E6E3DC}
+header .inner{max-width:1200px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.mark{display:flex;align-items:center;gap:9px;text-decoration:none;color:#1E293B}
+.mark-glyph{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.mark-glyph svg{width:100%;height:100%}
+.mark-name{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:500;letter-spacing:-0.01em}
+nav.head{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+nav.head a:not(.btn){text-decoration:none;color:#475569;font-size:14px;font-weight:500}
+nav.head a:not(.btn):hover,nav.head a:not(.btn)[aria-current]{color:#155F66}
+nav.head .btn{display:inline-flex;align-items:center;padding:11px 22px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer}
+nav.head .btn-ghost{background:transparent;color:#1E293B;border-color:#CFCBC1}
+nav.head .btn-ghost:hover{background:rgba(30,41,59,0.05)}
+nav.head .btn-primary{background:#1E293B;color:#fff}
+nav.head .btn-primary:hover{background:#103E43}
+footer{padding:44px 32px;border-top:1px solid #E6E3DC;background:#FFFFFF;margin-top:0}
+footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+footer .links{display:flex;gap:20px;flex-wrap:wrap}
+footer .copy,footer a{font-size:13px;color:#64748B;text-decoration:none;line-height:1.7}
+footer a:hover{color:#155F66}
+@media (max-width:760px){header .inner{padding:14px 18px}nav.head{gap:14px}nav.head a:not(.btn){font-size:13px}nav.head .btn{padding:9px 14px;font-size:13px}footer{padding:32px 18px}}
+@media (max-width:520px){.mark-name{display:none}nav.head .btn-ghost{display:none}}
+/* /chrome */</style>
 </head>
 <body>
 
 <header>
-  <div class="inner">
-    <a href="/" class="mark">
-      <span class="mark-glyph">
-        <svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
-      </span>
-      <span class="mark-name">Proper Blocks</span>
-    </a>
-    <nav class="head">
-      <a href="/">Home</a>
-      <a href="https://dennishouse.properblocks.co.uk">Portal login</a>
-    </nav>
-  </div>
+<div class="inner">
+<a href="/" class="mark">
+<span class="mark-glyph">
+<svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>
+</span>
+<span class="mark-name">Proper Blocks</span>
+</a>
+<nav class="head">
+<a href="/block-manager-london/" aria-current="page">About</a>
+<a href="/fees/">Fees</a>
+<a href="/FAQs/">FAQs</a>
+<a href="https://dennishouse.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
+<a href="/#message" class="btn btn-primary">Message us</a>
+</nav>
+</div>
 </header>
 
 <main>
@@ -245,8 +270,8 @@ footer a:hover{color:var(--copper-deep)}
 
   <h2>Fees</h2>
   <div class="fees">
-    <p class="ink"><strong>One flat fee per unit per year. You can quote it from memory.</strong></p>
-    <p class="muted">Major works are administered at 3% of the works value, against the 10-15% large firms typically charge. Tribunal and legal preparation is &pound;50 an hour, timesheeted and agreed with the board in advance. Every charge is set out in full on our <a href="/pricing/">pricing page</a>.</p>
+    <p class="ink"><strong>One flat fee per unit per year.</strong></p>
+    <p class="muted">Major works are administered at 5% of the works value, against the 10-15% large firms typically charge. Tribunal and legal preparation is &pound;50 an hour, timesheeted and agreed with the board in advance. Every charge is set out in full on our <a href="/fees/">fees page</a>.</p>
   </div>
 
   <h2>Who we work with</h2>
@@ -264,7 +289,7 @@ footer a:hover{color:var(--copper-deep)}
     </details>
     <details>
       <summary>How are Proper Blocks fees different from a managed-agent firm?</summary>
-      <p>Proper Blocks charges one flat fee per unit per year, quotable from memory, plus a transparent 3% on major works (against the 10-15% large firms typically charge) and a few clearly-listed extras. The big managed-agent firms stack a management fee, an uplift on project work that is commonly 10% or more, and a string of per-document charges, so a leaseholder paying a low headline fee can pay substantially more across the year. We publish every charge in full.</p>
+      <p>Proper Blocks charges one flat fee per unit per year, plus a transparent 5% on major works (against the 10-15% large firms typically charge) and a few clearly-listed extras. The big managed-agent firms stack a management fee, an uplift on project work that is commonly 10% or more, and a string of per-document charges, so a leaseholder paying a low headline fee can pay substantially more across the year. We publish every charge in full.</p>
     </details>
     <details>
       <summary>How is RTM block management different from a freeholder-appointed agent?</summary>
@@ -287,19 +312,25 @@ footer a:hover{color:var(--copper-deep)}
   <div class="cta-band">
     <h2>Looking for a block manager?</h2>
     <p>Tell us about your block. We'll reply as soon as possible.</p>
-    <a href="/" class="btn">Message us</a>
+    <a href="/#message" class="btn">Message us</a>
   </div>
 </main>
 
 <footer>
-  <div class="inner">
-    <div>&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610</div>
-    <div class="links">
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
-      <a href="mailto:howard@properblocks.co.uk">Contact</a>
-    </div>
-  </div>
+<div class="inner">
+<div class="copy">&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610 &middot; Registered in England &amp; Wales</div>
+<div class="links">
+<a href="/block-manager-london/">About</a>
+<a href="/fees/">Fees</a>
+<a href="/FAQs/">FAQs</a>
+<a href="/contractor/">Contractors</a>
+<a href="/privacy/">Privacy</a>
+<a href="/terms/">Terms</a>
+<a href="/cookies/">Cookies</a>
+<a href="https://dennishouse.properblocks.co.uk">Portal login</a>
+<a href="mailto:howard@properblocks.co.uk">Contact</a>
+</div>
+</div>
 </footer>
 
 </body>

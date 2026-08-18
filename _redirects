@@ -1,1 +1,4 @@
 https://www.properblocks.co.uk/* https://properblocks.co.uk/:splat 301!
+/pricing /fees/ 301
+/pricing/ /fees/ 301
+/pricing/* /fees/ 301

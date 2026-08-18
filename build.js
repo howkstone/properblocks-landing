@@ -63,6 +63,165 @@ fs.writeFileSync(path.join(OUT, 'privacy', 'index.html'), privacy);
 fs.writeFileSync(path.join(OUT, 'cookies', 'index.html'), cookies);
 fs.writeFileSync(path.join(OUT, 'terms',   'index.html'), terms);
 
+// ---- Shared page chrome -------------------------------------------------
+// The home page is the master. Every other page carries the same header and
+// the same footer, so a visitor gets the same navigation wherever they land
+// and every page links to every other one. That second part is the reason
+// this exists: an orphan page (no internal links pointing at it) is crawled
+// less often and inherits none of the site's authority, so a page nobody can
+// navigate to is a page that ranks weakly. Hand-editing a page's header is
+// pointless - this rewrites it on every build.
+const MARK_SVG = '<svg viewBox="0 0 32 32"><rect x="3" y="16" width="11" height="13" rx="1" fill="#4DDBE8"/><rect x="18" y="16" width="11" height="13" rx="1" fill="#1F8E99"/><rect x="10.5" y="4" width="11" height="13" rx="1" fill="#155F66"/></svg>';
+
+// key -> the page it marks as current. About keeps the /block-manager-london/
+// URL it earned in Google rather than moving to a tidier one: the ranking
+// belongs to the URL, and a 301 leaks some of it every hop.
+const NAV = [
+  { key: 'about', href: '/block-manager-london/', label: 'About' },
+  { key: 'fees',  href: '/fees/',                 label: 'Fees' },
+  { key: 'faqs',  href: '/FAQs/',                 label: 'FAQs' },
+];
+
+const FOOT_LINKS = [
+  ['/block-manager-london/', 'About'],
+  ['/fees/', 'Fees'],
+  ['/FAQs/', 'FAQs'],
+  ['/contractor/', 'Contractors'],
+  // Trailing slash: these files live at privacy/index.html and the bare path
+  // 308s to the slashed one, so linking the bare form put a redirect hop in
+  // front of every click and every crawl.
+  ['/privacy/', 'Privacy'],
+  ['/terms/', 'Terms'],
+  ['/cookies/', 'Cookies'],
+  ['https://dennishouse.properblocks.co.uk', 'Portal login'],
+  ['mailto:howard@properblocks.co.uk', 'Contact'],
+];
+
+function headerHtml(current, opts) {
+  const o = opts || {};
+  const links = NAV.map(n =>
+    `<a href="${n.href}"${n.key === current ? ' aria-current="page"' : ''}>${n.label}</a>`).join('\n');
+  // The home page owns the message form, so its button opens the modal in
+  // place. Every other page links to /#message, which the home page reads on
+  // arrival and opens the same form - a "Message us" button that only dumped
+  // the visitor on the home page was a control that did not do what it said.
+  const msg = o.modalButton
+    ? '<button type="button" class="btn btn-primary js-open-message-modal">Message us</button>'
+    : '<a href="/#message" class="btn btn-primary">Message us</a>';
+  return `<header${o.id ? ` id="${o.id}"` : ''}>
+<div class="inner">
+<a href="/" class="mark">
+<span class="mark-glyph">
+${MARK_SVG}
+</span>
+<span class="mark-name">Proper Blocks</span>
+</a>
+<nav class="head">
+${links}
+<a href="https://dennishouse.properblocks.co.uk" class="btn btn-ghost">Portal login</a>
+${msg}
+</nav>
+</div>
+</header>`;
+}
+
+function footerHtml() {
+  return `<footer>
+<div class="inner">
+<div class="copy">&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610 &middot; Registered in England &amp; Wales</div>
+<div class="links">
+${FOOT_LINKS.map(([h, l]) => `<a href="${h}">${l}</a>`).join('\n')}
+</div>
+</div>
+</footer>`;
+}
+
+// Self-contained, hex literals rather than custom properties: the pages do not
+// all name the palette the same way (--copper-deep here is --teal-deep there),
+// and chrome that renders differently per page is the thing this removes.
+const CHROME_CSS = `/* chrome:build.js */
+header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,0.94);backdrop-filter:blur(12px);border-bottom:1px solid #E6E3DC}
+header .inner{max-width:1200px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.mark{display:flex;align-items:center;gap:9px;text-decoration:none;color:#1E293B}
+.mark-glyph{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.mark-glyph svg{width:100%;height:100%}
+.mark-name{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:500;letter-spacing:-0.01em}
+nav.head{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+nav.head a:not(.btn){text-decoration:none;color:#475569;font-size:14px;font-weight:500}
+nav.head a:not(.btn):hover,nav.head a:not(.btn)[aria-current]{color:#155F66}
+nav.head .btn{display:inline-flex;align-items:center;padding:11px 22px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer}
+nav.head .btn-ghost{background:transparent;color:#1E293B;border-color:#CFCBC1}
+nav.head .btn-ghost:hover{background:rgba(30,41,59,0.05)}
+nav.head .btn-primary{background:#1E293B;color:#fff}
+nav.head .btn-primary:hover{background:#103E43}
+footer{padding:44px 32px;border-top:1px solid #E6E3DC;background:#FFFFFF;margin-top:0}
+footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+footer .links{display:flex;gap:20px;flex-wrap:wrap}
+footer .copy,footer a{font-size:13px;color:#64748B;text-decoration:none;line-height:1.7}
+footer a:hover{color:#155F66}
+@media (max-width:760px){header .inner{padding:14px 18px}nav.head{gap:14px}nav.head a:not(.btn){font-size:13px}nav.head .btn{padding:9px 14px;font-size:13px}footer{padding:32px 18px}}
+@media (max-width:520px){.mark-name{display:none}nav.head .btn-ghost{display:none}}
+/* /chrome */`;
+
+function withChromeCss(html) {
+  // Idempotent: the hand-maintained pages are rewritten in place, so strip any
+  // block a previous build appended before adding this one.
+  const stripped = html.replace(/\/\* chrome:build\.js \*\/[\s\S]*?\/\* \/chrome \*\//g, '');
+  const i = stripped.lastIndexOf('</style>');
+  if (i === -1) throw new Error('no </style> to append the chrome CSS to');
+  return stripped.slice(0, i) + CHROME_CSS + stripped.slice(i);
+}
+
+function applyChrome(html, current, opts) {
+  const o = opts || {};
+  // Tested by matching, never by comparing before/after: a page already
+  // carrying this exact chrome replaces to an identical string, and an
+  // equality check would read that as "nothing to replace" and fail the build
+  // on the second run.
+  if (!/<header[^>]*>[\s\S]*?<\/header>/.test(html)) throw new Error(`${current}: no <header> to replace`);
+  if (!/<footer[^>]*>[\s\S]*?<\/footer>/.test(html)) throw new Error(`${current}: no <footer> to replace`);
+  const out = html
+    .replace(/<header[^>]*>[\s\S]*?<\/header>/, () => headerHtml(current, o))
+    .replace(/<footer[^>]*>[\s\S]*?<\/footer>/, () => footerHtml());
+  return o.skipCss ? out : withChromeCss(out);
+}
+
+function applyChromeToPolicy(html, current) {
+  // The policy pages are generated from the portal's ui/*.js and have no site
+  // chrome at all: a visitor landing on /privacy from a search result had no
+  // way into the rest of the site, and the page's own "Back to the portal"
+  // link pointed at the marketing home page here, which is not the portal.
+  // Only this static copy is touched; the portal keeps its own version.
+  let out = html;
+  if (!/<div class="wrap">/.test(out)) throw new Error(`${current}: policy page shape changed`);
+  out = out.replace('<p><a class="back" href="/">&larr; Back to the portal</a></p>', '');
+  out = out.replace(/<footer[^>]*>[\s\S]*?<\/footer>/, '');
+  out = out.replace('<div class="wrap">', headerHtml(current) + '\n<div class="wrap">');
+  out = out.replace('</div></body>', '</div>\n' + footerHtml() + '\n</body>');
+  // Fraunces is what the brand mark is set in; the policy pages never loaded it.
+  out = out.replace('</head>', '<link rel="stylesheet" href="/fonts/fonts-1.css">\n</head>');
+  return withChromeCss(out);
+}
+
+const CHROMED = [
+  ['index.html',                    'home',       { id: 'hd', modalButton: true, skipCss: true }],
+  ['block-manager-london/index.html','about',     {}],
+  ['fees/index.html',               'fees',       {}],
+  ['FAQs/index.html',               'faqs',       {}],
+  ['contractor/index.html',         'contractor', {}],
+];
+CHROMED.forEach(([rel, key, opts]) => {
+  const file = path.join(OUT, rel);
+  fs.writeFileSync(file, applyChrome(fs.readFileSync(file, 'utf8'), key, opts));
+});
+[['privacy/index.html', 'privacy'], ['terms/index.html', 'terms'], ['cookies/index.html', 'cookies']]
+  .forEach(([rel, key]) => {
+    const file = path.join(OUT, rel);
+    fs.writeFileSync(file, applyChromeToPolicy(fs.readFileSync(file, 'utf8'), key));
+  });
+console.log(`Chrome: same header and footer written to ${CHROMED.length + 3} pages.`);
+
+
 // Static robots.txt with explicit AI-crawler allow-list. PB is meant to be
 // cited by ChatGPT / Perplexity / Google AI Overviews; silence in robots.txt
 // defaults to allow but explicit is stronger and survives crawler-policy drift.
@@ -79,7 +238,7 @@ fs.writeFileSync(path.join(OUT, 'robots.txt'),
   '\nSitemap: https://properblocks.co.uk/sitemap.xml\n');
 
 const today = new Date().toISOString().slice(0, 10);
-const sitemapUrls = ['/', '/privacy/', '/terms/', '/cookies/', '/block-manager-london/', '/contractor/'];
+const sitemapUrls = ['/', '/block-manager-london/', '/privacy/', '/terms/', '/cookies/', '/fees/', '/contractor/'];
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
@@ -112,7 +271,8 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 ## Key pages
 
 - [Home](https://properblocks.co.uk/) - approach, casework and contact
-- [Block manager - London](https://properblocks.co.uk/block-manager-london/) - service detail, fees, FAQ, founder credentials
+- [About](https://properblocks.co.uk/block-manager-london/) - what independent block management means here, casework, founder, common questions
+- [Fees](https://properblocks.co.uk/fees/) - what we charge, with a calculator for your own block
 - [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
 - [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics cookies
 - [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales
@@ -152,9 +312,26 @@ fs.writeFileSync(path.join(OUT, '_headers'),
   // here, and a cross-origin font needs CORS or the browser refuses it.
   '  Access-Control-Allow-Origin: *\n');
 
-// _redirects - canonicalise www to apex.
-fs.writeFileSync(path.join(OUT, '_redirects'),
-  'https://www.properblocks.co.uk/* https://properblocks.co.uk/:splat 301!\n');
+// _redirects - canonicalise www to apex, and keep the retired URLs alive.
+// /pricing/ was a separate price list and is now /fees/. It is a 301 rather
+// than a deletion because the old URL is in Google, in the printed letters' QR
+// trail, and in anything anyone has bookmarked.
+// /block-manager-london/ is NOT redirected: it is the About page, and it keeps
+// that URL because the URL is what carries the ranking for "block manager
+// London". A 301 would hand that to /fees/, which is a weaker page for the
+// search. This file is REWRITTEN on every build, so a redirect added by hand
+// to _redirects is lost - add it here.
+// Cloudflare Pages reads "from to status". The trailing "!" is Netlify's
+// force flag and a line carrying it is IGNORED here, which is why the first
+// pass at these 301s silently did nothing and /pricing/ kept serving. Both
+// the bare path and the trailing slash are listed, because a splat does not
+// reliably match the empty remainder.
+fs.writeFileSync(path.join(OUT, '_redirects'), [
+  'https://www.properblocks.co.uk/* https://properblocks.co.uk/:splat 301!',
+  '/pricing /fees/ 301',
+  '/pricing/ /fees/ 301',
+  '/pricing/* /fees/ 301',
+].join('\n') + '\n');
 
 console.log('Built:');
 ['index.html', 'privacy/index.html', 'cookies/index.html', 'terms/index.html',
@@ -164,7 +341,7 @@ console.log('Built:');
 });
 
 // Cross-page fact check. The hand-maintained pages (pricing, FAQs,
-// block-manager-london, contractor) are not generated here, so nothing else
+// fees, contractor) are not generated here, so nothing else
 // catches the same fact being stated two ways on two pages. Fails the build.
 require('child_process').execFileSync(
   process.execPath, [path.join(__dirname, 'scripts', 'consistency-check.js')],
