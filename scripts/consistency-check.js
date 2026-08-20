@@ -351,8 +351,8 @@ for (const rel of PAGES) {
 // paper it is one plain sentence. Compare the WORDS, not the markup: strip
 // tags, quotes and punctuation, then look for the phrase. Checking the raw
 // string would have passed the documents and failed the page it came from.
-const MISSION_TEXT = "Our mission: to be the most effective and honourable block manager in London.";
-const MISSION_WORDS = /our mission,? to be the most effective and honourable block manager in london/;
+const MISSION_TEXT = "Our mission: to be the most transparent, effective, and honourable block manager in London, restoring trust to the industry.";
+const MISSION_WORDS = /our mission,? to be the most transparent,? effective,? and honourable block manager in london,? restoring trust to the industry/;
 function statesMission(src) {
   const flat = src
     .replace(/<[^>]+>/g, " ")
@@ -436,11 +436,13 @@ if (fs.existsSync(indexFile)) {
         fail(path.basename(f), "carries no registrations at all. The Ombudsman number, the ICO reference and the indemnity cover go on everything we send out.");
       }
 
-      // THE MISSION LINE, word for word (18 Aug 2026). Howard dictated it as
-      // "the most effective and honourable block manager in London"; the site
-      // had been carrying "honourable and effective ... block managers", so the
-      // page and the paper stated the mission differently. One wording, on all
-      // three surfaces, or this fails.
+      // THE MISSION LINE, word for word. Howard dictated it on 20 Aug 2026 as
+      // "to be the most transparent, effective, and honourable block manager in
+      // London, restoring trust to the industry", replacing the 18 Aug wording
+      // ("the most effective and honourable block manager in London"). Before
+      // that the site carried "honourable and effective ... block managers", so
+      // the page and the paper stated the mission differently. One wording, on
+      // all three surfaces, or this fails.
       if (!statesMission(src)) {
         fail(path.basename(f), "does not carry the mission line exactly: " + MISSION_TEXT);
       }
