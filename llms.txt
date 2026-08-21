@@ -10,6 +10,8 @@ The service is anchored on two pillars: financial diligence (every supplier invo
 
 The current customer block is Dennis House, a 48-unit mixed-use building on Roman Road, London E3 5ER (Dennis House RTM Company Ltd, Companies House 11620031).
 
+There is a six-month service guarantee. Where Proper Blocks fails materially or persistently to manage a building to the standard set out in its management agreement, the client can end the agreement inside the first six months and every management fee and the onboarding fee is returned. The client's board decides whether the standard was met, giving its reasons in writing, and no proof of loss is required; where Proper Blocks disagrees with that decision an independent chartered surveyor settles it and the cost is shared. A change of mind is not covered. The wording is clause 9.5 of the management agreement.
+
 ## Casework patterns we have addressed
 
 - Asbestos discovered mid £250k Section 20 major works; re-inspection over a decade overdue when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders.
@@ -21,7 +23,7 @@ The current customer block is Dennis House, a 48-unit mixed-use building on Roma
 
 - [Home](https://properblocks.co.uk/) - approach, casework and contact
 - [About](https://properblocks.co.uk/block-manager-london/) - what independent block management means here, casework, founder, common questions
-- [Fees](https://properblocks.co.uk/fees/) - what we charge, with a calculator for your own block
+- [Fees](https://properblocks.co.uk/fees/) - what we charge, with a calculator for your own block, and the service guarantee
 - [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
 - [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics cookies
 - [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales
