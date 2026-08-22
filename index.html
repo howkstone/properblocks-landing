@@ -306,6 +306,120 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .deliver-close span.in{opacity:1;transform:none}
 @media (max-width:860px){.deliver-grid{grid-template-columns:1fr;gap:0}}
 
+/* Portal band - the leaseholder portal that ships with every block. A dark
+   moss band so it reads as its own product inside the page. Left column is
+   the feature list, right is a mock portal window whose pane swaps with the
+   active feature. The swap is opacity driven by an .is-on class the script
+   moves; with no script at all, or with reduced motion, the first pane stays
+   lit and every feature label is still readable, so nothing is hidden behind
+   the animation. The panes are decorative (aria-hidden) - the words a reader
+   needs are in the list itself. */
+.portal-band{background:var(--moss);color:#EDEFEE;padding:56px 32px 60px;position:relative;overflow:hidden}
+.portal-band::before{content:"";position:absolute;inset:0;background:radial-gradient(110% 130% at 76% 0%,rgba(77,219,232,0.13),transparent 62%);pointer-events:none}
+.portal-inner{position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);grid-template-areas:'head sec' 'feats screen' 'foot foot';column-gap:44px;row-gap:24px;align-items:start}
+.portal-head{grid-area:head;max-width:640px;align-self:center}
+.portal-eyebrow{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;color:#4DDBE8;margin:0 0 14px}
+.portal-head h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(30px,3.4vw,42px);line-height:1.1;letter-spacing:-0.02em;color:#FFFFFF;margin:0 0 16px;text-wrap:balance}
+.portal-head h2 .w{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity 0.95s cubic-bezier(0.22,1,0.36,1),transform 0.95s cubic-bezier(0.22,1,0.36,1)}
+.portal-head h2 .w.in{opacity:1;transform:translateY(0)}
+.portal-head h2 em{font-style:italic;color:#4DDBE8;font-weight:500}
+.portal-head .portal-lede{font-size:17px;line-height:1.65;color:#BFD2D2;max-width:640px;opacity:0;transform:translateY(8px);transition:opacity 0.6s ease 0.3s,transform 0.6s ease 0.3s}
+.portal-head .portal-lede.in{opacity:1;transform:none}
+.portal-feats{grid-area:feats;list-style:none;margin:0;padding:0}
+.pf{display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:center;padding:8px 12px 8px 10px;border-radius:6px;border-left:2px solid transparent;transition:background 0.3s ease,border-color 0.3s ease;opacity:0;transform:translateY(12px)}
+.pf.in{opacity:1;transform:none;transition:background 0.3s ease,border-color 0.3s ease,opacity 0.55s ease,transform 0.55s cubic-bezier(0.22,1,0.36,1)}
+.pf:nth-child(1){transition-delay:0s}
+.pf:nth-child(2){transition-delay:0.05s}
+.pf:nth-child(3){transition-delay:0.10s}
+.pf:nth-child(4){transition-delay:0.15s}
+.pf:nth-child(5){transition-delay:0.20s}
+.pf:nth-child(6){transition-delay:0.25s}
+.pf:nth-child(7){transition-delay:0.30s}
+.pf:nth-child(8){transition-delay:0.35s}
+.pf.is-on{background:rgba(77,219,232,0.09);border-left-color:#4DDBE8}
+.pf .pf-ic{display:flex;color:#7FB6BC;transition:color 0.3s ease}
+.pf.is-on .pf-ic{color:#4DDBE8}
+.pf .pf-ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pf .pf-label{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:17px;letter-spacing:-0.005em;color:#DCE5E4;transition:color 0.3s ease}
+.pf.is-on .pf-label{color:#FFFFFF}
+/* The mock window is decorative and aria-hidden, so each caption is carried
+   here for screen readers. Change one and change the other: the two must say
+   the same thing. */
+.pf-say{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* Mock portal window. Sticky on desktop so the panes stay beside the list. */
+.portal-screen{grid-area:screen;background:#FBFAF7;border-radius:10px;border:1px solid rgba(255,255,255,0.14);box-shadow:0 24px 60px rgba(0,0,0,0.30);overflow:hidden;opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.22,1,0.36,1)}
+.portal-screen.in{opacity:1;transform:none}
+.ps-chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#F0EEE8;border-bottom:1px solid #E1DED5}
+.ps-dot{width:9px;height:9px;border-radius:50%;background:#CFCBC1}
+.ps-url{margin-left:6px;font-size:11.5px;color:var(--ink-3);background:#FBFAF7;border:1px solid #E1DED5;border-radius:20px;padding:3px 12px;letter-spacing:0.01em}
+.ps-stage{position:relative;min-height:326px}
+.ps-pane{position:absolute;inset:0;padding:20px 22px 22px;opacity:0;transform:translateY(10px);transition:opacity 0.5s ease,transform 0.5s cubic-bezier(0.22,1,0.36,1);pointer-events:none}
+.ps-pane.is-on{opacity:1;transform:none}
+.ps-title{font-family:Fraunces,Georgia,serif;font-size:18px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.ps-cap{font-size:13.5px;line-height:1.5;color:var(--ink-2);margin-bottom:16px}
+.pm-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
+.pm-row:last-child{border-bottom:0}
+.pm-row b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.pm-row .pm-cr{color:#2AA06A;font-weight:600;font-variant-numeric:tabular-nums}
+.pm-bal{display:flex;align-items:baseline;justify-content:space-between;margin-top:12px;padding-top:11px;border-top:2px solid var(--ink)}
+.pm-bal span{font-size:12px;color:var(--ink-3);letter-spacing:0.03em}
+.pm-bal b{font-family:Fraunces,Georgia,serif;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
+.pm-chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:0.02em;padding:3px 9px;border-radius:20px;background:var(--copper-light);color:var(--copper-deep)}
+.pm-chip.pm-open{background:#FEF3C7;color:#8A6212}
+.pm-chip.pm-done{background:#DCF3E7;color:#1B6E4A}
+.pm-card{border:1px solid var(--rule);border-radius:7px;padding:12px 14px;margin-bottom:9px;background:#FFFFFF}
+.pm-card .pm-h{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.pm-card p{font-size:12px;line-height:1.5;color:var(--ink-3)}
+.pm-file{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
+.pm-file:last-child{border-bottom:0}
+.pm-file .pm-ext{font-size:9.5px;font-weight:700;letter-spacing:0.04em;color:#fff;background:var(--copper-deep);border-radius:3px;padding:2px 5px}
+.pm-file .pm-meta{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
+.pm-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.pm-tile{border:1px solid var(--rule);border-radius:7px;padding:11px 12px;background:#FFFFFF}
+.pm-tile span{display:block;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.pm-tile b{font-family:Fraunces,Georgia,serif;font-size:16px;color:var(--ink);letter-spacing:0.08em}
+.pm-track{display:flex;align-items:center;gap:0;margin:6px 0 14px}
+.pm-step{flex:1;display:flex;flex-direction:column;gap:7px}
+.pm-step i{display:block;height:4px;border-radius:3px;background:var(--rule);margin-right:4px}
+.pm-step.done i{background:var(--copper)}
+.pm-step.now i{background:var(--copper-deep)}
+.pm-step span{font-size:10.5px;color:var(--ink-3);line-height:1.3}
+.pm-step.now span{color:var(--copper-deep);font-weight:600}
+.pm-tick{display:flex;align-items:center;gap:9px;padding:8px 0;font-size:12.5px;color:var(--ink-2)}
+.pm-tick svg{width:15px;height:15px;fill:none;stroke:#2AA06A;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.pm-form{border:1px solid var(--rule);border-radius:7px;padding:12px 14px;background:#FFFFFF;margin-bottom:11px}
+.pm-form label{display:block;font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.pm-form .pm-input{border:1px solid var(--rule-2);border-radius:5px;padding:7px 10px;font-size:12.5px;color:var(--ink)}
+
+/* Security wink. Six plain statements of what actually protects the account. */
+.portal-sec{grid-area:sec;align-self:center;border:1px solid rgba(255,255,255,0.16);border-radius:10px;background:rgba(255,255,255,0.045);padding:18px 22px 20px}
+.portal-sec-label{display:flex;align-items:center;gap:9px;font-size:11.5px;letter-spacing:0.11em;text-transform:uppercase;font-weight:600;color:#7FB6BC;margin-bottom:13px}
+.portal-sec-label svg{width:16px;height:16px;fill:none;stroke:#4DDBE8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.portal-chips{display:flex;flex-direction:column;gap:0}
+.portal-chips li{list-style:none;display:grid;grid-template-columns:14px 1fr;gap:10px;align-items:start;font-size:13px;line-height:1.45;color:#D6E2E1;padding:5px 0;opacity:0;transform:translateY(8px);transition:opacity 0.5s ease,transform 0.5s ease}
+.portal-chips li.in{opacity:1;transform:none}
+.portal-chips li::before{content:"";width:11px;height:6px;margin:5px 0 0 1px;border-left:2px solid #4DDBE8;border-bottom:2px solid #4DDBE8;transform:rotate(-45deg)}
+.portal-chips li:nth-child(2){transition-delay:0.06s}
+.portal-chips li:nth-child(3){transition-delay:0.12s}
+.portal-chips li:nth-child(4){transition-delay:0.18s}
+.portal-chips li:nth-child(5){transition-delay:0.24s}
+.portal-chips li:nth-child(6){transition-delay:0.30s}
+.portal-foot{grid-area:foot;margin-top:4px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.14);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 26px}
+.portal-foot p{font-size:13.5px;line-height:1.6;color:#A9C0C0;max-width:660px}
+.portal-foot .btn{background:#4DDBE8;color:#0B2F33;border-color:#4DDBE8}
+.portal-foot .btn:hover{background:#7FE7F0;border-color:#7FE7F0}
+@media (max-width:980px){
+  .portal-inner{grid-template-columns:1fr;grid-template-areas:'head' 'feats' 'screen' 'sec' 'foot';row-gap:26px}
+  .portal-head{max-width:none}
+  .ps-stage{min-height:350px}
+}
+@media (max-width:640px){
+  .portal-band{padding:56px 20px 60px}
+  .pm-tiles{grid-template-columns:repeat(2,1fr)}
+  .ps-stage{min-height:390px}
+}
+
 .pillar:nth-child(1){transition-delay:0s}
 .pillar:nth-child(2){transition-delay:0.12s}
 .pillar:nth-child(3){transition-delay:0.24s}
@@ -682,6 +796,153 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <summary><span class="deliver-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span><span class="deliver-label">Safety and compliance kept in date</span><span class="deliver-plus" aria-hidden="true"></span></summary>
       <p>Fire risk assessment, lift, asbestos, electrical, and water checks each held with their due date, and re-done before that date passes.</p>
     </details>
+  </div>
+</section>
+
+<!-- Portal band. The list on the left is the whole story in text; the window
+     on the right is decoration that follows it. Every feature named here is
+     a live page in the portal, so this section is checked against NAV_ITEMS
+     in ui/portal.js whenever a page is added or retired. -->
+<section class="portal-band" id="portal" aria-labelledby="portal-h">
+  <div class="portal-inner" data-reveal-children>
+    <div class="portal-head" data-reveal-head>
+      <p class="portal-eyebrow">Included with every block</p>
+      <h2 id="portal-h" data-words>Your block, on a login of your own.</h2>
+      <p class="portal-lede">Every leaseholder gets an account on our own portal, which we wrote and we run. The same figures the directors see, the same records, whenever you want them.</p>
+    </div>
+
+    <div class="portal-sec">
+      <p class="portal-sec-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.2 8.4 8 9.5 4.8-1.1 8-5 8-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>Because it holds your money and your address</p>
+      <ul class="portal-chips" data-reveal-children>
+        <li>Two-factor sign-in, by app or text</li>
+        <li>TLS 1.3 with 256-bit encryption on every page</li>
+        <li>Passwords put through 600,000 rounds of hashing</li>
+        <li>Backups encrypted to 256-bit, with a copy on a second provider</li>
+        <li>An audit trail the database itself refuses to let anyone edit or delete</li>
+        <li>You see your own flat, and nothing else</li>
+      </ul>
+    </div>
+
+    <ul class="portal-feats" id="portal-feats" data-reveal-children>
+        <li class="pf is-on" data-pane="ps-statement">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>
+          <span class="pf-label">Your account statement</span><span class="pf-say">. Every charge and every payment since day one, with the running balance beside it. Export the lot to Excel in one click.</span>
+        </li>
+        <li class="pf" data-pane="ps-demands">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v5"/><path d="m9.5 14.5 2.5 2.5 2.5-2.5"/></svg></span>
+          <span class="pf-label">Demands, downloaded</span><span class="pf-say">. Open or download the demand itself as a PDF, with the summary of rights that has to come with it, going back as far as the records go.</span>
+        </li>
+        <li class="pf" data-pane="ps-issue">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 9v5"/><path d="M12 17.5h.01"/></svg></span>
+          <span class="pf-label">Report an issue in the block</span><span class="pf-say">. Say what is wrong and where it is. You then watch it move through acknowledged, assigned and done, with the contractor named.</span>
+        </li>
+        <li class="pf" data-pane="ps-notice">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 8.5a5 5 0 0 1 0 7"/></svg></span>
+          <span class="pf-label">Noticeboard and newsletter</span><span class="pf-say">. Block notices and the monthly newsletter in one place, so nothing important only ever exists in somebody's group chat.</span>
+        </li>
+        <li class="pf" data-pane="ps-docs">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+          <span class="pf-label">Every document about your block</span><span class="pf-say">. Your lease, the insurance policy, the safety certificates, and the certified accounts, filed where you can find them at midnight.</span>
+        </li>
+        <li class="pf" data-pane="ps-building">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M12 15v2"/></svg></span>
+          <span class="pf-label">Door codes and building info</span><span class="pf-say">. Door codes, bin days, where the stopcock is, and who to ring at 2am, on your phone instead of on a note in a drawer.</span>
+        </li>
+        <li class="pf" data-pane="ps-s20">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M6 20V9l6-4 6 4v11"/><path d="M10 20v-5h4v5"/></svg></span>
+          <span class="pf-label">Major works and Section 20</span><span class="pf-say">. Consultation notices, the quotes received and where the work has got to, without waiting for a letter to land.</span>
+        </li>
+        <li class="pf" data-pane="ps-pack">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="m8 12 2.5 2.5L16 9"/></svg></span>
+          <span class="pf-label">Selling or remortgaging</span><span class="pf-say">. Request the management pack your solicitor asks for, and follow it through the portal rather than chasing an agent for a fortnight.</span>
+        </li>
+      </ul>
+
+      <div class="portal-screen" id="portal-screen" aria-hidden="true">
+        <div class="ps-chrome">
+          <span class="ps-dot"></span><span class="ps-dot"></span><span class="ps-dot"></span>
+          <span class="ps-url">yourblock.properblocks.co.uk</span>
+        </div>
+        <div class="ps-stage">
+          <div class="ps-pane is-on" id="ps-statement">
+            <div class="ps-title">Account statement</div>
+            <p class="ps-cap">Every charge and every payment since day one, with the running balance beside it. Export the lot to Excel in one click.</p>
+            <div class="pm-row"><span>1 Apr &middot; Service charge, Q1</span><b>&pound;486.00</b></div>
+            <div class="pm-row"><span>14 Apr &middot; Payment received</span><span class="pm-cr">&minus;&pound;486.00</span></div>
+            <div class="pm-row"><span>1 Jul &middot; Service charge, Q2</span><b>&pound;486.00</b></div>
+            <div class="pm-row"><span>9 Jul &middot; Payment received</span><span class="pm-cr">&minus;&pound;486.00</span></div>
+            <div class="pm-bal"><span>BALANCE OUTSTANDING</span><b>&pound;0.00</b></div>
+          </div>
+          <div class="ps-pane" id="ps-demands">
+            <div class="ps-title">Service charge demands</div>
+            <p class="ps-cap">Open or download the demand itself as a PDF, with the summary of rights that has to come with it, going back as far as the records go.</p>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Service charge demand, Q2</span><span class="pm-meta">1 Jul</span></div>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Service charge demand, Q1</span><span class="pm-meta">1 Apr</span></div>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Budget for the year</span><span class="pm-meta">12 Mar</span></div>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Certified accounts, prior year</span><span class="pm-meta">28 Feb</span></div>
+          </div>
+          <div class="ps-pane" id="ps-issue">
+            <div class="ps-title">Report an issue</div>
+            <p class="ps-cap">Say what is wrong and where it is. You then watch it move through acknowledged, assigned and done, with the contractor named.</p>
+            <div class="pm-form">
+              <label>Where exactly</label>
+              <div class="pm-input">Second floor landing, by the lift</div>
+            </div>
+            <div class="pm-row"><span>Landing light out</span><span class="pm-chip pm-done">Completed</span></div>
+            <div class="pm-row"><span>Entry phone crackling</span><span class="pm-chip">In progress</span></div>
+          </div>
+          <div class="ps-pane" id="ps-notice">
+            <div class="ps-title">Noticeboard</div>
+            <p class="ps-cap">Block notices and the monthly newsletter in one place, so nothing important only ever exists in somebody's group chat.</p>
+            <div class="pm-card"><div class="pm-h">Lift service, Tuesday 9am to 1pm</div><p>Engineer booked. Stairs only for the morning, and we will post when it is back.</p></div>
+            <div class="pm-card"><div class="pm-h">Monthly newsletter, July</div><p>What was spent, what was fixed, and what is coming next month.</p></div>
+          </div>
+          <div class="ps-pane" id="ps-docs">
+            <div class="ps-title">Documents</div>
+            <p class="ps-cap">Your lease, the insurance policy, the safety certificates, and the certified accounts, filed where you can find them at midnight.</p>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Buildings insurance policy</span><span class="pm-meta">In force</span></div>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Fire risk assessment</span><span class="pm-meta">Reviewed</span></div>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Lift inspection report</span><span class="pm-meta">Current</span></div>
+            <div class="pm-file"><span class="pm-ext">PDF</span><span>Your lease</span><span class="pm-meta">Your flat</span></div>
+          </div>
+          <div class="ps-pane" id="ps-building">
+            <div class="ps-title">Building info and access codes</div>
+            <p class="ps-cap">Door codes, bin days, where the stopcock is, and who to ring at 2am, on your phone instead of on a note in a drawer.</p>
+            <div class="pm-tiles">
+              <div class="pm-tile"><span>Main door</span><b>&bull;&bull;&bull;&bull;</b></div>
+              <div class="pm-tile"><span>Bin store</span><b>&bull;&bull;&bull;&bull;</b></div>
+              <div class="pm-tile"><span>Bike store</span><b>&bull;&bull;&bull;&bull;</b></div>
+            </div>
+            <div class="pm-row" style="margin-top:12px"><span>Refuse collection</span><b>Wednesday</b></div>
+            <div class="pm-row"><span>Out of hours emergency</span><b>One tap to call</b></div>
+          </div>
+          <div class="ps-pane" id="ps-s20">
+            <div class="ps-title">Major works and Section 20</div>
+            <p class="ps-cap">Consultation notices, the quotes received and where the work has got to, without waiting for a letter to land.</p>
+            <div class="pm-track">
+              <div class="pm-step done"><i></i><span>Notice of intention</span></div>
+              <div class="pm-step done"><i></i><span>Observations</span></div>
+              <div class="pm-step now"><i></i><span>Quotes received</span></div>
+              <div class="pm-step"><i></i><span>Award</span></div>
+            </div>
+            <div class="pm-row"><span>Roof renewal, three quotes</span><span class="pm-chip">Open to comment</span></div>
+            <div class="pm-row"><span>Your observation, submitted</span><b>18 Jun</b></div>
+          </div>
+          <div class="ps-pane" id="ps-pack">
+            <div class="ps-title">Selling or remortgaging</div>
+            <p class="ps-cap">Request the management pack your solicitor asks for, and follow it through the portal rather than chasing an agent for a fortnight.</p>
+            <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Request raised for your flat</span></div>
+            <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Account balance confirmed to the buyer</span></div>
+            <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Insurance and certificates attached</span></div>
+            <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Pack issued to your solicitor</span></div>
+          </div>
+        </div>
+      </div>
+
+    <div class="portal-foot">
+      <p>Directors get the rest of it: who owes what, control of who can see which page, board meetings minuted where every change to the record is logged for good, and contractor onboarding with insurance and accreditation checked before anyone is instructed.</p>
+      <a href="https://dennishouse.properblocks.co.uk" class="btn btn-primary">See the portal</a>
+    </div>
   </div>
 </section>
 
@@ -1099,6 +1360,50 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     window.addEventListener('scroll', onScrollJourney, {passive:true});
     window.addEventListener('resize', function(){ setMode(); }, {passive:true});
     setMode();
+  })();
+
+  // Portal band: the mock window follows the feature list. Auto-advances only
+  // while the band is on screen, stops for good on reduced motion, and hands
+  // control to the pointer the moment someone hovers a feature. The markup
+  // ships with the first item and first pane already lit, so a failure here
+  // leaves a static, readable section rather than a blank window.
+  (function(){
+    const list = document.getElementById('portal-feats');
+    const stage = document.getElementById('portal-screen');
+    if(!list || !stage) return;
+    const items = Array.prototype.slice.call(list.querySelectorAll('.pf'));
+    if(items.length < 2) return;
+    let idx = 0, timer = null, visible = false;
+    const DWELL = 3800;
+    function show(n){
+      idx = (n + items.length) % items.length;
+      items.forEach(function(li,i){
+        li.classList.toggle('is-on', i === idx);
+        const pane = document.getElementById(li.getAttribute('data-pane'));
+        if(pane) pane.classList.toggle('is-on', i === idx);
+      });
+    }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+    function start(){
+      if(prefersReduced || timer || !visible) return;
+      timer = setInterval(function(){ show(idx + 1); }, DWELL);
+    }
+    items.forEach(function(li,i){
+      li.addEventListener('pointerenter', function(){ stop(); show(i); });
+      li.addEventListener('pointerleave', function(){ start(); });
+    });
+    if(!prefersReduced){
+      const io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          visible = e.isIntersecting;
+          if(visible) start(); else stop();
+        });
+      }, {threshold:0});
+      io.observe(document.getElementById('portal'));
+      document.addEventListener('visibilitychange', function(){
+        if(document.hidden) stop(); else start();
+      });
+    }
   })();
 
   if(prefersReduced){
