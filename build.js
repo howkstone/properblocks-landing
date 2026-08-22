@@ -269,6 +269,10 @@ There is a six-month service guarantee. Where Proper Blocks fails materially or 
 - Fire risk assessment several months overdue on inheritance, exposing the directors to criminal liability. Commissioned a competent FRA within weeks; directors taken out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005.
 - Inherited service-charge debtors who had not paid for over ten years. Balances reviewed and recovery pursued proportionately; the block kept solvent through the period.
 - Months of unanswered leaseholder correspondence and absolute refusal from the previous agent to share more than the legally required minimum. Replaced with a portal that logs every message, every action, every response, visible to the leaseholder it concerns.
+- A 60% buildings insurance rise across two years. Challenged, the rebuild value verified, then the suitability of the cover, and the appropriateness of the premium tested against those facts, securing a £37k (66%) discount; every policy then consolidated through one independent broker with terrorism and directors' and officers' cover added.
+- Service charges set with no forecast behind them and a reserve fund nobody had planned. Budget rebuilt line by line off the leases and the live contracts, then forecast out several years so the board can see the reserve, the major works and what each unit pays, every total reconciled before it reaches a demand.
+- A lift whose statutory safety examination had lapsed. An independent examiner put back on it through the engineering insurer, so the firm inspecting the lift is never the firm paid to maintain it; examination dates, service visits and every action arising held on one register with a due date against each.
+- Fly-tipping in the bin store with no way of proving who left it. Cameras installed with the notice the law requires and footage held for 180 days, the cost of clearance charged to whoever dumped it, and parking moved onto number-plate recognition with permits for residents and their visitors.
 
 ## Key pages
 
