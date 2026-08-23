@@ -237,6 +237,15 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .trust-creds .c:nth-child(3).in{transition-delay:0.16s}
 .trust-creds .c:nth-child(4).in{transition-delay:0.24s}
 .trust-creds .c .ind{color:var(--copper-deep);font-style:italic;font-weight:400;font-size:14px}
+/* A credential a board can check for itself (23 Aug 2026). Two of the three
+   rows now carry the register entry that proves them - the ombudsman's own
+   member record and the ICO's own register page - so nobody has to take our
+   word for a number typed on our own website. The link keeps the ink colour so
+   the row still reads as a credential rather than as navigation; the rule
+   underneath is the only thing that says it is clickable. */
+.trust-creds .c a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule-2);transition:border-color 0.18s ease,color 0.18s ease}
+.trust-creds .c a:hover{color:var(--copper-deep);border-bottom-color:var(--copper-deep)}
+.trust-creds .c a:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
 
 /* Section base */
 .section{max-width:1200px;margin:0 auto;padding:96px 32px;position:relative}
@@ -1152,11 +1161,11 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
            extraction, so a screen reader says "The Property OmbudsmanMembership
            T14754" and an AI assistant quoting the page copies that. Flex column
            separates them visually; only whitespace separates them in text. -->
-      <div class="c">The Property Ombudsman
+      <div class="c"><a href="https://www.tpos.co.uk/business-search/proper-blocks/" target="_blank" rel="noopener" aria-label="The Property Ombudsman: our entry on their public member register, opens in a new tab">The Property Ombudsman</a>
         <span class="ind">Membership T14754</span></div>
       <div class="c">Professional indemnity insurance
         <span class="ind">&pound;500,000 of cover</span></div>
-      <div class="c">Registered with the ICO
+      <div class="c"><a href="https://ico.org.uk/ESDWebPages/Entry/ZC141151" target="_blank" rel="noopener" aria-label="Registered with the ICO: our entry on their public register of fee payers, opens in a new tab">Registered with the ICO</a>
         <span class="ind">Reference ZC141151</span></div>
     </div>
   </div>
