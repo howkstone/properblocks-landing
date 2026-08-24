@@ -255,7 +255,7 @@ fs.writeFileSync(path.join(OUT, 'llms.txt'),
 
 ## What this is
 
-Proper Blocks is a trading style of Big Brain Ltd (Companies House 11209610). It offers independent block management to leaseholders who run their own buildings - typically through a right-to-manage (RTM) company under the Commonhold and Leasehold Reform Act 2002, or through a residents' association where RTM is not the chosen route. The founder, Howard Stone, is a turnaround finance director of fifteen years, revitalising companies in distress, and an active RTM director since 2018.
+Proper Blocks is a trading name of Big Brain Ltd (Companies House 11209610). It offers independent block management to leaseholders who run their own buildings - typically through a right-to-manage (RTM) company under the Commonhold and Leasehold Reform Act 2002, or through a residents' association where RTM is not the chosen route. The founder, Howard Stone, is a turnaround finance director of fifteen years, revitalising companies in distress, and an active RTM director since 2018.
 
 The service is anchored on two pillars: financial diligence (every supplier invoice scrutinised, service-charge debts pursued, accounts filed on time) and outstanding communication (a proprietary leaseholder portal that logs every message, document, and action visible to the leaseholder it concerns).
 
