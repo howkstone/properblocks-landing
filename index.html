@@ -282,6 +282,11 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .deliver-item:nth-child(8){transition-delay:0.42s}
 .deliver-item:nth-child(9){transition-delay:0.48s}
 .deliver-item:nth-child(10){transition-delay:0.54s}
+/* An odd number of promises used to be impossible here, so nothing handled it.
+   Removing the client-account line on 26 Aug 2026 left nine, and the ninth sat
+   in a half-width column with an empty column beside it. The last item spans
+   the grid whenever the count is odd, so the list stays square at any length. */
+.deliver-item:last-child:nth-child(odd){grid-column:1 / -1}
 .deliver-item > summary{display:grid;grid-template-columns:22px auto 18px 1fr;gap:14px;align-items:center;padding:17px 2px;cursor:pointer;list-style:none}
 .deliver-item > summary::-webkit-details-marker{display:none}
 .deliver-item > summary:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
