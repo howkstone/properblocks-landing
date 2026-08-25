@@ -70,6 +70,19 @@ const UNPROVABLE_CLAIMS = [
     pattern: /financial and operational (report|update)/i,
     why: "the quarterly report is expenditure only (Howard, 12 Aug 2026). Operational reporting is not committed to.",
   },
+  {
+    // Client money. Settled 14 Aug 2026 and restated 20 Aug: no client-trust
+    // -account claim goes on any Proper Blocks surface until a designated
+    // client account is actually open, and none is - the Unity Trust
+    // application people kept citing was the RTM's OWN account and completed on
+    // 27 July. Client money protection is unbought and unclaimed on the same
+    // rule. "Service charges are held in a client account, separate from our
+    // own money, with a ledger for your block" was live on this page from
+    // before 17 Aug 2026 and survived being raised as a blocking finding,
+    // because a rule written in a master file cannot fail a build.
+    pattern: /client (account|money)|designated client|held in trust|protected in trust|client money protection/i,
+    why: "makes a client-money claim. Big Brain Ltd t/a Proper Blocks holds no designated client account and no client money protection. Nothing here may say or imply otherwise until an account is open.",
+  },
 ];
 
 function fail(file, msg) {

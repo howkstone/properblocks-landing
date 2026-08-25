@@ -238,7 +238,17 @@ fs.writeFileSync(path.join(OUT, 'robots.txt'),
   '\nSitemap: https://properblocks.co.uk/sitemap.xml\n');
 
 const today = new Date().toISOString().slice(0, 10);
-const sitemapUrls = ['/', '/block-manager-london/', '/privacy/', '/terms/', '/cookies/', '/fees/', '/contractor/'];
+// DERIVED, not listed. The old hand-written array had drifted: /FAQs/ was in
+// the header nav and the footer of every page and had been missing from the
+// sitemap since it was published, so the one page answering the questions
+// prospects actually search was the one page never submitted to Google. A list
+// maintained beside another list only stays right until somebody adds a page.
+// Home, plus every internal page the site links to itself, deduplicated.
+const sitemapUrls = [...new Set([
+  '/',
+  ...NAV.map(n => n.href),
+  ...FOOT_LINKS.map(([href]) => href),
+].filter(h => h.startsWith('/')))];
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
