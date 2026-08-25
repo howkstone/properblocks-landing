@@ -103,7 +103,11 @@ h1{font-family:Fraunces,serif;font-weight:400;font-size:clamp(38px,4.6vw,56px);l
 
 /* Category chips */
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 40px}
-.chips a{font-size:12.5px;font-weight:500;color:var(--ink-2);background:var(--panel);border:1px solid var(--rule);border-radius:999px;padding:7px 14px;text-decoration:none}
+/* min-height 44px: these are controls, not prose links, so WCAG 2.5.5's
+   inline-link exemption does not reach them. They measured 36px tall until
+   26 Aug 2026. The flex centring keeps the pill looking the same height it
+   always did while the tappable box meets the floor. */
+.chips a{display:inline-flex;align-items:center;min-height:44px;font-size:12.5px;font-weight:500;color:var(--ink-2);background:var(--panel);border:1px solid var(--rule);border-radius:999px;padding:7px 14px;text-decoration:none}
 .chips a:hover{border-color:var(--teal);color:var(--teal-deep)}
 
 .cat{margin:0 0 8px}
