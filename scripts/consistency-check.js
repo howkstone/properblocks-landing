@@ -225,6 +225,20 @@ const FACTS = [
     banned: [/\bZ(?!C141151\b)[A-Z]?\d{6,7}\b/],
   },
   {
+    // Section 20 and major works are NOT in the annual fee. They are charged at
+    // 5% of the contract value under Schedule 2 of the management agreement, and
+    // the fees page listed "Section 20 consultation run properly" as an included
+    // item from launch until 25 Aug 2026, when Howard caught it live. A prospect
+    // reading that list was told the consultation was free and would have found
+    // the 5% on the invoice. The banned pattern reads only INSIDE the included
+    // list: it stops at the first closing tag of that list, so the separately
+    // charged row further down the same page stays legitimate.
+    name: "section 20 is never listed inside the annual fee",
+    probe: /annual fee covers|what the fee (covers|includes)/i,
+    required: [],
+    banned: [/(annual fee covers|what the fee (covers|includes))(?:(?!<\/ul>)[\s\S])*?(section\s*20|major works)/i],
+  },
+  {
     name: "fire risk assessment casework",
     probe: /Fire Risk Assessment (several months|on file)/i,
     required: [/several months overdue/i],
