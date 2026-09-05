@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fees - Proper Blocks</title>
-<meta name="description" content="What Proper Blocks charges: £350 per flat and £150 per commercial unit a year, inclusive of VAT, £3,600 minimum. Work out your block's fee with the calculator.">
+<meta name="description" content="What Proper Blocks charges: £350 per flat and £150 per commercial unit a year, inclusive of VAT, £3,500 minimum. Work out your block's fee with the calculator.">
 <meta name="theme-color" content="#155F66">
 
 <meta property="og:type" content="website">
@@ -209,11 +209,13 @@ footer a:hover{color:#155F66}
       <div class="vat">Inclusive of VAT</div>
     </div>
   </div>
-  <p class="priceline">Minimum charge <strong>&pound;3,600/year</strong>.</p>
+  <p class="priceline">Minimum charge <strong>&pound;3,500/year</strong>, which is ten flats at the flat rate.</p>
 
 
   <!-- Fee calculator. The arithmetic is the published schedule and nothing
-       else: 350 a flat, 150 a commercial unit and a 3,600 floor. Every figure
+       else: 350 a flat, 150 a commercial unit and a 3,500 floor, which is ten
+       flats at the flat rate (Howard, 5 Sep 2026 - the old 3,600 was a round
+       300 a month and bit at 10.3 flats). Every figure
        it prints has to be findable in the tables below it. Major works are NOT
        in here: they are a one-off on a contract that may never happen, and
        folding them into an annual fee overstates what the block pays every
@@ -268,7 +270,7 @@ footer a:hover{color:#155F66}
         <div class="calc-note">management fee only</div>
       </div>
     </div>
-    <p class="calc-min" id="calc-min" hidden>On units alone this block is under the &pound;3,600 minimum, so the minimum applies.</p>
+    <p class="calc-min" id="calc-min" hidden>On units alone this block is under the &pound;3,500 minimum, so the minimum applies.</p>
     <p class="calc-foot">Inclusive of VAT. This is the annual management fee. Six things sit outside it and every one is listed below with its price: the accountant who certifies your accounts, the one-off onboarding fee, major works administration, recovering arrears that were already old when you appointed us, advisory work, and running a tribunal or court case. The per-document charges further down are paid by the leaseholder who asks for them, never by the block.</p>
   </section>
 
@@ -415,7 +417,7 @@ footer a:hover{color:#155F66}
 
 <script>
 (function(){
-var RESI = 350, COMM = 150, MIN = 3600, MW_PCT = 0.05, AR_PCT = 0.05;
+var RESI = 350, COMM = 150, MIN = 3500, MW_PCT = 0.05, AR_PCT = 0.05;
 var resi = document.getElementById('calc-resi');
 var comm = document.getElementById('calc-comm');
 var outAnnual = document.getElementById('calc-annual');
@@ -441,7 +443,7 @@ if (resi) {
     var empty = (r + c) === 0;
     var annual = empty ? 0 : Math.max(onUnits, MIN);
     var atMin = onUnits < MIN && !empty;
-    // With nothing entered, print a dash. Showing the 3,600 minimum against an
+    // With nothing entered, print a dash. Showing the 3,500 minimum against an
     // empty form reads as a charge for managing no building.
     outAnnual.textContent = empty ? '\u2014' : money(annual);
     outBlockPm.textContent = empty ? '\u2014' : money2(annual / 12);

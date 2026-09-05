@@ -106,12 +106,19 @@ const FACTS = [
     banned: [],
   },
   {
+    // Howard, 5 Sep 2026: £3,500, down from £3,600. The old figure was a round
+    // £300 a month set on 11 Aug 2026 and never checked against the headline
+    // rate, so it bit at 10.3 flats. £3,500 is exactly ten flats at £350, which
+    // is why the pages may now say so; a page that quotes a different flat
+    // count against the minimum is stale.
     name: "small-block minimum",
     probe: /minimum (annual )?fee|smallest block|minimum of (£|&pound;)/i,
-    required: [/3,600/],
+    required: [/3,500/],
     banned: [
       /around 20 units or more/i,
       /From around 10 units upwards/i,
+      /(£|&pound;)3,600/,
+      /Below about ten flats/i,
     ],
   },
   {
