@@ -134,6 +134,9 @@ footer a:hover{color:var(--teal-deep)}
 .mwbox[open] summary::after{content:"\2212"}
 .mwbox summary:focus-visible{outline:2px solid var(--teal-deep);outline-offset:2px}
 .mwbox-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;align-items:end;padding:0 20px 20px}
+/* Two output tiles beside one input: stack them in the second column so the
+   grid stays two-up and no tile is left with an empty half-row beside it. */
+.mwbox-outs{display:grid;gap:14px}
 .calc-money{display:flex;align-items:center;gap:9px}
 .calc-money > span{font-size:24px;font-weight:600;color:var(--teal-deep)}
 .calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:26px}
@@ -266,7 +269,7 @@ footer a:hover{color:#155F66}
       </div>
     </div>
     <p class="calc-min" id="calc-min" hidden>On units alone this block is under the &pound;3,600 minimum, so the minimum applies.</p>
-    <p class="calc-foot">Inclusive of VAT. This is the annual management fee. The one-off onboarding fee, the accountant who certifies your accounts and major works administration are charged separately and listed below. The per-document charges further down are paid by the leaseholder who asks for them, never by the block.</p>
+    <p class="calc-foot">Inclusive of VAT. This is the annual management fee. Six things sit outside it and every one is listed below with its price: the accountant who certifies your accounts, the one-off onboarding fee, major works administration, recovering arrears that were already old when you appointed us, advisory work, and running a tribunal or court case. The per-document charges further down are paid by the leaseholder who asks for them, never by the block.</p>
   </section>
 
   <h2>What the annual fee covers</h2>
@@ -289,7 +292,7 @@ footer a:hover{color:#155F66}
     </li>
     <li class="row">
       <div class="name">Onboarding, one off<span>Charged on the first invoice. It covers taking the building over from your outgoing agent, and it comes back in full under our service guarantee if you end the agreement inside six months because we failed the standard written into it.</span></div>
-      <div class="price">&pound;1,000</div>
+      <div class="price">&pound;750</div>
     </li>
     <li class="row">
         <div class="name">Major works administration<span>Section 20 consultation and running the works programme, charged on the contract value. The surveyor or contract administrator is a separate, independent appointment.</span>
@@ -315,12 +318,42 @@ footer a:hover{color:#155F66}
         <div class="price">5%</div>
     </li>
     <li class="row">
-      <div class="name">Long arrears recovery<span>Charged on successful collection of arrears more than six months old. Chasing from the first missed payment is inside the annual fee.</span></div>
-      <div class="price">4%</div>
+      <div class="name">Old arrears recovery<span>Charged only on money we actually get back, and only from arrears that were already more than six months old on the day you appoint us. Anything that falls behind on our watch we chase inside the annual fee, at no extra cost, however old it gets.</span>
+        <details class="mwbox">
+        <summary>We have old arrears outstanding</summary>
+        <div class="mwbox-body">
+          <div class="calc-field">
+            <label for="ar-val">Arrears already more than six months old</label>
+            <div class="calc-money">
+              <span aria-hidden="true">&pound;</span>
+              <input type="text" inputmode="numeric" id="ar-val" value="50,000" autocomplete="off">
+            </div>
+            <span class="calc-rate">An estimate is fine. Nothing is charged on arrears we fail to collect, so the figure opposite is a ceiling you only reach if every penny comes back.</span>
+          </div>
+          <div class="mwbox-outs">
+            <div class="calc-tile calc-tile-quiet mwbox-out" aria-live="polite">
+              <div class="calc-lbl">Most you could ever pay</div>
+              <div class="calc-val" id="ar-fee">&pound;2,500</div>
+              <div class="calc-note" id="ar-note">5% of &pound;50,000, if all of it is recovered</div>
+            </div>
+            <div class="calc-tile calc-tile-quiet mwbox-out" aria-live="polite">
+              <div class="calc-lbl">Your block keeps</div>
+              <div class="calc-val" id="ar-keep">&pound;47,500</div>
+              <div class="calc-note" id="ar-keep-note">95% of everything recovered</div>
+            </div>
+          </div>
+        </div>
+      </details>
+      </div>
+      <div class="price">5%</div>
     </li>
     <li class="row">
-      <div class="name">Advisory<span>Tribunal and legal preparation, and advice to a board we do not manage for. Timesheeted, and agreed in advance</span></div>
+      <div class="name">Advisory<span>Advice outside the management service, and advice to a board we do not manage for. Timesheeted, and agreed in advance</span></div>
       <div class="price">&pound;50/hr</div>
+    </li>
+    <li class="row">
+      <div class="name">Litigation support<span>Preparing and running a tribunal or court case: evidence, bundles, witness statements, and attendance. Recovering service charge from a leaseholder is never charged here</span></div>
+      <div class="price">&pound;100/hr</div>
     </li>
   </ul>
 
@@ -382,7 +415,7 @@ footer a:hover{color:#155F66}
 
 <script>
 (function(){
-var RESI = 350, COMM = 150, MIN = 3600, MW_PCT = 0.05;
+var RESI = 350, COMM = 150, MIN = 3600, MW_PCT = 0.05, AR_PCT = 0.05;
 var resi = document.getElementById('calc-resi');
 var comm = document.getElementById('calc-comm');
 var outAnnual = document.getElementById('calc-annual');
@@ -459,6 +492,35 @@ if (mwVal) {
     mwCalc();
   });
   mwCalc();
+}
+
+// Old arrears estimator. Outside the annual fee for the same reason as major
+// works: a one-off on money that may never come back. It prints a CEILING, so
+// the label says so - the charge lands only on sums actually recovered, and a
+// block that gets none of it back pays nothing. The 95% tile is not decoration:
+// the whole point of the row is that the block keeps almost all of what we
+// claw in, and a percentage alone does not read that way to a volunteer board.
+var arVal = document.getElementById('ar-val');
+if (arVal) {
+  var arFee = document.getElementById('ar-fee');
+  var arNote = document.getElementById('ar-note');
+  var arKeep = document.getElementById('ar-keep');
+  var arKeepNote = document.getElementById('ar-keep-note');
+  var arCalc = function(){
+    var v = num(arVal);
+    // An empty box is not a debt-free block. Printing £0 reads as a quote.
+    arFee.textContent = v ? money(v * AR_PCT) : '—';
+    arKeep.textContent = v ? money(v * (1 - AR_PCT)) : '—';
+    arNote.textContent = v ? '5% of ' + money(v) + ', if all of it is recovered' : 'enter what is outstanding';
+    arKeepNote.textContent = v ? '95% of everything recovered' : 'you keep 95% of whatever comes back';
+  };
+  arVal.addEventListener('input', arCalc);
+  arVal.addEventListener('blur', function(){
+    var n = digits(arVal.value);
+    arVal.value = n === '' ? '' : parseInt(n, 10).toLocaleString('en-GB');
+    arCalc();
+  });
+  arCalc();
 }
 })();
 </script>

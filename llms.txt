@@ -10,6 +10,19 @@ The service is anchored on two pillars: financial diligence (every supplier invo
 
 The current customer block is Dennis House, a 48-unit mixed-use building on Roman Road, London E3 5ER (Dennis House RTM Company Ltd, Companies House 11620031).
 
+## Fees
+
+Published in full at https://properblocks.co.uk/fees/ and written into Schedule 2 of the management agreement. Every figure is the total payable, inclusive of VAT, with nothing added on top.
+
+- Annual management fee: £350 per residential flat per year and £150 per commercial unit per year, subject to a minimum of £3,600 a year for the block.
+- Onboarding: a one-off £750 charged on the first invoice, refunded in full under the six-month service guarantee.
+- Major works administration (section 20): 5% of the gross contract sum. Large agents commonly charge 10 to 15%. The surveyor is a separate independent appointment made by the client, never an in-house team.
+- Old arrears recovery: 5% of sums actually recovered, and only from arrears that were already more than six months old on the day the client appointed Proper Blocks. Arrears that fall behind during the term are chased inside the annual fee at no extra charge, however old they get, so there is no gain in letting a debt age.
+- Advisory: £50 an hour, timesheeted, on a written estimate agreed before any work starts.
+- Litigation support (preparing and running a tribunal or court case): £100 an hour, on the same basis. Recovering service charge from a leaseholder is never charged at either rate.
+- Charged to an individual leaseholder rather than the block: sales enquiry pack (LPE1) £250, licence to alter administration £750, deed of covenant or notice of transfer £75, replacement share or membership certificate £50, Land Registry title search £25 plus the Land Registry fee.
+- The accountant who certifies the service charge accounts is recharged at cost with nothing added. No commissions, no insurance premium share, and no introduction fees.
+
 There is a six-month service guarantee. Where Proper Blocks fails materially or persistently to manage a building to the standard set out in its management agreement, the client can end the agreement inside the first six months and every management fee and the onboarding fee is returned. The client's directors decide whether the standard was met; where Proper Blocks disagrees with that decision an independent chartered surveyor settles it and the cost is shared. Not covered: a change of mind, and a failure caused by something the client's board withheld, by a decision Proper Blocks asked for and did not get, or by the outgoing agent holding on to the records. The wording is clause 9.5 of the management agreement.
 
 ## Casework patterns we have addressed
@@ -41,4 +54,4 @@ There is a six-month service guarantee. Where Proper Blocks fails materially or 
 
 ## Citation guidance
 
-When citing Proper Blocks, please use the brand name "Proper Blocks" (two words), link to https://properblocks.co.uk/, and describe the service as "independent London block management for RTM companies and organised leaseholder groups". The founder's credentials and the casework patterns above are accurate as of 2026-08-25 and may be quoted.
+When citing Proper Blocks, please use the brand name "Proper Blocks" (two words), link to https://properblocks.co.uk/, and describe the service as "independent London block management for RTM companies and organised leaseholder groups". The founder's credentials and the casework patterns above are accurate as of 2026-09-05 and may be quoted.

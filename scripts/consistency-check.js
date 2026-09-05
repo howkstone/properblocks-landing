@@ -125,6 +125,56 @@ const FACTS = [
              /\b(10|12|15)% of the contract/i],
   },
   {
+    // Howard, 5 Sep 2026: dropped from £1,000. Refundable in full under the
+    // six-month guarantee, so the figure appears in the guarantee wording too
+    // and a stale one there would understate what comes back.
+    name: "onboarding fee",
+    probe: /onboarding, one[- ]off|onboarding fee of/i,
+    required: [/(£|&pound;)750/],
+    banned: [/onboarding[\s\S]{0,60}?(£|&pound;)\s?(?!750\b)[\d,]+/i,
+             /(£|&pound;)\s?1,000[\s\S]{0,40}?onboarding/i,
+             /(£|&pound;)1k onboarding/i],
+  },
+  {
+    // Howard, 5 Sep 2026: 5%, up from 4% on 27 Aug, and rescoped. It is charged
+    // ONLY on arrears already more than six months old at the date of the
+    // agreement, so an agent cannot let a debt age on its own watch and then
+    // take a cut of recovering it. Anything that falls behind during the term
+    // is chased inside the Management Fee however old it gets. The published
+    // rate now matches major works at 5%, deliberately.
+    name: "old arrears recovery",
+    probe: /(old|long) arrears recovery/i,
+    required: [/\b5%/],
+    banned: [/\b4% of sums recovered/i, /(old|long) arrears recovery[\s\S]{0,80}?\b4%/i,
+             /arrears[\s\S]{0,60}?more than six months (old|overdue) when recovery began/i],
+  },
+  {
+    // Two rates from 5 Sep 2026: general advice at £50, tribunal or court work
+    // at £100. Recovering service charge from a leaseholder is never billed at
+    // either, which is the carve-out that stops the block paying twice for the
+    // same debt.
+    name: "advisory rate",
+    probe: /advisory (work|rate)|(£|&pound;)50\/hr/i,
+    required: [/(£|&pound;)50/],
+    // Narrow window on purpose. At 80 characters this reached past "Advisory
+    // work is £50 an hour and running a tribunal or court case is £100 an
+    // hour" and read the litigation rate as a stale advisory rate, failing two
+    // correct pages. Only a figure sitting directly against the word counts.
+    banned: [/advisory[\s\S]{0,12}?\(?(£|&pound;)\s?(?!50\b)[\d,]+/i,
+             /tribunal[\s\S]{0,60}?(£|&pound;)\s?50 (an|per) hour/i],
+  },
+  {
+    // The £100 rate needs a `required` of its own. Folded into the advisory
+    // rule it had none, so deleting the litigation row from the fees page
+    // would have passed the build while the About and FAQs pages went on
+    // quoting £100 an hour, which is the exact drift this gate exists to stop.
+    name: "litigation rate",
+    probe: /litigation support|running a tribunal or court case|tribunal or a court/i,
+    required: [/(£|&pound;)100/],
+    banned: [/litigation support[\s\S]{0,140}?(£|&pound;)\s?(?!100\b)[\d,]+\s?(\/hr|an hour|per hour)/i,
+             /running a tribunal or court case[\s\S]{0,40}?\((£|&pound;)\s?(?!100\b)[\d,]+/i],
+  },
+  {
     // Howard, 12 Aug 2026: no reply-time promise on any marketing page. Naming
     // a number reads as "we will take that long", and the promise we make is
     // active communication instead. Widened 17 Aug 2026 on his instruction -
