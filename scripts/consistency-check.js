@@ -35,6 +35,12 @@ const PAGES = [
 
 const failures = [];
 
+// The one disclosure that lets Big Brain Ltd appear on a Proper Blocks page.
+// Must stay character-identical to REG_NOTE in build.js: this gate strips the
+// note out of a page and then refuses "Big Brain" and "11209610" in what is
+// left, so a reworded copy on one page would read as an undisclosed mention.
+const REG_NOTE = "Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), our sister company.";
+
 // Claims a marketing page may not make, because we cannot evidence them.
 // Every entry here is a wording that actually shipped and had to be pulled.
 const UNPROVABLE_CLAIMS = [
@@ -49,6 +55,19 @@ const UNPROVABLE_CLAIMS = [
   {
     pattern: /you can prove it|so you can prove/i,
     why: "promises the reader an outcome in a dispute. Say what the record contains instead.",
+  },
+  {
+    // 6 Sep 2026, the Dennis House one-pager: "Nobody had ever chased them." Howard:
+    // "FALSE!!!! They did chase." A universal negative about the past is a claim about
+    // what every party did or failed to do across all time, which we cannot vouch for.
+    pattern: /\b(nobody|no one|no-one)\b[^.\n]{0,60}\bever\b|\bnot once (in|has|had|have|been|did)\b|\bfor the first time (ever|in (?:over )?\w+ years)\b/i,
+    why: "a categorical claim about the past (\"nobody had ever ...\") we cannot vouch for. State our own action instead.",
+  },
+  {
+    // 6 Sep 2026, same page: "so none of it is challengeable on a technicality." Howard:
+    // "Again you're fabricating." A promise about how a dispute would go is never ours to make.
+    pattern: /\b(none|nothing|not (?:a|one|any)(?: of it| part)?)\b[^.\n]{0,40}\b(challengeable|contestable|disputable)\b|\b(cannot|can'?t|impossible to)\b[^.\n]{0,30}\bbe (challenged|disputed|contested|overturned)\b|\b(watertight|bullet-?proof|air-?tight|iron-?clad|cast-?iron|beyond challenge)\b/i,
+    why: "guarantees a dispute outcome (\"none of it is challengeable\"). Marketing copy cannot promise how a challenge would go; state what the record contains.",
   },
   {
     // Howard, 12 Aug 2026: his body was CIMA, not ICAEW, and that membership
@@ -81,7 +100,7 @@ const UNPROVABLE_CLAIMS = [
     // before 17 Aug 2026 and survived being raised as a blocking finding,
     // because a rule written in a master file cannot fail a build.
     pattern: /client (account|money)|designated client|held in trust|protected in trust|client money protection/i,
-    why: "makes a client-money claim. Big Brain Ltd t/a Proper Blocks holds no designated client account and no client money protection. Nothing here may say or imply otherwise until an account is open.",
+    why: "makes a client-money claim. Proper Blocks holds no designated client account and no client money protection. Nothing here may say or imply otherwise until an account is open.",
   },
 ];
 
@@ -348,17 +367,31 @@ for (const rel of PAGES) {
   if (/Big Brain Company Ltd/.test(html)) {
     fail(rel, 'names "Big Brain Company Ltd", which is not a registered company. 11209610 is BIG BRAIN LTD.');
   }
-  // Big Brain Ltd trades as Proper Blocks and is the contracting entity, so it
-  // is the only company number that may appear anywhere on the site. Proper
-  // Blocks Ltd (17301605) holds the brand and must stay dormant: naming it as
-  // the trader would put the wrong company on the contract, outside the
-  // professional indemnity policy and the ombudsman membership, and would end
-  // its dormancy for the associated-company corporation tax limits.
-  if (/Co\. No\. \d+/.test(html) && !/Co\. No\. 11209610/.test(html)) {
-    fail(rel, "states a company number that is not Big Brain Ltd (11209610).");
+  // Howard, 7 Sep 2026: Proper Blocks Ltd (17301605) is the entity on every
+  // public surface, and Big Brain Ltd comes off them. The registrations do not
+  // move with it - the ICO reference and the insurances stay in Big Brain Ltd's
+  // name until Proper Blocks Ltd has a second client and can carry the cost of
+  // its own - so a prospect checking either number at Companies House or on
+  // the ICO register finds a company the site never mentions. That gap is
+  // closed by disclosing the arrangement in small print under the registration
+  // line, which reverses the rule this gate used to enforce: Big Brain Ltd is
+  // permitted on the site INSIDE that note, and refused everywhere else.
+  const noteCount = published.split(REG_NOTE).length - 1;
+  const outsideNote = published.split(REG_NOTE).join(" ");
+  if (/Big Brain|11209610/.test(published) && noteCount === 0) {
+    fail(rel, "names Big Brain Ltd without the registrations note. It may appear only inside that note, verbatim: " + REG_NOTE);
   }
-  if (/17301605/.test(html)) {
-    fail(rel, "names Proper Blocks Ltd (17301605) as a trading entity. It holds the brand only.");
+  if (/Big Brain/.test(outsideNote)) {
+    fail(rel, "names Big Brain Ltd outside the registrations note. Proper Blocks Ltd is the entity on every public surface.");
+  }
+  if (/11209610/.test(outsideNote)) {
+    fail(rel, "states Big Brain Ltd's company number (11209610) outside the registrations note. The site's company number is 17301605.");
+  }
+  if (/Co\. No\. \d+/.test(outsideNote) && !/Co\. No\. 17301605/.test(outsideNote)) {
+    fail(rel, "states a company number that is not Proper Blocks Ltd (17301605).");
+  }
+  if (!/17301605/.test(published)) {
+    fail(rel, "does not state Proper Blocks Ltd's company number (17301605). Every page carries it in the footer.");
   }
 
   // --- house style -----------------------------------------------------

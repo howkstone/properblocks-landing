@@ -125,10 +125,32 @@ ${msg}
 </header>`;
 }
 
+// The trading entity on every public surface is Proper Blocks Ltd (17301605),
+// from 7 Sep 2026 (Howard). Big Brain Ltd (11209610) still holds the ICO
+// registration and the insurances, and a prospect who looks up either number
+// will find that, so the arrangement is disclosed once, in small print under
+// the registration line, rather than left to be discovered. Wording is
+// identical everywhere it appears and scripts/consistency-check.js requires it
+// verbatim on any page stating a company number: Big Brain Ltd may appear on
+// the site inside this note and nowhere else.
+// No leading asterisk: the same sentence runs inside the privacy and terms
+// prose, where an asterisk has nothing to point at. The marker is added at the
+// two places that carry a footnote. scripts/consistency-check.js holds a copy
+// of this string and both must stay identical.
+//
+// It ends at "our sister company". Howard, 7 Sep 2026, striking "which holds
+// them for us": "we're not writing a children's story". Settled - the sentence
+// states the fact and stops. Do not restore an explanatory tail here or in the
+// privacy and terms prose that carries the same sentence.
+const REG_NOTE = 'Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), our sister company.';
+
 function footerHtml() {
   return `<footer>
 <div class="inner">
-<div class="copy">&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610 &middot; Registered in England &amp; Wales</div>
+<div class="copy-block">
+<div class="copy">&copy; 2026 Proper Blocks Ltd &middot; Co. No. 17301605* &middot; Registered in England &amp; Wales</div>
+<p class="copy-note">* ${REG_NOTE}</p>
+</div>
 <div class="links">
 ${FOOT_LINKS.map(([h, l]) => `<a href="${h}">${l}</a>`).join('\n')}
 </div>
@@ -155,9 +177,11 @@ nav.head .btn-ghost:hover{background:rgba(30,41,59,0.05)}
 nav.head .btn-primary{background:#1E293B;color:#fff}
 nav.head .btn-primary:hover{background:#103E43}
 footer{padding:44px 32px;border-top:1px solid #E6E3DC;background:#FFFFFF;margin-top:0}
-footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+footer .copy-block{max-width:560px}
 footer .links{display:flex;gap:20px;flex-wrap:wrap}
 footer .copy,footer a{font-size:13px;color:#64748B;text-decoration:none;line-height:1.7}
+footer .copy-note{font-size:11px;color:#64748B;line-height:1.6;margin:2px 0 0;max-width:520px}
 footer a:hover{color:#155F66}
 @media (max-width:760px){header .inner{padding:14px 18px}nav.head{gap:14px}nav.head a:not(.btn){font-size:13px}nav.head .btn{padding:9px 14px;font-size:13px}footer{padding:32px 18px}}
 @media (max-width:520px){.mark-name{display:none}nav.head .btn-ghost{display:none}}
@@ -265,7 +289,7 @@ fs.writeFileSync(path.join(OUT, 'llms.txt'),
 
 ## What this is
 
-Proper Blocks is a trading name of Big Brain Ltd (Companies House 11209610). It offers independent block management to leaseholders who run their own buildings - typically through a right-to-manage (RTM) company under the Commonhold and Leasehold Reform Act 2002, or through a residents' association where RTM is not the chosen route. The founder, Howard Stone, is a turnaround finance director of fifteen years, revitalising companies in distress, and an active RTM director since 2018.
+Proper Blocks is the trading name of Proper Blocks Ltd (Companies House 17301605). It offers independent block management to leaseholders who run their own buildings - typically through a right-to-manage (RTM) company under the Commonhold and Leasehold Reform Act 2002, or through a residents' association where RTM is not the chosen route. The founder, Howard Stone, is a turnaround finance director of fifteen years, revitalising companies in distress, and an active RTM director since 2018.
 
 The service is anchored on two pillars: financial diligence (every supplier invoice scrutinised, service-charge debts pursued, accounts filed on time) and outstanding communication (a proprietary leaseholder portal that logs every message, document, and action visible to the leaseholder it concerns).
 
@@ -310,7 +334,7 @@ There is a six-month service guarantee. Where Proper Blocks fails materially or 
 ## Contact
 
 - Email: howard@properblocks.co.uk
-- Company: Big Brain Ltd (trading as Proper Blocks), Companies House 11209610, ICO ZC141151, registered in England and Wales.
+- Company: Proper Blocks Ltd, Companies House 17301605, registered in England and Wales. ${REG_NOTE}
 - Founder: Howard Stone, turnaround finance director of 15 years, RTM director since 2018.
 
 ## Citation guidance

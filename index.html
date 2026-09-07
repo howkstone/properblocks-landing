@@ -15,8 +15,8 @@
       "@type": "Organization",
       "@id": "https://properblocks.co.uk/#organization",
       "name": "Proper Blocks",
-      "legalName": "Big Brain Ltd",
-      "identifier": "11209610",
+      "legalName": "Proper Blocks Ltd",
+      "identifier": "17301605",
       "url": "https://properblocks.co.uk/",
       "logo": "https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev/buildings.jpg",
       "description": "Independent London block management for right-to-manage (RTM) companies, resident-management companies and organised leaseholder groups.",
@@ -28,13 +28,7 @@
           {"@type": "EducationalOccupationalCredential", "credentialCategory": "RTM Director", "name": "Right-to-manage company director since 2018"}
         ]
       },
-      "parentOrganization": {
-        "@type": "Organization",
-        "name": "Big Brain Ltd",
-        "identifier": "11209610",
-        "url": "https://bigbraincompany.co.uk/",
-        "address": {"@type": "PostalAddress", "addressCountry": "GB", "addressRegion": "England"}
-      },
+      "address": {"@type": "PostalAddress", "addressCountry": "GB", "addressRegion": "England"},
       "areaServed": {"@type": "City", "name": "London"},
       "contactPoint": {
         "@type": "ContactPoint",
@@ -636,6 +630,15 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 #msg-modal-form select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center}
 #msg-modal-form select:hover{border-color:var(--ink-3)}
 @media (max-width:600px){#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel],#msg-modal-form textarea,#msg-modal-form select{font-size:16px}}
+/* Size of the block, asked once. Two numbers on one row because that is one
+   question, and because the fee is £350 a flat and £150 a commercial unit
+   against a £3,500 minimum, so these two figures price the block on sight.
+   Fieldset margin matches a plain label's 12px so the row does not sit lower
+   than the fields above it. */
+.msg-units{border:0;padding:0;margin:0 0 12px;min-width:0}
+.msg-units legend{font-size:13px;color:var(--ink-2);font-weight:500;padding:0}
+.msg-units .units-row{display:flex;gap:12px;margin-top:2px}
+.msg-units .units-row label{flex:1 1 0;min-width:0;margin-bottom:0;font-weight:400;font-size:12px;color:var(--ink-3)}
 .msg-issues{border:1px solid var(--rule);border-radius:11px;padding:14px 16px;margin-bottom:14px;background:var(--alt)}
 .msg-issues legend{font-size:13px;font-weight:500;color:var(--ink-2);padding:0 6px}
 .msg-issues .cb{display:flex;align-items:center;gap:12px;margin:4px 0;min-height:44px;font-size:14px;color:var(--ink);cursor:pointer;font-weight:400;padding:4px 0}
@@ -652,11 +655,17 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 
 /* Footer */
 footer{padding:48px 32px;border-top:1px solid var(--rule);background:var(--panel)}
-footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+footer .copy-block{max-width:560px}
 footer .links{display:flex;gap:24px;flex-wrap:wrap}
 footer a{font-size:13px;color:var(--ink-3);text-decoration:none;transition:color 0.18s ease}
 footer a:hover{color:var(--copper-deep)}
 footer .copy{font-size:13px;color:var(--ink-3)}
+/* The registrations note. Small print by design, and still readable: 11px on
+   the same #64748B as the links beside it, which clears WCAG AA at 4.9:1 on
+   the white footer. No opacity dimming - 0.85 pulled it to about 3.9:1, which
+   is a disclosure a reader cannot comfortably read. */
+footer .copy-note{font-size:11px;color:var(--ink-3);line-height:1.6;margin:2px 0 0;max-width:520px}
 
 @media (max-width:900px){
   .hero{padding:80px 24px 32px;gap:24px}
@@ -1240,6 +1249,13 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
         <label>Email<span class="req">*</span><input type="email" name="email" required maxlength="200" autocomplete="email"></label>
         <label>Phone <span class="opt">(optional)</span><input type="tel" name="phone" maxlength="40" autocomplete="tel"></label>
         <label>Block address<span class="req">*</span><input type="text" name="block_address" required maxlength="200" placeholder="e.g. E3, London"></label>
+        <fieldset class="msg-units">
+          <legend>How many units are in the block? <span class="opt">(optional)</span></legend>
+          <div class="units-row">
+            <label>Flats<input type="text" name="units_residential" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="e.g. 36" class="js-digits"></label>
+            <label>Commercial units<input type="text" name="units_commercial" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="e.g. 12" class="js-digits"></label>
+          </div>
+        </fieldset>
         <label>RTM company <span class="opt">(optional)</span><input type="text" name="rtm_company" maxlength="150" placeholder="If your block has an RTM"></label>
         <label>Existing managing agent <span class="opt">(optional)</span><input type="text" name="managing_agent" maxlength="150" placeholder="Who manages the block at the moment"></label>
         <fieldset class="msg-issues">
@@ -1266,7 +1282,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 
 <footer>
 <div class="inner">
-<div class="copy">&copy; 2026 Big Brain Ltd &middot; Proper Blocks &middot; Co. No. 11209610 &middot; Registered in England &amp; Wales</div>
+<div class="copy-block">
+<div class="copy">&copy; 2026 Proper Blocks Ltd &middot; Co. No. 17301605* &middot; Registered in England &amp; Wales</div>
+<p class="copy-note">* Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), our sister company.</p>
+</div>
 <div class="links">
 <a href="/block-manager-london/">About</a>
 <a href="/fees/">Fees</a>
@@ -1640,6 +1659,26 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
+  // The unit counts are text boxes carrying inputmode="numeric" (the house
+  // pattern - type=number brings spinners and changes its value on a stray
+  // scroll), so nothing stops someone typing "about 36". The server takes
+  // digits only and would drop that to nothing, silently losing the answer, so
+  // keep the box to digits as it is typed. Paste included: the input event
+  // fires for a paste, and the caret is restored so a correction mid-number
+  // does not jump to the end.
+  if (form) form.querySelectorAll('.js-digits').forEach(el => {
+    el.addEventListener('input', () => {
+      const before = el.value;
+      const after = before.replace(/\D+/g, '').slice(0, 4);
+      if (after === before) return;
+      const caret = el.selectionStart;
+      const removedBeforeCaret = before.slice(0, caret).length - before.slice(0, caret).replace(/\D+/g, '').length;
+      el.value = after;
+      const pos = Math.max(0, Math.min(after.length, caret - removedBeforeCaret));
+      try { el.setSelectionRange(pos, pos); } catch (e) { /* not all inputs allow it */ }
+    });
+  });
+
   // The message box is always visible - an enquirer must never have to find a
   // checkbox before they can type. Ticking "Other" just jumps them into it.
   if (otherCb && otherWrap) {
@@ -1664,6 +1703,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       email: (fd.get('email') || '').toString().trim(),
       phone: (fd.get('phone') || '').toString().trim(),
       block_address: (fd.get('block_address') || '').toString().trim(),
+      units_residential: (fd.get('units_residential') || '').toString().trim(),
+      units_commercial: (fd.get('units_commercial') || '').toString().trim(),
       rtm_company: (fd.get('rtm_company') || '').toString().trim(),
       managing_agent: (fd.get('managing_agent') || '').toString().trim(),
       issues: issues,
