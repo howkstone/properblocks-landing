@@ -80,12 +80,19 @@ const NAV = [
   { key: 'about', href: '/block-manager-london/', label: 'About' },
   { key: 'fees',  href: '/fees/',                 label: 'Fees' },
   { key: 'faqs',  href: '/FAQs/',                 label: 'FAQs' },
+  // The prospect one-pager, offered from the nav between FAQs and Portal login
+  // (Howard, 8 Sep 2026). It is the same PDF sent with an enquiry reply, and
+  // this build COPIES it from the Prospects folder every run rather than
+  // keeping a second original, so the published copy can never fall behind the
+  // one he sends. The label says PDF because the link opens a viewer.
+  { key: 'case',  href: '/case-study.pdf',        label: 'Case study (PDF)' },
 ];
 
 const FOOT_LINKS = [
   ['/block-manager-london/', 'About'],
   ['/fees/', 'Fees'],
   ['/FAQs/', 'FAQs'],
+  ['/case-study.pdf', 'Case study'],
   ['/contractor/', 'Contractors'],
   // Trailing slash: these files live at privacy/index.html and the bare path
   // 308s to the slashed one, so linking the bare form put a redirect hop in
@@ -388,6 +395,16 @@ fs.writeFileSync(path.join(OUT, '_redirects'), [
   '/pricing/ /fees/ 301',
   '/pricing/* /fees/ 301',
 ].join('\n') + '\n');
+
+// The nav's Case study link. One original, in the Prospects folder, copied here
+// on every build: a second hand-maintained copy is how a published PDF quietly
+// stops matching the one going out with enquiry replies.
+const CASE_STUDY_SRC = path.join('C:', 'Users', 'user', 'OneDrive', 'Documents', 'Big Brain Ltd',
+  'Proper Blocks Ltd', 'Prospects', 'Proper Blocks - Dennis House.pdf');
+if (!fs.existsSync(CASE_STUDY_SRC)) {
+  throw new Error('case study PDF missing at ' + CASE_STUDY_SRC + ' - the nav links /case-study.pdf');
+}
+fs.copyFileSync(CASE_STUDY_SRC, path.join(OUT, 'case-study.pdf'));
 
 console.log('Built:');
 ['index.html', 'privacy/index.html', 'cookies/index.html', 'terms/index.html',
