@@ -138,11 +138,14 @@ ${msg}
 // two places that carry a footnote. scripts/consistency-check.js holds a copy
 // of this string and both must stay identical.
 //
-// It ends at "our sister company". Howard, 7 Sep 2026, striking "which holds
+// It ends at "a sister company". "our" became "a" on 8 Sep 2026 to match the
+// wording he used when he edited the prospect one-pager himself: the plainer
+// article, and one fact worded one way across the site and the PDF.
+// It ends there. Howard, 7 Sep 2026, striking "which holds
 // them for us": "we're not writing a children's story". Settled - the sentence
 // states the fact and stops. Do not restore an explanatory tail here or in the
 // privacy and terms prose that carries the same sentence.
-const REG_NOTE = 'Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), our sister company.';
+const REG_NOTE = 'Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), a sister company.';
 
 function footerHtml() {
   return `<footer>
@@ -312,7 +315,7 @@ There is a six-month service guarantee. Where Proper Blocks fails materially or 
 
 ## Casework patterns we have addressed
 
-- Asbestos discovered mid £250k Section 20 major works; re-inspection over a decade overdue when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders.
+- Asbestos discovered mid £250k Section 20 major works; the asbestos survey more than a decade overdue and the re-inspection almost five years when we took over. Surveys scoped, licensed remediation arranged, budget honestly reset with leaseholders.
 - Fire risk assessment several months overdue on inheritance, exposing the directors to criminal liability. Commissioned a competent FRA within weeks; directors taken out of unknowing liability under the Regulatory Reform (Fire Safety) Order 2005.
 - Inherited service-charge debtors who had not paid for over ten years. Balances reviewed and recovery pursued proportionately; the block kept solvent through the period.
 - Months of unanswered leaseholder correspondence and absolute refusal from the previous agent to share more than the legally required minimum. Replaced with a portal that logs every message, every action, every response, visible to the leaseholder it concerns.

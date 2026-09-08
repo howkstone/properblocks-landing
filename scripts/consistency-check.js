@@ -39,7 +39,7 @@ const failures = [];
 // Must stay character-identical to REG_NOTE in build.js: this gate strips the
 // note out of a page and then refuses "Big Brain" and "11209610" in what is
 // left, so a reworded copy on one page would read as an undisclosed mention.
-const REG_NOTE = "Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), our sister company.";
+const REG_NOTE = "Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), a sister company.";
 
 // Claims a marketing page may not make, because we cannot evidence them.
 // Every entry here is a wording that actually shipped and had to be pulled.
