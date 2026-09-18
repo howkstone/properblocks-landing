@@ -361,6 +361,16 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .ps-chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#F0EEE8;border-bottom:1px solid #E1DED5}
 .ps-dot{width:9px;height:9px;border-radius:50%;background:#CFCBC1}
 .ps-url{margin-left:6px;font-size:11.5px;color:var(--ink-3);background:#FBFAF7;border:1px solid #E1DED5;border-radius:20px;padding:3px 12px;letter-spacing:0.01em}
+/* The portal's side menu since 12 Sep 2026: a dark icon rail down the left
+   edge. The icons are copied by the script from the feature list, so the rail
+   and the list cannot disagree; the one lit is the pane on show. */
+.ps-body{display:grid;grid-template-columns:52px minmax(0,1fr)}
+.ps-rail{background:#103E43;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0}
+.ps-rail .psr-mark{width:24px;height:24px;border-radius:6px;background:#1F8E99;margin-bottom:10px;box-shadow:inset -8px -8px 0 #4DDBE8}
+.ps-rail .psr-i{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:32px;border-radius:7px;color:#94A3B8;transition:background 0.3s ease,color 0.3s ease}
+.ps-rail .psr-i svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ps-rail .psr-i.is-on{background:rgba(77,219,232,0.16);color:#4DDBE8}
+.ps-rail .psr-i.is-on::before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:#4DDBE8}
 .ps-stage{position:relative;min-height:326px}
 .ps-pane{position:absolute;inset:0;padding:20px 22px 22px;opacity:0;transform:translateY(10px);transition:opacity 0.5s ease,transform 0.5s cubic-bezier(0.22,1,0.36,1);pointer-events:none}
 .ps-pane.is-on{opacity:1;transform:none}
@@ -426,6 +436,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
   .portal-band{padding:56px 20px 60px}
   .pm-tiles{grid-template-columns:repeat(2,1fr)}
   .ps-stage{min-height:390px}
+  .ps-body{grid-template-columns:40px minmax(0,1fr)}
+  .ps-rail .psr-i{width:30px;height:28px}
+  .ps-rail .psr-i.is-on::before{left:-5px}
 }
 
 .pillar:nth-child(1){transition-delay:0s}
@@ -883,6 +896,8 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           <span class="ps-dot"></span><span class="ps-dot"></span><span class="ps-dot"></span>
           <span class="ps-url">yourblock.properblocks.co.uk</span>
         </div>
+        <div class="ps-body">
+        <div class="ps-rail" id="ps-rail"><span class="psr-mark"></span></div>
         <div class="ps-stage">
           <div class="ps-pane is-on" id="ps-statement">
             <div class="ps-title">Account statement</div>
@@ -956,6 +971,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
             <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Insurance and certificates attached</span></div>
             <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Pack issued to your solicitor</span></div>
           </div>
+        </div>
         </div>
       </div>
 
@@ -1451,10 +1467,22 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     if(items.length < 2) return;
     let idx = 0, timer = null, visible = false;
     const DWELL = 3800;
+    // The side menu in the mock window wears the list's own icons, one per
+    // feature, so the two can never drift apart.
+    const rail = document.getElementById('ps-rail');
+    const railItems = items.map(function(li,i){
+      const ic = li.querySelector('.pf-ic svg');
+      const span = document.createElement('span');
+      span.className = 'psr-i' + (i === 0 ? ' is-on' : '');
+      if(ic) span.appendChild(ic.cloneNode(true));
+      if(rail) rail.appendChild(span);
+      return span;
+    });
     function show(n){
       idx = (n + items.length) % items.length;
       items.forEach(function(li,i){
         li.classList.toggle('is-on', i === idx);
+        if(railItems[i]) railItems[i].classList.toggle('is-on', i === idx);
         const pane = document.getElementById(li.getAttribute('data-pane'));
         if(pane) pane.classList.toggle('is-on', i === idx);
       });
