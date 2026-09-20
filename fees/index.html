@@ -222,7 +222,7 @@ footer a:hover{color:#155F66}
        it prints has to be findable in the tables below it. Major works are NOT
        in here: they are a one-off on a contract that may never happen, and
        folding them into an annual fee overstates what the block pays every
-       year. That estimate has its own box beside the 5% rate. -->
+       year. That estimate has its own box beside the tapered rate. -->
   <section class="calc" aria-labelledby="calc-h">
     <h2 id="calc-h">Calculate your fee</h2>
 
@@ -300,7 +300,7 @@ footer a:hover{color:#155F66}
       <div class="price">&pound;750</div>
     </li>
     <li class="row">
-        <div class="name">Major works administration<span>Section 20 consultation and running the works programme, charged on the contract value. The surveyor or contract administrator is a separate, independent appointment.</span>
+        <div class="name">Major works administration<span>Section 20 consultation and running the works programme, charged on the contract value: 5% of the first &pound;100,000 and 2.5% of everything above it. The surveyor or contract administrator is a separate, independent appointment.</span>
             <details class="mwbox">
         <summary>We expect major works this year</summary>
         <div class="mwbox-body">
@@ -310,17 +310,17 @@ footer a:hover{color:#155F66}
               <span aria-hidden="true">&pound;</span>
               <input type="text" inputmode="numeric" id="mw-val" value="250,000" autocomplete="off">
             </div>
-            <span class="calc-rate">Administered at 5% of the contract value, one off. The surveyor is a separate, independent appointment, paid by the block.</span>
+            <span class="calc-rate">Administered at 5% of the first &pound;100,000 of the contract and 2.5% of anything above it, one off. The surveyor is a separate, independent appointment, paid by the block.</span>
           </div>
           <div class="calc-tile calc-tile-quiet mwbox-out" aria-live="polite">
             <div class="calc-lbl">Major works administration</div>
-            <div class="calc-val" id="mw-fee">&pound;12,500</div>
-            <div class="calc-note" id="mw-note">5% of &pound;250,000, one off</div>
+            <div class="calc-val" id="mw-fee">&pound;8,750</div>
+            <div class="calc-note" id="mw-note">5% of the first &pound;100,000 and 2.5% of the remaining &pound;150,000, one off</div>
           </div>
         </div>
       </details>
         </div>
-        <div class="price">5%</div>
+        <div class="price">5% / 2.5%</div>
     </li>
     <li class="row">
       <div class="name">Old arrears recovery<span>Charged only on money we actually get back, and only from arrears that were already more than six months old on the day you appoint us. Anything that falls behind on our watch we chase inside the annual fee, at no extra cost, however old it gets.</span>
@@ -362,7 +362,7 @@ footer a:hover{color:#155F66}
     </li>
   </ul>
 
-  <p class="note">For context, large managing agents commonly charge 10-15% to administer major works, and often use their own in-house surveyors. We use an independent external surveyor, appointed by the RTM.</p>
+  <p class="note">The rate halves above &pound;100,000 because the work of running a &pound;400,000 contract is not four times the work of running a &pound;100,000 one. For context, large managing agents commonly charge 10-15% to administer major works, and often use their own in-house surveyors. We use an independent external surveyor, appointed by the RTM.</p>
   <p class="note">We don't believe the company organising and charging a % of the works should also be the one pricing that same work.</p>
   <h2>Individual leaseholder costs</h2>
   <p class="note">Paid by the leaseholder who asks for the document, and never by the block.</p>
@@ -423,7 +423,11 @@ footer a:hover{color:#155F66}
 
 <script>
 (function(){
-var RESI = 350, COMM = 150, MIN = 3500, MW_PCT = 0.05, AR_PCT = 0.05;
+var RESI = 350, COMM = 150, MIN = 3500, MW_PCT = 0.05, MW_PCT_HI = 0.025, MW_BAND = 100000, AR_PCT = 0.05;
+// Major works taper (Howard, 8 and 19 Sep 2026). 5% on the first 100,000 of the
+// contract and 2.5% on everything above it, band by band like tax, never a
+// cliff: a 100,001 contract must not cost less to administer than a 99,999 one.
+function mwFeeOf(v){ return v <= MW_BAND ? v * MW_PCT : MW_BAND * MW_PCT + (v - MW_BAND) * MW_PCT_HI; }
 var resi = document.getElementById('calc-resi');
 var comm = document.getElementById('calc-comm');
 var outAnnual = document.getElementById('calc-annual');
@@ -436,7 +440,10 @@ var outCm = document.getElementById('calc-cm');
 var commYTile = document.getElementById('calc-comm-y-tile');
 var commMTile = document.getElementById('calc-comm-m-tile');
 var minNote = document.getElementById('calc-min');
-function digits(v){ return String(v).replace(/[^0-9]/g, ''); }
+// Anything after a decimal point is dropped before the digits are stripped.
+// Without the split, "250,000.50" loses the point and reads as 25,000,050, so a
+// quarter-million contract printed a fee in the hundreds of thousands.
+function digits(v){ return String(v).split('.')[0].replace(/[^0-9]/g, ''); }
 function num(el){ var n = parseInt(digits(el.value), 10); return isNaN(n) ? 0 : n; }
 function money(v){ return '\u00A3' + Math.round(v).toLocaleString('en-GB'); }
 function money2(v){ return '\u00A3' + v.toLocaleString('en-GB', {minimumFractionDigits:2, maximumFractionDigits:2}); }
@@ -490,8 +497,12 @@ if (mwVal) {
   var mwCalc = function(){
     var v = num(mwVal);
     // An empty box is not a £0 contract. Printing £0 reads as a quote.
-    mwFee.textContent = v ? money(v * MW_PCT) : '\u2014';
-    mwNote.textContent = v ? '5% of ' + money(v) + ', one off' : 'enter the contract value';
+    mwFee.textContent = v ? money(mwFeeOf(v)) : '\u2014';
+    mwNote.textContent = v
+      ? (v <= MW_BAND
+          ? '5% of ' + money(v) + ', one off'
+          : '5% of the first ' + money(MW_BAND) + ' and 2.5% of the remaining ' + money(v - MW_BAND) + ', one off')
+      : 'enter the contract value';
   };
   mwVal.addEventListener('input', mwCalc);
   mwVal.addEventListener('blur', function(){

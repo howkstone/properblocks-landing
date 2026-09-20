@@ -144,11 +144,17 @@ const FACTS = [
     // 18 Aug 2026: 5%, not 3%. Dennis House pays 3% because Howard owns a flat
     // there, so that rate belongs to that block's own agreement and must never
     // be the published rate again.
+    // Howard, 19 Sep 2026: the rate TAPERS. 5% on the first £100,000 of the
+    // contract and 2.5% on everything above it, band by band like tax, never a
+    // cliff. A page that states the 5% without the 2.5% and the £100,000 band
+    // overstates the fee on every large contract, which is the one place the
+    // percentage frightens a board, so all three are required together.
     name: "major works administration",
     probe: /major works administration|Section 20 consultation and running/i,
-    required: [/\b5%/],
+    required: [/\b5%/, /\b2\.5%/, /(£|&pound;)\s?100,000/],
     banned: [/\b3% (of|on) (the )?(works|major works|contract)/i, /\b3% administration/i,
-             /\b(10|12|15)% of the contract/i],
+             /\b(10|12|15)% of the contract/i,
+             /5% (of|on) the (works value|contract value|contract sum)(?![\s\S]{0,120}?2\.5%)/i],
   },
   {
     // Howard, 5 Sep 2026: dropped from £1,000. Refundable in full under the

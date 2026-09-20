@@ -311,7 +311,7 @@ Published in full at https://properblocks.co.uk/fees/ and written into Schedule 
 
 - Annual management fee: £350 per residential flat per year and £150 per commercial unit per year, subject to a minimum of £3,500 a year for the block, which is ten flats at the flat rate.
 - Onboarding: a one-off £750 charged on the first invoice, refunded in full under the six-month service guarantee.
-- Major works administration (section 20): 5% of the gross contract sum. Large agents commonly charge 10 to 15%. The surveyor is a separate independent appointment made by the client, never an in-house team.
+- Major works administration (section 20): 5% of the first £100,000 of the gross contract sum and 2.5% of everything above it, band by band. A £250,000 contract is therefore £8,750. Large agents commonly charge 10 to 15%. The surveyor is a separate independent appointment made by the client, never an in-house team.
 - Old arrears recovery: 5% of sums actually recovered, and only from arrears that were already more than six months old on the day the client appointed Proper Blocks. Arrears that fall behind during the term are chased inside the annual fee at no extra charge, however old they get, so there is no gain in letting a debt age.
 - Advisory: £50 an hour, timesheeted, on a written estimate agreed before any work starts.
 - Litigation support (preparing and running a tribunal or court case): £100 an hour, on the same basis. Recovering service charge from a leaseholder is never charged at either rate.
