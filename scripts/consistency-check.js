@@ -157,6 +157,15 @@ const FACTS = [
              /5% (of|on) the (works value|contract value|contract sum)(?![\s\S]{0,120}?2\.5%)/i],
   },
   {
+    // Howard cut the licence to alter from £750 to £200 on the fees page on
+    // 9 Sep 2026 and llms.txt still said £750 twelve days later, because no rule
+    // read this row. A leaseholder quoted either figure is quoted a real price.
+    name: "licence to alter",
+    probe: /licence to alter/i,
+    required: [/(£|&pound;)\s?200\b/],
+    banned: [/licence to alter[^.<]{0,60}(£|&pound;)\s?(?!200\b)[\d,]+/i],
+  },
+  {
     // Howard, 5 Sep 2026: dropped from £1,000. Refundable in full under the
     // six-month guarantee, so the figure appears in the guarantee wording too
     // and a stale one there would understate what comes back.
