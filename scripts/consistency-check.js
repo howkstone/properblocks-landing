@@ -39,7 +39,11 @@ const failures = [];
 // Must stay character-identical to REG_NOTE in build.js: this gate strips the
 // note out of a page and then refuses "Big Brain" and "11209610" in what is
 // left, so a reworded copy on one page would read as an undisclosed mention.
+// Two wordings are allowed. Howard shortened the homepage to the ICO-only line
+// on 21 Sep 2026, directly on GitHub; every other page still carries the long
+// one. Either is a legitimate mention of Big Brain Ltd; anything else is not.
 const REG_NOTE = "Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), a sister company.";
+const REG_NOTE_SHORT = "Our ICO registration is in the name of Big Brain Ltd (Co. No. 11209610), a sister company.";
 
 // Claims a marketing page may not make, because we cannot evidence them.
 // Every entry here is a wording that actually shipped and had to be pulled.
@@ -391,10 +395,11 @@ for (const rel of PAGES) {
   // closed by disclosing the arrangement in small print under the registration
   // line, which reverses the rule this gate used to enforce: Big Brain Ltd is
   // permitted on the site INSIDE that note, and refused everywhere else.
-  const noteCount = published.split(REG_NOTE).length - 1;
-  const outsideNote = published.split(REG_NOTE).join(" ");
+  const noteCount = published.split(REG_NOTE).length - 1
+                  + published.split(REG_NOTE_SHORT).length - 1;
+  const outsideNote = published.split(REG_NOTE).join(" ").split(REG_NOTE_SHORT).join(" ");
   if (/Big Brain|11209610/.test(published) && noteCount === 0) {
-    fail(rel, "names Big Brain Ltd without the registrations note. It may appear only inside that note, verbatim: " + REG_NOTE);
+    fail(rel, "names Big Brain Ltd without the registrations note. It may appear only inside that note, verbatim, in one of its two wordings: " + REG_NOTE + " / " + REG_NOTE_SHORT);
   }
   if (/Big Brain/.test(outsideNote)) {
     fail(rel, "names Big Brain Ltd outside the registrations note. Proper Blocks Ltd is the entity on every public surface.");
