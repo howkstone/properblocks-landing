@@ -42,8 +42,8 @@ const failures = [];
 // Two wordings are allowed. Howard shortened the homepage to the ICO-only line
 // on 21 Sep 2026, directly on GitHub; every other page still carries the long
 // one. Either is a legitimate mention of Big Brain Ltd; anything else is not.
-const REG_NOTE = "Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), a sister company.";
-const REG_NOTE_SHORT = "Our ICO registration is in the name of Big Brain Ltd (Co. No. 11209610), a sister company.";
+const REG_NOTE = "Our professional indemnity cover is in the name of Big Brain Ltd (Co. No. 11209610), a sister company.";
+const REG_NOTE_SHORT = "Our professional indemnity cover is in the name of Big Brain Ltd (Co. No. 11209610), a sister company.";
 
 // Claims a marketing page may not make, because we cannot evidence them.
 // Every entry here is a wording that actually shipped and had to be pulled.
@@ -329,8 +329,8 @@ const FACTS = [
     // regulator's own register.
     name: "ICO registration reference",
     probe: /ICO (reg\.?|reference|ZC)|registered with the (ICO|Information Commissioner)/i,
-    required: [/ZC141151/],
-    banned: [/\bZ(?!C141151\b)[A-Z]?\d{6,7}\b/],
+    required: [/ZC254427/],
+    banned: [/\bZ(?!C254427\b)[A-Z]?\d{6,7}\b/],
   },
   {
     // Section 20 and major works are NOT in the annual fee. They are charged at
@@ -395,9 +395,13 @@ for (const rel of PAGES) {
   // closed by disclosing the arrangement in small print under the registration
   // line, which reverses the rule this gate used to enforce: Big Brain Ltd is
   // permitted on the site INSIDE that note, and refused everywhere else.
-  const noteCount = published.split(REG_NOTE).length - 1
-                  + published.split(REG_NOTE_SHORT).length - 1;
-  const outsideNote = published.split(REG_NOTE).join(" ").split(REG_NOTE_SHORT).join(" ");
+  // A non-breaking space is a space to a reader, so it must be one here too:
+  // "Co.&nbsp;No.&nbsp;11209610" keeps the label with its number at 390px and
+  // would otherwise read as a different sentence from the one this gate holds.
+  const noteText = published.replace(new RegExp('&nbsp;| ', 'g'), " ");
+  const noteCount = noteText.split(REG_NOTE).length - 1
+                  + noteText.split(REG_NOTE_SHORT).length - 1;
+  const outsideNote = noteText.split(REG_NOTE).join(" ").split(REG_NOTE_SHORT).join(" ");
   if (/Big Brain|11209610/.test(published) && noteCount === 0) {
     fail(rel, "names Big Brain Ltd without the registrations note. It may appear only inside that note, verbatim, in one of its two wordings: " + REG_NOTE + " / " + REG_NOTE_SHORT);
   }
@@ -562,7 +566,7 @@ if (fs.existsSync(indexFile)) {
       // three must name all three, with the site's own figures.
       const creds = [
         ["The Property Ombudsman number", /T14754/],
-        ["the ICO registration", /ZC141151/],
+        ["the ICO registration", /ZC254427/],
         ["the professional indemnity cover", /(£|&pound;)\s?500,000|£500k/],
       ];
       const shown = creds.filter(([, re]) => re.test(src));

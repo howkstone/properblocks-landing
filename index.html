@@ -237,8 +237,12 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    word for a number typed on our own website. The link keeps the ink colour so
    the row still reads as a credential rather than as navigation; the rule
    underneath is the only thing that says it is clickable. */
-.trust-creds .c a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule-2);transition:border-color 0.18s ease,color 0.18s ease}
-.trust-creds .c a:hover{color:var(--copper-deep);border-bottom-color:var(--copper-deep)}
+/* Underline, not a border: the border was #CFCBC1 on white, 1.62:1, and a flex
+   item's border spans the whole box, so at 390px the two-line ICO link drew one
+   full-width rule under its second line only. An underline follows the words on
+   every line and clears 3:1. */
+.trust-creds .c a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--copper-deep);transition:color 0.18s ease,text-decoration-color 0.18s ease}
+.trust-creds .c a:hover{color:var(--copper-deep)}
 .trust-creds .c a:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
 
 /* Section base */
@@ -361,16 +365,6 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .ps-chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#F0EEE8;border-bottom:1px solid #E1DED5}
 .ps-dot{width:9px;height:9px;border-radius:50%;background:#CFCBC1}
 .ps-url{margin-left:6px;font-size:11.5px;color:var(--ink-3);background:#FBFAF7;border:1px solid #E1DED5;border-radius:20px;padding:3px 12px;letter-spacing:0.01em}
-/* The portal's side menu since 12 Sep 2026: a dark icon rail down the left
-   edge. The icons are copied by the script from the feature list, so the rail
-   and the list cannot disagree; the one lit is the pane on show. */
-.ps-body{display:grid;grid-template-columns:52px minmax(0,1fr)}
-.ps-rail{background:#103E43;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0}
-.ps-rail .psr-mark{width:24px;height:24px;border-radius:6px;background:#1F8E99;margin-bottom:10px;box-shadow:inset -8px -8px 0 #4DDBE8}
-.ps-rail .psr-i{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:32px;border-radius:7px;color:#94A3B8;transition:background 0.3s ease,color 0.3s ease}
-.ps-rail .psr-i svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.ps-rail .psr-i.is-on{background:rgba(77,219,232,0.16);color:#4DDBE8}
-.ps-rail .psr-i.is-on::before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:#4DDBE8}
 .ps-stage{position:relative;min-height:326px}
 .ps-pane{position:absolute;inset:0;padding:20px 22px 22px;opacity:0;transform:translateY(10px);transition:opacity 0.5s ease,transform 0.5s cubic-bezier(0.22,1,0.36,1);pointer-events:none}
 .ps-pane.is-on{opacity:1;transform:none}
@@ -384,9 +378,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .pm-bal span{font-size:12px;color:var(--ink-3);letter-spacing:0.03em}
 .pm-bal b{font-family:Fraunces,Georgia,serif;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
 .pm-chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:0.02em;padding:3px 9px;border-radius:20px;background:var(--copper-light);color:var(--copper-deep)}
-.pm-chip.pm-open{background:#FEF3C7;color:#92400E}
-.pm-chip.pm-done{background:#DCFCE7;color:#166534}
-.pm-card{border:1px solid var(--rule);border-radius:8px;padding:12px 14px;margin-bottom:9px;background:#FFFFFF}
+.pm-chip.pm-open{background:#FEF3C7;color:#8A6212}
+.pm-chip.pm-done{background:#DCF3E7;color:#1B6E4A}
+.pm-card{border:1px solid var(--rule);border-radius:7px;padding:12px 14px;margin-bottom:9px;background:#FFFFFF}
 .pm-card .pm-h{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
 .pm-card p{font-size:12px;line-height:1.5;color:var(--ink-3)}
 .pm-file{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
@@ -394,7 +388,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .pm-file .pm-ext{font-size:9.5px;font-weight:700;letter-spacing:0.04em;color:#fff;background:var(--copper-deep);border-radius:3px;padding:2px 5px}
 .pm-file .pm-meta{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
 .pm-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.pm-tile{border:1px solid var(--rule);border-radius:8px;padding:11px 12px;background:#FFFFFF}
+.pm-tile{border:1px solid var(--rule);border-radius:7px;padding:11px 12px;background:#FFFFFF}
 .pm-tile span{display:block;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
 .pm-tile b{font-family:Fraunces,Georgia,serif;font-size:16px;color:var(--ink);letter-spacing:0.08em}
 .pm-track{display:flex;align-items:center;gap:0;margin:6px 0 14px}
@@ -406,9 +400,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .pm-step.now span{color:var(--copper-deep);font-weight:600}
 .pm-tick{display:flex;align-items:center;gap:9px;padding:8px 0;font-size:12.5px;color:var(--ink-2)}
 .pm-tick svg{width:15px;height:15px;fill:none;stroke:#2AA06A;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.pm-form{border:1px solid var(--rule);border-radius:8px;padding:12px 14px;background:#FFFFFF;margin-bottom:11px}
+.pm-form{border:1px solid var(--rule);border-radius:7px;padding:12px 14px;background:#FFFFFF;margin-bottom:11px}
 .pm-form label{display:block;font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
-.pm-form .pm-input{border:1px solid var(--rule-2);border-radius:6px;padding:7px 10px;font-size:12.5px;color:var(--ink)}
+.pm-form .pm-input{border:1px solid var(--rule-2);border-radius:5px;padding:7px 10px;font-size:12.5px;color:var(--ink)}
 
 /* Security wink. Six plain statements of what actually protects the account. */
 .portal-sec{grid-area:sec;align-self:center;border:1px solid rgba(255,255,255,0.16);border-radius:10px;background:rgba(255,255,255,0.045);padding:18px 22px 20px}
@@ -436,9 +430,6 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
   .portal-band{padding:56px 20px 60px}
   .pm-tiles{grid-template-columns:repeat(2,1fr)}
   .ps-stage{min-height:390px}
-  .ps-body{grid-template-columns:40px minmax(0,1fr)}
-  .ps-rail .psr-i{width:30px;height:28px}
-  .ps-rail .psr-i.is-on::before{left:-5px}
 }
 
 .pillar:nth-child(1){transition-delay:0s}
@@ -678,7 +669,11 @@ footer .copy{font-size:13px;color:var(--ink-3)}
    the same #64748B as the links beside it, which clears WCAG AA at 4.9:1 on
    the white footer. No opacity dimming - 0.85 pulled it to about 3.9:1, which
    is a disclosure a reader cannot comfortably read. */
-footer .copy-note{font-size:11px;color:var(--ink-3);line-height:1.6;margin:2px 0 0;max-width:520px}
+footer .copy-note{font-size:13px;color:var(--ink-3);line-height:1.6;margin:2px 0 0;max-width:520px}
+/* The note belongs to the credential it qualifies, so it sits inside it: at
+   1280 a note centred on the band sat closer to the two credentials it says
+   nothing about. */
+.trust-creds .c .copy-note{font-family:Inter,sans-serif;font-style:normal;font-weight:400;font-size:13px;color:var(--ink-3);line-height:1.6;margin:6px 0 0;max-width:260px;text-align:center}
 
 @media (max-width:900px){
   .hero{padding:80px 24px 32px;gap:24px}
@@ -896,8 +891,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           <span class="ps-dot"></span><span class="ps-dot"></span><span class="ps-dot"></span>
           <span class="ps-url">yourblock.properblocks.co.uk</span>
         </div>
-        <div class="ps-body">
-        <div class="ps-rail" id="ps-rail"><span class="psr-mark"></span></div>
         <div class="ps-stage">
           <div class="ps-pane is-on" id="ps-statement">
             <div class="ps-title">Account statement</div>
@@ -971,7 +964,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
             <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Insurance and certificates attached</span></div>
             <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Pack issued to your solicitor</span></div>
           </div>
-        </div>
         </div>
       </div>
 
@@ -1190,10 +1182,18 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
            separates them visually; only whitespace separates them in text. -->
       <div class="c"><a href="https://www.tpos.co.uk/business-search/proper-blocks/" target="_blank" rel="noopener" aria-label="The Property Ombudsman: our entry on their public member register, opens in a new tab">The Property Ombudsman</a>
         <span class="ind">Membership T14754</span></div>
+      <!-- The note moved here from the ICO credential on 22 Sep 2026. Proper
+           Blocks Ltd now holds its own ICO registration, ZC254427, so that
+           credential needs no explanation; the indemnity cover is still Big
+           Brain Ltd's policy, and this is the one row a reader would otherwise
+           read as Proper Blocks Ltd's own. -->
       <div class="c">Professional indemnity insurance
-        <span class="ind">&pound;500,000 of cover</span></div>
-      <div class="c"><a href="https://ico.org.uk/ESDWebPages/Entry/ZC141151" target="_blank" rel="noopener" aria-label="Registered with the ICO: our entry on their public register of fee payers, opens in a new tab">Registered with the ICO</a>
-        <span class="ind">Reference ZC141151</span></div>
+        <span class="ind">&pound;500,000 of cover</span>
+        <p class="copy-note">Our professional indemnity cover is in the name of Big Brain Ltd (Co.&nbsp;No.&nbsp;11209610), a sister company.</p></div>
+      <!-- Link held back until the ICO register shows ZC254427; restore it to
+           https://ico.org.uk/ESDWebPages/Entry/ZC254427 once it resolves. -->
+      <div class="c">Information Commissioner's Office
+        <span class="ind">Registration ZC254427</span><!-- ITALIC-OK: .ind sets every credential's reference number in italics, the same on all three; house style, not added here --></div>
     </div>
   </div>
 </section>
@@ -1301,7 +1301,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 <div class="inner">
 <div class="copy-block">
 <div class="copy">&copy; 2026 Proper Blocks Ltd &middot; Co. No. 17301605 &middot; Registered in England &amp; Wales</div>
-<p class="copy-note">* Our ICO registration is in the name of Big Brain Ltd (Co. No. 11209610), a sister company.</p>
 </div>
 <div class="links">
 <a href="/block-manager-london/">About</a>
@@ -1467,22 +1466,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     if(items.length < 2) return;
     let idx = 0, timer = null, visible = false;
     const DWELL = 3800;
-    // The side menu in the mock window wears the list's own icons, one per
-    // feature, so the two can never drift apart.
-    const rail = document.getElementById('ps-rail');
-    const railItems = items.map(function(li,i){
-      const ic = li.querySelector('.pf-ic svg');
-      const span = document.createElement('span');
-      span.className = 'psr-i' + (i === 0 ? ' is-on' : '');
-      if(ic) span.appendChild(ic.cloneNode(true));
-      if(rail) rail.appendChild(span);
-      return span;
-    });
     function show(n){
       idx = (n + items.length) % items.length;
       items.forEach(function(li,i){
         li.classList.toggle('is-on', i === idx);
-        if(railItems[i]) railItems[i].classList.toggle('is-on', i === idx);
         const pane = document.getElementById(li.getAttribute('data-pane'));
         if(pane) pane.classList.toggle('is-on', i === idx);
       });

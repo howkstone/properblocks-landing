@@ -133,10 +133,11 @@ ${msg}
 }
 
 // The trading entity on every public surface is Proper Blocks Ltd (17301605),
-// from 7 Sep 2026 (Howard). Big Brain Ltd (11209610) still holds the ICO
-// registration and the insurances, and a prospect who looks up either number
-// will find that, so the arrangement is disclosed once, in small print under
-// the registration line, rather than left to be discovered. Wording is
+// from 7 Sep 2026 (Howard). Proper Blocks Ltd took its own ICO registration,
+// ZC254427, on 22 Sep 2026, so the ICO came OUT of this note that day; the
+// insurances are still Big Brain Ltd's (11209610), and a prospect who looks up
+// the indemnity cover will find that, so the arrangement is disclosed once, in
+// small print under the registration line, rather than left to be discovered. Wording is
 // identical everywhere it appears and scripts/consistency-check.js requires it
 // verbatim on any page stating a company number: Big Brain Ltd may appear on
 // the site inside this note and nowhere else.
@@ -152,14 +153,19 @@ ${msg}
 // them for us": "we're not writing a children's story". Settled - the sentence
 // states the fact and stops. Do not restore an explanatory tail here or in the
 // privacy and terms prose that carries the same sentence.
-const REG_NOTE = 'Our registrations and insurances, including ICO registration ZC141151, are in the name of Big Brain Ltd (Co. No. 11209610), a sister company.';
+const REG_NOTE = 'Our professional indemnity cover is in the name of Big Brain Ltd (Co. No. 11209610), a sister company.';
 
-function footerHtml() {
+// The home page carries the note inside the indemnity credential, where the
+// claim it qualifies is, so the shared footer leaves it off there: printing it
+// twice on one page reads as two different disclosures. Every other page states
+// the company number with no credentials band, so the footer is the only place
+// the note can go.
+function footerHtml(opts) {
+  const note = (opts && opts.noRegNote) ? '' : `\n<p class="copy-note">${REG_NOTE}</p>`;
   return `<footer>
 <div class="inner">
 <div class="copy-block">
-<div class="copy">&copy; 2026 Proper Blocks Ltd &middot; Co. No. 17301605* &middot; Registered in England &amp; Wales</div>
-<p class="copy-note">* ${REG_NOTE}</p>
+<div class="copy">&copy; 2026 Proper Blocks Ltd &middot; Co. No. 17301605 &middot; Registered in England &amp; Wales</div>${note}
 </div>
 <div class="links">
 ${FOOT_LINKS.map(([h, l]) => `<a href="${h}">${l}</a>`).join('\n')}
@@ -191,7 +197,7 @@ footer .inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-
 footer .copy-block{max-width:560px}
 footer .links{display:flex;gap:20px;flex-wrap:wrap}
 footer .copy,footer a{font-size:13px;color:#64748B;text-decoration:none;line-height:1.7}
-footer .copy-note{font-size:11px;color:#64748B;line-height:1.6;margin:2px 0 0;max-width:520px}
+footer .copy-note{font-size:13px;color:#64748B;line-height:1.6;margin:2px 0 0;max-width:520px}
 footer a:hover{color:#155F66}
 @media (max-width:760px){header .inner{padding:14px 18px}nav.head{gap:14px}nav.head a:not(.btn){font-size:13px}nav.head .btn{padding:9px 14px;font-size:13px}footer{padding:32px 18px}}
 @media (max-width:520px){.mark-name{display:none}nav.head .btn-ghost{display:none}}
@@ -216,9 +222,14 @@ function applyChrome(html, current, opts) {
   if (!/<footer[^>]*>[\s\S]*?<\/footer>/.test(html)) throw new Error(`${current}: no <footer> to replace`);
   const out = html
     .replace(/<header[^>]*>[\s\S]*?<\/header>/, () => headerHtml(current, o))
-    .replace(/<footer[^>]*>[\s\S]*?<\/footer>/, () => footerHtml());
+    .replace(/<footer[^>]*>[\s\S]*?<\/footer>/, () => footerHtml(o));
   return o.skipCss ? out : withChromeCss(out);
 }
+
+// Privacy and terms already carry the note in "Who we are", so the shared
+// footer leaves it off there: the same sentence twice on one page reads as two
+// disclosures. Cookies has no such paragraph, so its footer keeps the note.
+const POLICY_HAS_NOTE_IN_BODY = ['privacy', 'terms'];
 
 function applyChromeToPolicy(html, current) {
   // The policy pages are generated from the portal's ui/*.js and have no site
@@ -231,14 +242,15 @@ function applyChromeToPolicy(html, current) {
   out = out.replace('<p><a class="back" href="/">&larr; Back to the portal</a></p>', '');
   out = out.replace(/<footer[^>]*>[\s\S]*?<\/footer>/, '');
   out = out.replace('<div class="wrap">', headerHtml(current) + '\n<div class="wrap">');
-  out = out.replace('</div></body>', '</div>\n' + footerHtml() + '\n</body>');
+  out = out.replace('</div></body>', '</div>\n'
+    + footerHtml({ noRegNote: POLICY_HAS_NOTE_IN_BODY.includes(current) }) + '\n</body>');
   // Fraunces is what the brand mark is set in; the policy pages never loaded it.
   out = out.replace('</head>', '<link rel="stylesheet" href="/fonts/fonts-1.css">\n</head>');
   return withChromeCss(out);
 }
 
 const CHROMED = [
-  ['index.html',                    'home',       { id: 'hd', modalButton: true, skipCss: true }],
+  ['index.html',                    'home',       { id: 'hd', modalButton: true, skipCss: true, noRegNote: true }],
   ['block-manager-london/index.html','about',     {}],
   ['fees/index.html',               'fees',       {}],
   ['FAQs/index.html',               'faqs',       {}],
@@ -336,7 +348,7 @@ There is a six-month service guarantee. Where Proper Blocks fails materially or 
 - [Home](https://properblocks.co.uk/) - approach, casework and contact
 - [About](https://properblocks.co.uk/block-manager-london/) - what independent block management means here, casework, founder, common questions
 - [Fees](https://properblocks.co.uk/fees/) - what we charge, with a calculator for your own block, and the service guarantee
-- [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC141151
+- [Privacy notice](https://properblocks.co.uk/privacy/) - UK GDPR, lawful bases, ICO ZC254427
 - [Cookies](https://properblocks.co.uk/cookies/) - one strictly-necessary session cookie, no analytics cookies
 - [Terms of use](https://properblocks.co.uk/terms/) - governing law England and Wales
 - [Leaseholder portal](https://dennishouse.properblocks.co.uk/) - separate authenticated surface for current customer blocks
