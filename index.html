@@ -25,6 +25,7 @@
           "@type": "Person",
           "name": "Howard Stone",
           "jobTitle": "Co-Founder",
+          "sameAs": ["https://www.linkedin.com/in/howard-stone-uk"],
           "hasCredential": [
             {"@type": "EducationalOccupationalCredential", "credentialCategory": "RTM Director", "name": "Right-to-manage company director since 2018"}
           ]
@@ -32,7 +33,8 @@
         {
           "@type": "Person",
           "name": "Michael Cumes",
-          "jobTitle": "Co-Founder"
+          "jobTitle": "Co-Founder",
+          "sameAs": ["https://www.linkedin.com/in/michael-cumes/"]
         }
       ],
       "address": {"@type": "PostalAddress", "addressCountry": "GB", "addressRegion": "England"},
@@ -569,6 +571,9 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .founder-fig figcaption{margin-top:14px;font-family:Inter,system-ui,sans-serif;line-height:1.35}
 .founder-fig .fn{display:block;font-weight:600;font-size:17px;color:var(--ink)}
 .founder-fig .fr{display:block;font-size:14px;color:var(--copper-deep);font-weight:500;margin-top:2px}
+.founder-fig .fl{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;font-size:14px;font-weight:500;color:var(--copper-deep);text-decoration:underline;text-underline-offset:3px}
+.founder-fig .fl:hover{color:var(--ink)}
+.founder-fig .fl:focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:4px}
 .cofounder{padding:64px 32px 64px;background:var(--bg);border-bottom:1px solid var(--rule)}
 .cofounder-inner{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr 200px;gap:48px;align-items:start}
 .cofounder-inner p{margin:0;max-width:720px;font-family:Fraunces,Georgia,serif;font-size:clamp(19px,2.1vw,24px);font-weight:400;line-height:1.5;color:var(--ink);letter-spacing:-0.005em}
@@ -1139,12 +1144,11 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   <div class="who-inner has-founder" data-reveal-head>
     <figure class="founder-fig">
       <img src="/img/howard-stone.webp" width="176" height="176" alt="Howard Stone" loading="lazy" decoding="async">
-      <figcaption><span class="fn">Howard Stone</span><span class="fr">Co-Founder</span></figcaption>
+      <figcaption><span class="fn">Howard Stone</span><span class="fr">Co-Founder</span><a class="fl" href="https://www.linkedin.com/in/howard-stone-uk" target="_blank" rel="noopener">LinkedIn profile</a></figcaption>
     </figure>
     <div>
-    <p>We set up Proper Blocks in 2025, after 15 years revitalising companies in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right.</p>
-    <p style="margin-top:1.4em">Effective running of a building requires these same three things - we're out to restore people's trust in block management, having suffered at the hands of two national block management companies.</p>
-    <p style="margin-top:1.4em">We're <strong><u>independent</u></strong>, so we only have a duty to the leaseholders of our blocks. We work with <strong><u>residential and mixed-use</u></strong> blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: <strong><u>a better run block for everyone</u></strong> who owns, lives in or works there.</p>
+    <p>Howard spent 15 years turning around companies in distress. He has also been an RTM director since 2018, at a block run by two national managing agents in turn, neither of them effective or willing to work with the board.</p>
+    <p style="margin-top:1.4em">In 2025 he co-founded Proper Blocks to give leaseholders a reliable, responsible block manager. It rests on three things: sound <strong><u>financial decisions</u></strong>, excellent <strong><u>communication</u></strong>, and absolute <strong><u>persistence</u></strong> to put things right.</p>
     </div>
   </div>
 </section>
@@ -1157,8 +1161,16 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     </div>
     <figure class="founder-fig">
       <img src="/img/michael-cumes.webp" width="176" height="176" alt="Michael Cumes" loading="lazy" decoding="async">
-      <figcaption><span class="fn">Michael Cumes</span><span class="fr">Co-Founder</span></figcaption>
+      <figcaption><span class="fn">Michael Cumes</span><span class="fr">Co-Founder</span><a class="fl" href="https://www.linkedin.com/in/michael-cumes/" target="_blank" rel="noopener">LinkedIn profile</a></figcaption>
     </figure>
+  </div>
+</section>
+
+<!-- Who we work with: the company's own line, in "we", kept out of the two
+     founder bios so each bio stays about its person. -->
+<section class="who" id="work-with" aria-label="Who we work with">
+  <div class="who-inner" data-reveal-head>
+    <p>We're <strong><u>independent</u></strong>, so we only have a duty to the leaseholders of our blocks. We work with <strong><u>residential and mixed-use</u></strong> blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: <strong><u>a better run block for everyone</u></strong> who owns, lives in or works there.</p>
   </div>
 </section>
 
