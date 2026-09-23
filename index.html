@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Proper Blocks - independent block management for London RTM companies</title>
-<meta name="description" content="Independent London block management for RTM companies and residents' associations. Turnaround finance director as founder, independent of developers and freeholders.">
+<meta name="description" content="Independent London block management for RTM companies and residents' associations. Turnaround finance director as co-founder, independent of developers and freeholders.">
 <meta name="theme-color" content="#155F66">
 
 <script type="application/ld+json">
@@ -20,14 +20,21 @@
       "url": "https://properblocks.co.uk/",
       "logo": "https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev/buildings.jpg",
       "description": "Independent London block management for right-to-manage (RTM) companies, resident-management companies and organised leaseholder groups.",
-      "founder": {
-        "@type": "Person",
-        "name": "Howard Stone",
-        "jobTitle": "Founder",
-        "hasCredential": [
-          {"@type": "EducationalOccupationalCredential", "credentialCategory": "RTM Director", "name": "Right-to-manage company director since 2018"}
-        ]
-      },
+      "founder": [
+        {
+          "@type": "Person",
+          "name": "Howard Stone",
+          "jobTitle": "Co-Founder",
+          "hasCredential": [
+            {"@type": "EducationalOccupationalCredential", "credentialCategory": "RTM Director", "name": "Right-to-manage company director since 2018"}
+          ]
+        },
+        {
+          "@type": "Person",
+          "name": "Michael Cumes",
+          "jobTitle": "Co-Founder"
+        }
+      ],
       "address": {"@type": "PostalAddress", "addressCountry": "GB", "addressRegion": "England"},
       "areaServed": {"@type": "City", "name": "London"},
       "contactPoint": {
@@ -553,6 +560,25 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .who-inner{max-width:820px;margin:0 auto;text-align:center}
 .who-inner p{font-family:Fraunces,Georgia,serif;font-size:clamp(19px,2.1vw,24px);font-weight:400;line-height:1.5;color:var(--ink);letter-spacing:-0.005em}
 .who-inner strong{color:var(--copper-deep);font-weight:600}
+
+/* Co-founders: each founder's photo sits beside their own words, Howard's
+   quote in .who and Michael's bio in .cofounder, one shared figure style. */
+.who-inner.has-founder{max-width:1040px;display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start;text-align:left}
+.founder-fig{margin:0;text-align:center}
+.founder-fig img{display:block;width:176px;height:176px;border-radius:50%;object-fit:cover;margin:0 auto;border:4px solid #fff;box-shadow:0 6px 24px rgba(30,41,59,0.12)}
+.founder-fig figcaption{margin-top:14px;font-family:Inter,system-ui,sans-serif;line-height:1.35}
+.founder-fig .fn{display:block;font-weight:600;font-size:17px;color:var(--ink)}
+.founder-fig .fr{display:block;font-size:14px;color:var(--copper-deep);font-weight:500;margin-top:2px}
+.cofounder{padding:64px 32px 64px;background:var(--bg);border-bottom:1px solid var(--rule)}
+.cofounder-inner{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr 200px;gap:48px;align-items:start}
+.cofounder-inner p{margin:0;max-width:720px;font-family:Fraunces,Georgia,serif;font-size:clamp(19px,2.1vw,24px);font-weight:400;line-height:1.5;color:var(--ink);letter-spacing:-0.005em}
+.cofounder-inner p+p{margin-top:1.4em}
+@media (max-width:760px){
+  .who-inner.has-founder,.cofounder-inner{grid-template-columns:1fr;gap:28px;text-align:center}
+  .cofounder-inner .founder-fig{order:-1}
+  .who-inner.has-founder p,.cofounder-inner p{text-align:left}
+  .founder-fig img{width:148px;height:148px}
+}
 
 /* Onboarding journey - scroll-driven horizontal "how taking us on works".
    Desktop (enhanced, .journey-ready added by JS): the three steps are pinned
@@ -1110,10 +1136,29 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 </section>
 
 <section class="who" id="who">
-  <div class="who-inner" data-reveal-head>
-    <p>I set up Proper Blocks in 2025, after 15 years revitalising companies in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right.</p>
+  <div class="who-inner has-founder" data-reveal-head>
+    <figure class="founder-fig">
+      <img src="/img/howard-stone.webp" width="176" height="176" alt="Howard Stone" loading="lazy" decoding="async">
+      <figcaption><span class="fn">Howard Stone</span><span class="fr">Co-Founder</span></figcaption>
+    </figure>
+    <div>
+    <p>We set up Proper Blocks in 2025, after 15 years revitalising companies in distress. Three things were key: sensible <strong><u>financial decisions</u></strong>, good <strong><u>communication</u></strong>, absolute <strong><u>persistence</u></strong> to put things right.</p>
     <p style="margin-top:1.4em">Effective running of a building requires these same three things - we're out to restore people's trust in block management, having suffered at the hands of two national block management companies.</p>
     <p style="margin-top:1.4em">We're <strong><u>independent</u></strong>, so we only have a duty to the leaseholders of our blocks. We work with <strong><u>residential and mixed-use</u></strong> blocks across London, whatever your legal structure - <strong>RTM</strong>, <strong>Residents' Association</strong>, or organised leaseholders. The aim is always the same: <strong><u>a better run block for everyone</u></strong> who owns, lives in or works there.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cofounder" id="michael" aria-label="Michael Cumes, Co-Founder">
+  <div class="cofounder-inner" data-reveal-head>
+    <div>
+      <p>Michael organises the dozens of moving parts across people, logistics, and calendars - all the parts which ensure our blocks feel looked after. An outstanding communicator, he proactively fixes (and prevents) issues, and finds creative solutions.</p>
+      <p>An award-winning screenwriter, Michael's previously been a teacher, marketing manager, barista, and an ice cream man for a summer. Now, he's using his skills to launch and propel Proper Blocks to greatness.</p>
+    </div>
+    <figure class="founder-fig">
+      <img src="/img/michael-cumes.webp" width="176" height="176" alt="Michael Cumes" loading="lazy" decoding="async">
+      <figcaption><span class="fn">Michael Cumes</span><span class="fr">Co-Founder</span></figcaption>
+    </figure>
   </div>
 </section>
 
