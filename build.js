@@ -155,11 +155,6 @@ ${msg}
 // privacy and terms prose that carries the same sentence.
 const REG_NOTE = 'Our professional indemnity cover is in the name of Big Brain Ltd (Co. No. 11209610), a sister company.';
 
-// The home page carries the note inside the indemnity credential, where the
-// claim it qualifies is, so the shared footer leaves it off there: printing it
-// twice on one page reads as two different disclosures. Every other page states
-// the company number with no credentials band, so the footer is the only place
-// the note can go.
 // The Property Ombudsman's logo, linked to our entry on its member register,
 // on every page (Howard, 26 Sep 2026). TPO requires members to display it on
 // their website, and a requirement met on one page is met only where somebody
@@ -168,6 +163,12 @@ const REG_NOTE = 'Our professional indemnity cover is in the name of Big Brain L
 // The ICO has no logo here: it refuses its logo to anyone without the
 // Commissioner's express approval.
 const TPO_MARK = '<a class="tpo" href="https://www.tpos.co.uk/business-search/proper-blocks/" target="_blank" rel="noopener" aria-label="The Property Ombudsman, membership T14754: our entry on their public member register, opens in a new tab"><img src="/img/the-property-ombudsman.webp" alt="The Property Ombudsman" width="103" height="36"></a>';
+
+// The home page carries the note inside the indemnity credential, where the
+// claim it qualifies is, so the shared footer leaves it off there: printing it
+// twice on one page reads as two different disclosures. Every other page states
+// the company number with no credentials band, so the footer is the only place
+// the note can go.
 
 function footerHtml(opts) {
   const note = (opts && opts.noRegNote) ? '' : `\n<p class="copy-note">${REG_NOTE}</p>`;
