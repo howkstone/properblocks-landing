@@ -160,11 +160,21 @@ const REG_NOTE = 'Our professional indemnity cover is in the name of Big Brain L
 // twice on one page reads as two different disclosures. Every other page states
 // the company number with no credentials band, so the footer is the only place
 // the note can go.
+// The Property Ombudsman's logo, linked to our entry on its member register,
+// on every page (Howard, 26 Sep 2026). TPO requires members to display it on
+// their website, and a requirement met on one page is met only where somebody
+// remembered, so the footer every page shares carries it. The home page shows
+// it in its credentials band instead, and one link twice on a page is noise.
+// The ICO has no logo here: it refuses its logo to anyone without the
+// Commissioner's express approval.
+const TPO_MARK = '<a class="tpo" href="https://www.tpos.co.uk/business-search/proper-blocks/" target="_blank" rel="noopener" aria-label="The Property Ombudsman, membership T14754: our entry on their public member register, opens in a new tab"><img src="/img/the-property-ombudsman.webp" alt="The Property Ombudsman" width="103" height="36"></a>';
+
 function footerHtml(opts) {
   const note = (opts && opts.noRegNote) ? '' : `\n<p class="copy-note">${REG_NOTE}</p>`;
+  const mark = (opts && opts.noTpoMark) ? '' : `\n${TPO_MARK}`;
   return `<footer>
 <div class="inner">
-<div class="copy-block">
+<div class="copy-block">${mark}
 <div class="copy">&copy; 2026 Proper Blocks Ltd &middot; Co. No. 17301605 &middot; Registered in England &amp; Wales</div>${note}
 </div>
 <div class="links">
@@ -199,6 +209,11 @@ footer .links{display:flex;gap:20px;flex-wrap:wrap}
 footer .copy,footer a{font-size:13px;color:#64748B;text-decoration:none;line-height:1.7}
 footer .copy-note{font-size:13px;color:#64748B;line-height:1.6;margin:2px 0 0;max-width:520px}
 footer a:hover{color:#155F66}
+footer .tpo{display:inline-block;line-height:0;margin:0 0 10px;padding:4px 0;border-radius:4px}
+@media (min-width:1100px){footer .inner{flex-wrap:nowrap;gap:40px}footer .copy-block{flex:1 1 auto;min-width:0}footer .links{flex:0 0 auto;flex-wrap:nowrap}}
+footer .tpo img{display:block;height:36px;width:auto}
+footer .tpo:hover{opacity:0.88}
+footer .tpo:focus-visible{outline:2px solid #155F66;outline-offset:3px}
 @media (max-width:760px){header .inner{padding:14px 18px}nav.head{gap:14px}nav.head a:not(.btn){font-size:13px}nav.head .btn{padding:9px 14px;font-size:13px}footer{padding:32px 18px}}
 @media (max-width:520px){.mark-name{display:none}nav.head .btn-ghost{display:none}}
 /* /chrome */`;
@@ -250,7 +265,7 @@ function applyChromeToPolicy(html, current) {
 }
 
 const CHROMED = [
-  ['index.html',                    'home',       { id: 'hd', modalButton: true, skipCss: true, noRegNote: true }],
+  ['index.html',                    'home',       { id: 'hd', modalButton: true, skipCss: true, noRegNote: true, noTpoMark: true }],
   ['block-manager-london/index.html','about',     {}],
   ['fees/index.html',               'fees',       {}],
   ['FAQs/index.html',               'faqs',       {}],
