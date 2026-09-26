@@ -171,7 +171,9 @@ const TPO_MARK = '<a class="tpo" href="https://www.tpos.co.uk/business-search/pr
 // the note can go.
 
 function footerHtml(opts) {
-  const note = (opts && opts.noRegNote) ? '' : `\n<p class="copy-note">${REG_NOTE}</p>`;
+  // Non-breaking spaces hold "Co. No. 11209610" together, as the home band does.
+  const note = (opts && opts.noRegNote) ? ''
+    : `\n<p class="copy-note">${REG_NOTE.replace('Co. No. ', 'Co.&nbsp;No.&nbsp;')}</p>`;
   const mark = (opts && opts.noTpoMark) ? '' : `\n${TPO_MARK}`;
   return `<footer>
 <div class="inner">
