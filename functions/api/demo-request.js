@@ -1,10 +1,11 @@
-// POST /api/demo-request - Pages Function that proxies the "Request a demo
-// account" pop-up in the Portal section to the dennis-house-portal Worker over
+// POST /api/demo-request - Pages Function that proxies the "Get a demo login"
+// pop-up in the Portal section to the dennis-house-portal Worker over
 // the same WORKER service binding as /api/landing-contact (see that file for
 // why the binding exists and how it was wired).
 //
 // The Worker owns everything that matters: the 10-an-hour cap, the per-IP
-// limit, the demo_requests table, the email to Howard and the approval. This
+// limit, the demo_requests table, making and emailing the login, and the
+// heads-up to Howard. This
 // Function only forwards the body, pins the Origin the Worker's guard expects,
 // and carries the visitor's real IP so the per-IP limit keys on the visitor
 // rather than the Pages edge.
