@@ -344,7 +344,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    needs are in the list itself. */
 .portal-band{background:var(--moss);color:#EDEFEE;padding:56px 32px 60px;position:relative;overflow:hidden}
 .portal-band::before{content:"";position:absolute;inset:0;background:radial-gradient(110% 130% at 76% 0%,rgba(77,219,232,0.13),transparent 62%);pointer-events:none}
-.portal-inner{position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);grid-template-areas:'head sec' 'feats screen' 'foot foot';column-gap:44px;row-gap:24px;align-items:start}
+.portal-inner{position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);grid-template-areas:'head sec' 'feats screen' 'foot foot' 'demo demo';column-gap:44px;row-gap:24px;align-items:start}
 .portal-head{grid-area:head;max-width:640px;align-self:center}
 .portal-eyebrow{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;color:#4DDBE8;margin:0 0 14px}
 .portal-head h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(30px,3.4vw,42px);line-height:1.1;letter-spacing:-0.02em;color:#FFFFFF;margin:0 0 16px;text-wrap:balance}
@@ -437,8 +437,20 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .portal-foot p{font-size:13.5px;line-height:1.6;color:#A9C0C0;max-width:660px}
 .portal-foot .btn{background:#4DDBE8;color:#0B2F33;border-color:#4DDBE8}
 .portal-foot .btn:hover{background:#7FE7F0;border-color:#7FE7F0}
+/* "Try it on an example block": the demo-account panel under the Portal band's
+   footer (approved mock-up, 13 Oct 2026). It reveals with the band like its
+   siblings: the scroll-reveal puts .in on every direct child of .portal-inner. */
+.portal-demo{grid-area:demo;border:1px solid rgba(255,255,255,0.16);border-radius:10px;background:rgba(255,255,255,0.045);padding:22px 26px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;opacity:0;transform:translateY(12px);transition:opacity 0.6s ease,transform 0.6s cubic-bezier(0.22,1,0.36,1)}
+.portal-demo.in{opacity:1;transform:none}
+.portal-demo h3{font-family:Fraunces,serif;font-weight:400;font-size:24px;line-height:1.2;color:#FFFFFF;margin:0 0 8px}
+.portal-demo p{font-size:14.5px;line-height:1.6;color:#BFD2D2;max-width:640px;margin:0}
+.portal-demo .free{color:#4DDBE8;font-weight:600}
+.portal-demo .promise{margin-top:8px;font-size:13.5px;color:#A9C0C0}
+.portal-demo .promise strong{color:#FFFFFF;font-weight:600}
+.portal-demo .btn{background:#4DDBE8;color:#0B2F33;border-color:#4DDBE8;font-weight:500;min-height:48px;padding:0 24px;justify-content:center}
+.portal-demo .btn:hover{background:#7FE7F0;border-color:#7FE7F0;box-shadow:none}
 @media (max-width:980px){
-  .portal-inner{grid-template-columns:1fr;grid-template-areas:'head' 'feats' 'screen' 'sec' 'foot';row-gap:26px}
+  .portal-inner{grid-template-columns:1fr;grid-template-areas:'head' 'feats' 'screen' 'sec' 'foot' 'demo';row-gap:26px}
   .portal-head{max-width:none}
   .ps-stage{min-height:350px}
 }
@@ -657,7 +669,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .msg-modal-card{position:relative;background:var(--panel);border-radius:18px;max-width:560px;width:100%;max-height:calc(100vh - 40px);overflow-y:auto;padding:32px 32px 28px;box-shadow:0 24px 60px -10px rgba(16,62,67,0.35),0 8px 24px -4px rgba(16,62,67,0.18);font-family:Inter,sans-serif}
 .msg-modal-close{position:absolute;top:10px;right:10px;width:44px;height:44px;border:none;background:transparent;font-size:28px;line-height:1;color:var(--ink-3);cursor:pointer;border-radius:8px;transition:background 0.15s ease,color 0.15s ease;display:flex;align-items:center;justify-content:center}
 .msg-modal-close:hover{background:var(--alt);color:var(--ink)}
-.msg-modal-card h3{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.msg-modal-card h3{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:600;color:var(--ink);margin-bottom:6px;padding-right:40px}
 .msg-modal-sub{font-size:14px;color:var(--ink-2);margin-bottom:20px;line-height:1.5}
 .msg-modal-sub strong{color:var(--copper-deep);font-weight:600}
 #msg-modal-form label{display:block;font-size:13px;color:var(--ink-2);font-weight:500;margin-bottom:12px}
@@ -689,11 +701,36 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .msg-hp{position:absolute !important;left:-9999px !important;width:1px !important;height:1px !important;overflow:hidden}
 .msg-actions{margin-top:18px;display:flex;justify-content:flex-end}
 .msg-error{margin-top:12px;font-size:13px;color:var(--copper-deep);min-height:18px;text-align:right}
-.msg-error.is-error{color:#D94A3D}
+.msg-error.is-error{color:#B23A2F}
+#demo-error:empty{margin:0;min-height:0}
 .msg-success{text-align:center;padding:12px 0 4px}
 .msg-success .check{width:48px;height:48px;border-radius:50%;background:#2AA06A;color:#1E293B;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;font-weight:700}
-.msg-success h3{margin-bottom:8px}
-.msg-success p{color:var(--ink-2);font-size:14px;line-height:1.55;max-width:420px;margin:0 auto}
+.msg-success h3{margin-bottom:8px;padding-right:0}
+.msg-success p{color:var(--ink-2);font-size:14px;line-height:1.55;max-width:400px;margin:0 auto;text-wrap:balance}
+.msg-success h3:focus{outline:none}
+
+/* Request-a-demo-account pop-up. Same shell as the Message-us pop-up above;
+   these are its form rules (approved mock-up, 13 Oct 2026). One column, 44px
+   targets, no "required" markers: the button stays pale until the three needed
+   answers pass a proper check, and a hint appears only once a person has left
+   a field or pressed the button, never while they are still typing. */
+.dm-sub{font-size:14px;color:var(--ink-2);margin-bottom:20px;line-height:1.5}
+.dm-form label{display:block;font-size:13px;color:var(--ink-2);font-weight:500;margin-bottom:12px}
+.dm-form .opt{color:var(--ink-3);font-weight:400;font-size:12px}
+.dm-form input[type=text],.dm-form input[type=email],.dm-form select{display:block;width:100%;min-height:44px;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
+.dm-form input:focus,.dm-form select:focus{outline:none;border-color:var(--copper);background-color:var(--panel);box-shadow:0 0 0 3px var(--copper-light)}
+.dm-form input[aria-invalid="true"]{border-color:#D94A3D}
+.dm-form select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center}
+.dm-form select:hover{border-color:var(--ink-3)}
+.dm-hint{display:block;min-height:0;margin-top:6px;font-size:12.5px;font-weight:400;line-height:1.4;color:#B23A2F}
+.dm-hint:empty{display:none}
+.dm-hint::before{content:"!";display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-right:6px;border-radius:50%;background:#D94A3D;color:#fff;font-size:10px;font-weight:700;vertical-align:1px}
+.dm-form .btn-primary{font-weight:500;min-height:48px;padding:0 24px;justify-content:center}
+/* aria-disabled, never the disabled attribute: a click on an incomplete form
+   must still reach the submit handler, which raises every hint and focuses the
+   first bad field. [disabled] is only the in-flight state while sending. */
+.dm-form .btn-primary[aria-disabled="true"],.dm-form .btn-primary[disabled]{background:#C7CFDB;border-color:#C7CFDB;color:#1E293B;cursor:default;transform:none;box-shadow:none}
+@media (max-width:600px){.dm-form input[type=text],.dm-form input[type=email],.dm-form select{font-size:16px}}
 
 /* Footer */
 footer{padding:48px 32px;border-top:1px solid var(--rule);background:var(--panel)}
@@ -729,7 +766,7 @@ footer .copy-note{font-size:13px;color:var(--ink-3);line-height:1.6;margin:2px 0
 <style>
 /* If JavaScript is disabled the reveal animations never fire, so make sure
    the elements that start at opacity:0 are visible by default. */
-.hero-pillars,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.jstep,.section-head h2 .w{
+.hero-pillars,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.jstep,.section-head h2 .w,.portal-demo{
   opacity:1 !important;transform:none !important
 }
 /* The unravel wordmark is clipped away until the scroll handler steps it
@@ -1008,6 +1045,15 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <div class="portal-foot">
       <p>RTM Directors receive further privileges: see who owes what, control of who can see which page, board meetings minuted, and every safety and compliance date held with the date it has to be done again.</p>
       <a href="https://dennishouse.properblocks.co.uk" class="btn btn-primary">Portal login</a>
+    </div>
+
+    <div class="portal-demo">
+      <div>
+        <h3>Try it on an example block</h3>
+        <p><span class="free">Completely free.</span> Sign in to a made-up block full of example flats, demands, documents, and repairs, and see what your directors and leaseholders would see.</p>
+        <p class="promise">Don't worry, we won't chase you with <strong>any</strong> follow-up emails.</p>
+      </div>
+      <button type="button" class="btn btn-primary js-open-demo-modal">Request a demo account</button>
     </div>
   </div>
 </section>
@@ -1366,6 +1412,30 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   </div>
 </div>
 
+<!-- Request-a-demo-account modal. Same shell and the same open/close/focus-trap code as the Message-us modal. -->
+<div id="demo-modal" class="msg-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+  <div class="msg-modal-overlay" data-close-modal></div>
+  <div class="msg-modal-card" role="document">
+    <button type="button" class="msg-modal-close" data-close-modal aria-label="Close">&times;</button>
+    <div id="demo-modal-body">
+      <h3 id="demo-modal-title">Request a demo account</h3>
+      <p class="dm-sub">Tell us who you are and Howard will set up your login.</p>
+      <form id="demo-modal-form" class="dm-form" novalidate>
+        <label>Your name<input type="text" name="name" maxlength="100" autocomplete="name" aria-describedby="dm-hint-name"><span class="dm-hint" id="dm-hint-name" aria-live="polite"></span></label>
+        <label>Your email<input type="email" name="email" maxlength="200" autocomplete="email" aria-describedby="dm-hint-email"><span class="dm-hint" id="dm-hint-email" aria-live="polite"></span></label>
+        <label>Your block, or the one you're looking at<input type="text" name="block" maxlength="200" autocomplete="off" aria-describedby="dm-hint-block"><span class="dm-hint" id="dm-hint-block" aria-live="polite"></span></label>
+        <label>You are <span class="opt">(optional)</span><select name="role"><option value=""></option><option>An RTM director</option><option>A leaseholder</option><option>A managing agent</option><option>Something else</option></select></label>
+        <!-- Honeypot: bots fill all fields, humans don't see this -->
+        <label class="msg-hp" aria-hidden="true" tabindex="-1">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <div class="msg-actions">
+          <button type="submit" class="btn btn-primary btn-md" id="demo-submit" aria-disabled="true">Request a demo account</button>
+        </div>
+        <div id="demo-error" class="msg-error" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <footer>
 <div class="inner">
 <div class="copy-block">
@@ -1695,6 +1765,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   // (CMS edit, A/B test, partial render) the IIFE must NOT throw - the same
   // IIFE owns the ambient particles, scroll reveals and morph video.
   const modal = document.getElementById('msg-modal');
+  const demoModal = document.getElementById('demo-modal');
   const openBtns = document.querySelectorAll('.js-open-message-modal');
   // The fees and FAQ pages are separate static files with no modal of their
   // own, so their "Message us" button links here with #message. Without this
@@ -1706,38 +1777,46 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
   const otherCb = document.getElementById('issue-other');
   const otherWrap = document.getElementById('other-wrap');
   let lastFocus = null;
+  // One open/close/focus-trap for every pop-up on the page (Message us, and
+  // Request a demo account). Whichever is open is the active one.
+  let activeModal = null;
 
-  function focusables(){
-    if (!modal) return [];
-    return Array.from(modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+  function focusables(m){
+    if (!m) return [];
+    return Array.from(m.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
       .filter(el => !el.disabled && el.offsetParent !== null);
   }
-  function openModal(){
-    if (!modal) return;
+  function openModal(m){
+    if (!m) return;
     lastFocus = document.activeElement;
-    modal.setAttribute('aria-hidden', 'false');
+    activeModal = m;
+    m.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
-      const firstInput = form && form.querySelector('input[name="name"]');
+      const firstInput = m.querySelector('input[name="name"]');
       if (firstInput) firstInput.focus();
     }, 50);
   }
-  function closeModal(){
-    if (!modal) return;
-    modal.setAttribute('aria-hidden', 'true');
+  function closeModal(m){
+    const target = m && m.setAttribute ? m : activeModal;
+    if (!target) return;
+    target.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (activeModal === target) activeModal = null;
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
-  if (modal) openBtns.forEach(b => b.addEventListener('click', openModal));
-  if (modal && wantsMessage()) openModal();
-  window.addEventListener('hashchange', () => { if (modal && wantsMessage()) openModal(); });
-  if (modal) modal.querySelectorAll('[data-close-modal]').forEach(el => el.addEventListener('click', closeModal));
+  if (modal) openBtns.forEach(b => b.addEventListener('click', () => openModal(modal)));
+  if (modal && wantsMessage()) openModal(modal);
+  window.addEventListener('hashchange', () => { if (modal && wantsMessage()) openModal(modal); });
+  [modal, demoModal].forEach(m => {
+    if (m) m.querySelectorAll('[data-close-modal]').forEach(el => el.addEventListener('click', () => closeModal(m)));
+  });
   document.addEventListener('keydown', (e) => {
-    if (!modal || modal.getAttribute('aria-hidden') !== 'false') return;
-    if (e.key === 'Escape') { closeModal(); return; }
+    if (!activeModal || activeModal.getAttribute('aria-hidden') !== 'false') return;
+    if (e.key === 'Escape') { closeModal(activeModal); return; }
     // Focus trap: keep Tab cycling within the modal.
     if (e.key === 'Tab') {
-      const list = focusables();
+      const list = focusables(activeModal);
       if (!list.length) return;
       const first = list[0];
       const last = list[list.length - 1];
@@ -1818,7 +1897,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       // Success
       const body = document.getElementById('msg-modal-body');
       body.innerHTML = '<div class="msg-success"><div class="check">&#10003;</div><h3>Thanks, ' + escapeText(payload.name.split(' ')[0]) + '.</h3><p>Your message has gone to <strong>howard@properblocks.co.uk</strong>. A copy is on its way to your inbox. We will reply as soon as possible.</p><div class="msg-actions is-centred"><button type="button" class="btn btn-ghost btn-sm" id="msg-close-after">Close</button></div></div>';
-      document.getElementById('msg-close-after').addEventListener('click', closeModal);
+      document.getElementById('msg-close-after').addEventListener('click', () => closeModal(modal));
     } catch (e) {
       errEl.textContent = 'Network error. Please try again or email howard@properblocks.co.uk.';
       errEl.classList.add('is-error');
@@ -1826,6 +1905,105 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       submitBtn.textContent = 'Send message';
     }
   });
+
+  // ---- Request-a-demo-account form ----
+  // The button stays pale until name, email and block pass a proper check. A
+  // hint shows only after a person leaves a field or presses Enter or the
+  // button, and clears the moment the value is right. Nothing warns mid-typing.
+  const demoForm = document.getElementById('demo-modal-form');
+  if (demoModal) document.querySelectorAll('.js-open-demo-modal').forEach(b => b.addEventListener('click', () => openModal(demoModal)));
+  if (demoForm) {
+    const dmBtn = document.getElementById('demo-submit');
+    const dmErr = document.getElementById('demo-error');
+    const DM_EMAIL = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[^\s@.]{2,}$/;
+    const DM_RULES = {
+      name: v => v.trim().length >= 2 ? '' : 'Please enter your name.',
+      email: v => DM_EMAIL.test(v.trim()) ? '' : 'Please enter your full email address, like name@example.com.',
+      block: v => v.trim() ? '' : 'Please tell us which block.',
+    };
+    const dmField = n => demoForm.querySelector('[name="' + n + '"]');
+    const dmShow = (n) => {
+      const msg = DM_RULES[n](dmField(n).value);
+      document.getElementById('dm-hint-' + n).textContent = msg;
+      dmField(n).setAttribute('aria-invalid', msg ? 'true' : 'false');
+      return !msg;
+    };
+    const dmValid = () => Object.keys(DM_RULES).every(n => !DM_RULES[n](dmField(n).value));
+    // Pale, never disabled: a click on an incomplete form still reaches the
+    // submit handler, which raises the hints. Nothing posts while incomplete.
+    const dmSync = () => { dmBtn.setAttribute('aria-disabled', dmValid() ? 'false' : 'true'); };
+    // First name for the thank-you: skip a leading title (Mr, Mrs, Ms, Miss, Dr,
+    // Mx, Prof, with or without a full stop); fall back to the whole name.
+    const dmFirst = (n) => {
+      const p = String(n || '').trim().split(/\s+/);
+      return (p.length > 1 && /^(mr|mrs|ms|miss|dr|mx|prof)\.?$/i.test(p[0]) ? p[1] : p[0]) || String(n || '').trim();
+    };
+    Object.keys(DM_RULES).forEach(n => {
+      const el = dmField(n);
+      el.addEventListener('blur', () => { if (el.value !== '') dmShow(n); });
+      // While typing, only ever CLEAR a hint that is showing; never raise one.
+      el.addEventListener('input', () => {
+        dmSync();
+        if (document.getElementById('dm-hint-' + n).textContent && !DM_RULES[n](el.value)) dmShow(n);
+      });
+    });
+    dmSync();
+    // Enter presses the button the form exists for, so it behaves exactly as a
+    // click does: the submit handler posts if complete, otherwise raises every
+    // hint and moves to the first bad field.
+    demoForm.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' || e.target.tagName === 'BUTTON') return;
+      e.preventDefault();
+      if (dmBtn.disabled) return;
+      demoForm.requestSubmit();
+    });
+    demoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      dmErr.textContent = '';
+      dmErr.classList.remove('is-error');
+      if (dmBtn.disabled) return;
+      if (!dmValid()) {
+        const bad = Object.keys(DM_RULES).filter(n => !dmShow(n));
+        if (bad.length) dmField(bad[0]).focus();
+        return;
+      }
+      const label = dmBtn.textContent;
+      dmBtn.disabled = true;
+      dmBtn.textContent = 'Sending...';
+      const fd = new FormData(demoForm);
+      const payload = {
+        name: (fd.get('name') || '').toString().trim(),
+        email: (fd.get('email') || '').toString().trim(),
+        block: (fd.get('block') || '').toString().trim(),
+        role: (fd.get('role') || '').toString(),
+        website: (fd.get('website') || '').toString().trim(), // honeypot
+      };
+      const fail = (text) => {
+        dmErr.textContent = text;
+        dmErr.classList.add('is-error');
+        dmBtn.textContent = label;
+        dmBtn.disabled = false;
+        dmSync();
+      };
+      const FALLBACK = "We couldn't send that just now. Please email howard@properblocks.co.uk.";
+      try {
+        const res = await fetch('/api/demo-request', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) { fail(res.status === 400 && data && data.error ? data.error : FALLBACK); return; }
+        // Success is shown only once the server has said ok.
+        const body = document.getElementById('demo-modal-body');
+        body.innerHTML = '<div class="msg-success" role="status"><div class="check" aria-hidden="true">&#10003;</div><h3 tabindex="-1" id="demo-sent-title">Request sent</h3><p>Thanks, ' + escapeText(dmFirst(payload.name)) + '. Howard reads every request. If it\'s approved, your login arrives by email, and that is the only email we\'ll send.</p></div>';
+        const sent = document.getElementById('demo-sent-title');
+        if (sent) sent.focus();
+      } catch (err) {
+        fail(FALLBACK);
+      }
+    });
+  }
 
   function escapeText(s){ return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
