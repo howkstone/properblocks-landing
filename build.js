@@ -187,6 +187,10 @@ ${FOOT_LINKS.map(([h, l]) => `<a href="${h}">${l}</a>`).join('\n')}
 </footer>`;
 }
 
+// Every page's bar matches the home page's at every width (Howard, 13 Oct 2026,
+// phone fixes picker: "5a"): up to 900px the text links go to the footer, and
+// up to 520px Portal login does too, leaving the name and Message us on one line.
+//
 // Self-contained, hex literals rather than custom properties: the pages do not
 // all name the palette the same way (--copper-deep here is --teal-deep there),
 // and chrome that renders differently per page is the thing this removes.
@@ -200,7 +204,7 @@ header .inner{max-width:1200px;margin:0 auto;padding:18px 32px;display:flex;alig
 nav.head{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 nav.head a:not(.btn){text-decoration:none;color:#475569;font-size:14px;font-weight:500}
 nav.head a:not(.btn):hover,nav.head a:not(.btn)[aria-current]{color:#155F66}
-nav.head .btn{display:inline-flex;align-items:center;padding:11px 22px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer}
+nav.head .btn{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;padding:11px 22px;border-radius:6px;font-size:14px;font-weight:600;line-height:1.2;text-decoration:none;border:1px solid transparent;cursor:pointer}
 nav.head .btn-ghost{background:transparent;color:#1E293B;border-color:#CFCBC1}
 nav.head .btn-ghost:hover{background:rgba(30,41,59,0.05)}
 nav.head .btn-primary{background:#1E293B;color:#fff}
@@ -217,8 +221,10 @@ footer .tpo{display:inline-block;line-height:0;margin:0 0 10px;padding:4px 0;bor
 footer .tpo img{display:block;height:36px;width:auto}
 footer .tpo:hover{opacity:0.88}
 footer .tpo:focus-visible{outline:2px solid #155F66;outline-offset:3px}
-@media (max-width:760px){header .inner{padding:14px 18px}nav.head{gap:14px}nav.head a:not(.btn){font-size:13px}nav.head .btn{padding:9px 14px;font-size:13px}footer{padding:32px 18px}}
-@media (max-width:520px){.mark-name{display:none}nav.head .btn-ghost{display:none}}
+nav.head .btn,.mark-name{white-space:nowrap}
+@media (max-width:900px){nav.head{gap:14px}nav.head a:not(.btn){display:none}}
+@media (max-width:760px){header .inner{padding:14px 18px}footer{padding:32px 18px}}
+@media (max-width:520px){header .inner{padding:14px 20px}nav.head a:not(.btn),nav.head .btn-ghost{display:none}nav.head .btn{min-height:44px;padding:11px 16px;font-size:14px}}
 /* /chrome */`;
 
 function withChromeCss(html) {
