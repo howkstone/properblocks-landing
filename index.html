@@ -135,6 +135,16 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .btn-primary:hover{background:var(--moss);transform:translateY(-1px);box-shadow:0 10px 24px rgba(30,41,59,0.18)}
 .btn-ghost{background:transparent;color:var(--ink);border-color:var(--rule-2)}
 .btn-ghost:hover{background:var(--alt)}
+/* Phone top bar (Howard, 13 Oct 2026 picker: "Keep Message us, drop Portal
+   login"): every label on one line, and up to 520px the bar holds the name and
+   Message us only. Portal login stays in the portal section and the footer.
+   Both buttons overflow anywhere up to 520px. */
+header .btn,.mark-name{white-space:nowrap}
+@media (max-width:520px){
+  header .inner{padding:14px 20px}
+  nav.head .btn{min-height:44px;padding:11px 16px}
+  nav.head .btn-ghost{display:none}
+}
 
 /* Hero with particle-text headline morph + ambient particle field */
 /* Hero stage: 200vh sticky pin so the user's first 100vh of scroll lights the
@@ -670,10 +680,10 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
 .msg-modal-card h3{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:600;color:var(--ink);margin-bottom:6px;padding-right:40px}
 .msg-modal-sub{font-size:14px;color:var(--ink-2);margin-bottom:20px;line-height:1.5}
 .msg-modal-sub strong{color:var(--copper-deep);font-weight:600}
-#msg-modal-form label{display:block;font-size:13px;color:var(--ink-2);font-weight:500;margin-bottom:12px}
+#msg-modal-form label{display:block;font-size:14px;color:var(--ink-2);font-weight:500;margin-bottom:12px}
 #msg-modal-form .req{color:var(--copper-deep);margin-left:3px}
-#msg-modal-form .opt{color:var(--ink-3);font-weight:400;font-size:12px}
-#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel],#msg-modal-form textarea,#msg-modal-form select{display:block;width:100%;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
+#msg-modal-form .opt{color:var(--ink-3);font-weight:400;font-size:14px}
+#msg-modal-form input[type=text],#msg-modal-form input[type=email],#msg-modal-form input[type=tel],#msg-modal-form textarea,#msg-modal-form select{display:block;width:100%;min-height:44px;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid #8A867D;border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
 #msg-modal-form textarea{resize:vertical;min-height:96px;line-height:1.5}
 /* background-color, never the background shorthand: the shorthand resets
    background-image, which wiped the dropdown's chevron the moment it took
@@ -688,18 +698,30 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    Fieldset margin matches a plain label's 12px so the row does not sit lower
    than the fields above it. */
 .msg-units{border:0;padding:0;margin:0 0 12px;min-width:0}
-.msg-units legend{font-size:13px;color:var(--ink-2);font-weight:500;padding:0}
+.msg-units legend{font-size:14px;color:var(--ink-2);font-weight:500;padding:0}
 .msg-units .units-row{display:flex;gap:12px;margin-top:2px}
-.msg-units .units-row label{flex:1 1 0;min-width:0;margin-bottom:0;font-weight:400;font-size:12px;color:var(--ink-3)}
+.msg-units .units-row label{flex:1 1 0;min-width:0;margin-bottom:0;font-weight:400;font-size:14px;color:var(--ink-3)}
 .msg-issues{border:1px solid var(--rule);border-radius:11px;padding:14px 16px;margin-bottom:14px;background:var(--alt)}
-.msg-issues legend{font-size:13px;font-weight:500;color:var(--ink-2);padding:0 6px}
-.msg-issues .cb{display:flex;align-items:center;gap:12px;margin:4px 0;min-height:44px;font-size:14px;color:var(--ink);cursor:pointer;font-weight:400;padding:4px 0}
+/* The legend floats so it sits inside the box at any length; on its border it
+   wrapped across the edge at phone width. */
+.msg-issues legend{float:left;width:100%;font-size:14px;font-weight:500;color:var(--ink-2);padding:0;margin-bottom:4px}
+.msg-issues legend + .cb{clear:both}
+/* #msg-modal-form label sets display:block and 14px at id strength, which beat
+   this rule and stacked each tick box on top of its text; the id prefix wins. */
+#msg-modal-form .msg-issues .cb,.msg-issues .cb{display:flex;align-items:center;gap:12px;margin:4px 0;min-height:44px;font-size:14px;color:var(--ink);cursor:pointer;font-weight:400;padding:4px 0}
 .msg-issues .cb input{flex-shrink:0;accent-color:var(--copper-deep);width:18px;height:18px}
 .msg-issues .cb span{line-height:1.4}
 .msg-hp{position:absolute !important;left:-9999px !important;width:1px !important;height:1px !important;overflow:hidden}
 .msg-actions{margin-top:18px;display:flex;justify-content:flex-end}
-.msg-error{margin-top:12px;font-size:13px;color:var(--copper-deep);min-height:18px;text-align:right}
-.msg-error.is-error{color:#B23A2F}
+/* Form-level errors (a failed send) sit above the button, left-aligned, with
+   the same warning mark as the per-field hints. */
+.msg-error{display:block;margin:0 0 4px;font-size:14px;line-height:1.45;color:#B23A2F;text-align:left}
+.msg-error:empty{display:none}
+.msg-error.is-error::before{content:"!";display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-right:6px;border-radius:50%;background:#D94A3D;color:#fff;font-size:10px;font-weight:700;vertical-align:1px}
+#msg-modal-form input[aria-invalid="true"]{border-color:#D94A3D}
+.msg-modal-card h3{text-wrap:balance}
+#msg-modal-form .btn-primary{font-weight:500;min-height:48px;padding:0 24px;justify-content:center}
+#msg-modal-form .btn-primary[aria-disabled="true"],#msg-modal-form .btn-primary[disabled]{background:#5E6B80;color:#F8FAFC;cursor:default;transform:none;box-shadow:none}
 #demo-error:empty{margin:0;min-height:0}
 .msg-success{text-align:center;padding:12px 0 4px}
 .msg-success .check{width:48px;height:48px;border-radius:50%;background:#2AA06A;color:#1E293B;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;font-weight:700}
@@ -714,7 +736,7 @@ nav.head a:focus-visible{outline:2px solid var(--copper);outline-offset:3px;bord
    a field or pressed the button, never while they are still typing. */
 .dm-sub{font-size:14px;color:var(--ink-2);margin-bottom:20px;line-height:1.5}
 .dm-form label{display:block;font-size:14px;color:var(--ink-2);font-weight:500;margin-bottom:12px}
-.dm-form .opt{color:var(--ink-3);font-weight:400;font-size:12px}
+.dm-form .opt{color:var(--ink-3);font-weight:400;font-size:14px}
 .dm-form input[type=text],.dm-form input[type=email],.dm-form select{display:block;width:100%;min-height:44px;margin-top:6px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid #8A867D;border-radius:9px;transition:border-color 0.15s ease,background 0.15s ease}
 .dm-form input:focus,.dm-form select:focus{outline:none;border-color:var(--copper);background-color:var(--panel);box-shadow:0 0 0 3px var(--copper-light)}
 .dm-form input[aria-invalid="true"]{border-color:#D94A3D}
@@ -758,8 +780,13 @@ footer .copy-note{font-size:13px;color:var(--ink-3);line-height:1.6;margin:2px 0
   .hero{padding:80px 24px 32px;gap:24px}
   .hero-manifesto{font-size:clamp(36px,9vw,52px);margin-bottom:24px}
   .unravel{padding:72px 24px 64px}
-  .unravel-glyph{width:64px;height:64px}
-  .unravel-word{font-size:clamp(42px,11vw,72px)}
+  /* The hero already pads 24px each side, and the name scales with the
+     screen, so the row fits from 320px up (Howard, 13 Oct 2026 picker: "Name
+     shrinks to fit the phone"; at 42px it ran 6px past a 390px phone). */
+  .hero-unravel{padding-left:0;padding-right:0}
+  .unravel-inner{gap:clamp(12px,3.5vw,22px)}
+  .unravel-glyph{width:clamp(44px,14vw,64px);height:clamp(44px,14vw,64px)}
+  .unravel-word{font-size:clamp(30px,9.4vw,72px)}
   .pillars-intro{padding:72px 24px 16px}
   .pillars,.pillars.two-up{grid-template-columns:1fr}
   nav.head{gap:14px}
@@ -1380,10 +1407,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <h3 id="msg-modal-title">Message Proper Blocks</h3>
       <p class="msg-modal-sub">Tell us about your block and we'll be in touch. Goes to <strong>howard@properblocks.co.uk</strong>; you'll get a copy in your inbox.</p>
       <form id="msg-modal-form" novalidate>
-        <label>Name<span class="req">*</span><input type="text" name="name" required maxlength="100" autocomplete="name"></label>
-        <label>Email<span class="req">*</span><input type="email" name="email" required maxlength="200" autocomplete="email"></label>
+        <label>Name<input type="text" name="name" maxlength="100" autocomplete="name" aria-describedby="msg-hint-name"><span class="dm-hint" id="msg-hint-name" aria-live="polite"></span></label>
+        <label>Email<input type="email" name="email" maxlength="200" autocomplete="email" aria-describedby="msg-hint-email"><span class="dm-hint" id="msg-hint-email" aria-live="polite"></span></label>
         <label>Phone <span class="opt">(optional)</span><input type="tel" name="phone" maxlength="40" autocomplete="tel"></label>
-        <label>Block address<span class="req">*</span><input type="text" name="block_address" required maxlength="200" placeholder="e.g. E3, London"></label>
+        <label>Block address<input type="text" name="block_address" maxlength="200" placeholder="e.g. E3, London" aria-describedby="msg-hint-block_address"><span class="dm-hint" id="msg-hint-block_address" aria-live="polite"></span></label>
         <fieldset class="msg-units">
           <legend>How many units are in the block? <span class="opt">(optional)</span></legend>
           <div class="units-row">
@@ -1392,7 +1419,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           </div>
         </fieldset>
         <label>RTM company <span class="opt">(optional)</span><input type="text" name="rtm_company" maxlength="150" placeholder="If your block has an RTM"></label>
-        <label>Existing managing agent <span class="opt">(optional)</span><input type="text" name="managing_agent" maxlength="150" placeholder="Who manages the block at the moment"></label>
+        <label>Existing managing agent <span class="opt">(optional)</span><input type="text" name="managing_agent" maxlength="150" placeholder="Who manages it now"></label>
         <fieldset class="msg-issues">
           <legend>What's on your mind? <span class="opt">(tick all that apply)</span></legend>
           <label class="cb"><input type="checkbox" name="issue" value="Service charge transparency or questions on what you're being charged"><span>Service charge transparency, or questions on what you're being charged</span></label>
@@ -1406,10 +1433,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
         <label>How did you hear about us? <span class="opt">(optional)</span><select name="heard_from"><option value="">Prefer not to say</option><option>Google search</option><option>Google Maps</option><option>Word of mouth or a recommendation</option><option>A letter from us</option><option>LinkedIn</option><option>Another website or directory</option><option>Something else</option></select></label>
         <!-- Honeypot: bots fill all fields, humans don't see this -->
         <label class="msg-hp" aria-hidden="true" tabindex="-1">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-        <div class="msg-actions">
-          <button type="submit" class="btn btn-primary btn-md" id="msg-submit">Send message</button>
-        </div>
         <div id="msg-error" class="msg-error" aria-live="polite"></div>
+        <div class="msg-actions">
+          <button type="submit" class="btn btn-primary btn-md" id="msg-submit" aria-disabled="true">Send message</button>
+        </div>
       </form>
     </div>
   </div>
@@ -1860,11 +1887,50 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     });
   }
 
+  // The three answers the message needs, checked the way the demo pop-up checks
+  // its email: Send stays pale until all three pass, a hint shows under its own
+  // field only once a person leaves it or presses Send, and a showing hint
+  // clears the moment the value is right. Nothing warns mid-typing.
+  const MSG_EMAIL = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[^\s@.]{2,}$/;
+  const MSG_RULES = {
+    name: v => v.trim().length >= 2 ? '' : 'Please tell us your name.',
+    email: v => MSG_EMAIL.test(v.trim()) ? '' : 'Please enter your full email address, like name@example.com.',
+    block_address: v => v.trim() ? '' : 'Please tell us your block address.',
+  };
+  const msgBtn = document.getElementById('msg-submit');
+  const msgField = n => form.querySelector('[name="' + n + '"]');
+  const msgHint = n => document.getElementById('msg-hint-' + n);
+  const msgShow = (n) => {
+    const m = MSG_RULES[n](msgField(n).value);
+    msgHint(n).textContent = m;
+    msgField(n).setAttribute('aria-invalid', m ? 'true' : 'false');
+    return !m;
+  };
+  const msgValid = () => Object.keys(MSG_RULES).every(n => !MSG_RULES[n](msgField(n).value));
+  const msgSync = () => { if (msgBtn) msgBtn.setAttribute('aria-disabled', msgValid() ? 'false' : 'true'); };
+  if (form && msgBtn) {
+    Object.keys(MSG_RULES).forEach(n => {
+      const el = msgField(n);
+      el.addEventListener('blur', () => { if (el.value !== '') msgShow(n); });
+      el.addEventListener('input', () => {
+        msgSync();
+        if (msgHint(n).textContent && !MSG_RULES[n](el.value)) msgShow(n);
+      });
+    });
+    msgSync();
+  }
+
   if (form) form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errEl.textContent = '';
     errEl.classList.remove('is-error');
     const submitBtn = document.getElementById('msg-submit');
+    if (submitBtn.disabled) return;
+    if (!msgValid()) {
+      const bad = Object.keys(MSG_RULES).filter(n => !msgShow(n));
+      if (bad.length) msgField(bad[0]).focus();
+      return;
+    }
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
     const fd = new FormData(form);
@@ -1883,9 +1949,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       heard_from: (fd.get('heard_from') || '').toString().trim(),
       website: (fd.get('website') || '').toString().trim(), // honeypot
     };
-    if (!payload.name || payload.name.length < 2) { errEl.textContent = 'Please tell us your name.'; errEl.classList.add('is-error'); submitBtn.disabled = false; submitBtn.textContent = 'Send message'; return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) { errEl.textContent = 'Please enter a valid email.'; errEl.classList.add('is-error'); submitBtn.disabled = false; submitBtn.textContent = 'Send message'; return; }
-    if (!payload.block_address) { errEl.textContent = 'Please tell us your block address.'; errEl.classList.add('is-error'); submitBtn.disabled = false; submitBtn.textContent = 'Send message'; return; }
     try {
       const res = await fetch('/api/landing-contact', {
         method: 'POST',
