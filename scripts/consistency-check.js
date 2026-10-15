@@ -428,6 +428,21 @@ for (const rel of PAGES) {
     fail(rel, "contains an em dash.");
   }
 
+  // --- the brand mark takes the visitor home (ui-standard U-187) ---------
+  // Howard, 14 Oct 2026, on theken.uk/checkout: ""TheKen" on the checkout page
+  // DOESN'T take the visitor back to the homepage. This is so basic". Every
+  // page's top-bar mark is a link to "/", never a picture that does nothing.
+  if (/\.html$/.test(rel)) {
+    const marks = (html.match(/<([a-z]+)\b[^>]*\bclass=["'][^"']*["'][^>]*>/gi) || [])
+      .filter((tag) => /\bclass=["'][^"']*(^|\s)mark(\s|["'])/i.test(tag.replace(/class=(["'])/, 'class=$1 ')));
+    if (!marks.length) fail(rel, 'has no top-bar brand mark (class "mark"); every page carries one, and it links home.');
+    for (const tag of marks) {
+      if (!/^<a\b/i.test(tag) || !/\bhref=["']\/(index\.html)?["']/i.test(tag)) {
+        fail(rel, 'the brand mark is not a link to the home page: ' + tag + ' (U-187; Howard, 14 Oct 2026: "This is so basic").');
+      }
+    }
+  }
+
   // Howard, 14 Aug 2026: the serial comma is his house style and he uses it.
   // He caught a letter where his own "attention, responsiveness, and diligence"
   // had been silently reduced to the British-optional form; the site was then
