@@ -433,10 +433,11 @@ for (const rel of PAGES) {
   // DOESN'T take the visitor back to the homepage. This is so basic". Every
   // page's top-bar mark is a link to "/", never a picture that does nothing.
   if (/\.html$/.test(rel)) {
-    const marks = html.match(/<([a-z]+)\b[^>]*\bclass="mark"[^>]*>/gi) || [];
-    if (!marks.length) fail(rel, 'has no top-bar brand mark (class="mark"); every page carries one, and it links home.');
+    const marks = (html.match(/<([a-z]+)\b[^>]*\bclass=["'][^"']*["'][^>]*>/gi) || [])
+      .filter((tag) => /\bclass=["'][^"']*(^|\s)mark(\s|["'])/i.test(tag.replace(/class=(["'])/, 'class=$1 ')));
+    if (!marks.length) fail(rel, 'has no top-bar brand mark (class "mark"); every page carries one, and it links home.');
     for (const tag of marks) {
-      if (!/^<a\b/i.test(tag) || !/\bhref="\/"/.test(tag)) {
+      if (!/^<a\b/i.test(tag) || !/\bhref=["']\/(index\.html)?["']/i.test(tag)) {
         fail(rel, 'the brand mark is not a link to the home page: ' + tag + ' (U-187; Howard, 14 Oct 2026: "This is so basic").');
       }
     }
