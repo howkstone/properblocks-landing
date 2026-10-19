@@ -430,6 +430,18 @@ fs.writeFileSync(path.join(OUT, '_headers'),
   // here, and a cross-origin font needs CORS or the browser refuses it.
   '  Access-Control-Allow-Origin: *\n');
 
+// The page CSP is built per request in functions/_middleware.js; the static
+// one above covers everything else. Both must allow the analytics beacon, or
+// one class of response silently drops it. Fails the build if they drift.
+{
+  const mw = fs.readFileSync(path.join(__dirname, 'functions', '_middleware.js'), 'utf8');
+  const hd = fs.readFileSync(path.join(OUT, '_headers'), 'utf8');
+  ['https://static.cloudflareinsights.com', 'https://cloudflareinsights.com'].forEach(host => {
+    if (!mw.includes(`'${host}'`)) throw new Error(`functions/_middleware.js CSP no longer names ${host}`);
+    if (!hd.includes(host)) throw new Error(`_headers CSP no longer names ${host}`);
+  });
+}
+
 // _redirects - canonicalise www to apex, and keep the retired URLs alive.
 // /pricing/ was a separate price list and is now /fees/. It is a 301 rather
 // than a deletion because the old URL is in Google, in the printed letters' QR

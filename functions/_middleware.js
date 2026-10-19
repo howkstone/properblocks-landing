@@ -88,7 +88,8 @@ export async function onRequest(context) {
   const nonce = randomNonce();
 
   // Inject nonce attribute on every inline <script> (not on external scripts
-  // - they pass via script-src 'self'). The CSP authorises only inline scripts
+  // - they pass via script-src 'self' or, for the analytics beacon, the
+  // CF_BEACON_SCRIPT host). The CSP authorises only inline scripts
   // carrying the matching nonce; without it the inline block would fail.
   const rewriter = new HTMLRewriter().on('script', {
     element(el) {
