@@ -44,7 +44,7 @@
     };
     btn.addEventListener('click', function () {
       try {
-        if (switchedOff()) localStorage.removeItem(KEY); else localStorage.setItem(KEY, '1');
+        if (switchedOff()) { localStorage.removeItem(KEY); loadBeacon(); } else localStorage.setItem(KEY, '1');
       } catch (e) {
         state.textContent = 'Your browser is blocking this choice from being saved. Turning on Global Privacy Control stops the counting instead.';
         return;
@@ -54,10 +54,16 @@
     draw();
   }
 
-  if (gpc() || switchedOff()) return;
-  var s = document.createElement('script');
-  s.defer = true;
-  s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-  s.setAttribute('data-cf-beacon', '{"token": "3e66f271b1ff45e29fe0b51a7f50e5b6"}');
-  document.body.appendChild(s);
+  // Also called when counting is switched back on, so "being counted" is
+  // true on the page the visitor is already looking at.
+  function loadBeacon() {
+    if (gpc() || switchedOff()) return;
+    if (document.querySelector('script[src*="cloudflareinsights.com/beacon.min.js"]')) return;
+    var s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon', '{"token": "3e66f271b1ff45e29fe0b51a7f50e5b6"}');
+    document.body.appendChild(s);
+  }
+  loadBeacon();
 })();
