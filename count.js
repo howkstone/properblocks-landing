@@ -4,6 +4,26 @@
   function gpc() { return navigator.globalPrivacyControl === true; }
   function switchedOff() { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
 
+  // A beacon already loaded on this page reports again when the page closes.
+  // Once counting is switched off, that report is dropped here, whichever way
+  // the beacon sends it, so the screen never says off while one more goes out.
+  var RUM = /(^|\/\/)([a-z0-9-]+\.)?cloudflareinsights\.com\//i;
+  function blocked(url) { return switchedOff() && RUM.test(String(url)); }
+  if (navigator.sendBeacon) {
+    var sb = navigator.sendBeacon.bind(navigator);
+    navigator.sendBeacon = function (url, data) { return blocked(url) ? true : sb(url, data); };
+  }
+  if (window.fetch) {
+    var f = window.fetch.bind(window);
+    window.fetch = function (input, init) {
+      var url = input && input.url ? input.url : input;
+      return blocked(url) ? Promise.resolve(new Response(null, { status: 204 })) : f(input, init);
+    };
+  }
+  var xo = XMLHttpRequest.prototype.open, xs = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.open = function (m, url) { this.__pbRum = RUM.test(String(url)); return xo.apply(this, arguments); };
+  XMLHttpRequest.prototype.send = function () { if (this.__pbRum && switchedOff()) return; return xs.apply(this, arguments); };
+
   var box = document.getElementById('visit-count-switch');
   if (box) {
     var state = box.querySelector('.vc-state');

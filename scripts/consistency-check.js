@@ -464,6 +464,9 @@ for (const rel of PAGES) {
     "roof, façade, structural Building safety and c",
     "per unit per year, usually plus VAT, plus an uplift on major works and a",
     "managing agent or contractor, provided the request is reasonable and t",
+    // 19 Oct 2026: "your device type and operating system" is one item of the
+    // visit-counting list, which already carries its serial comma further on.
+    "your country, your browser, your device type and o",
   ];
   for (const m of visible.matchAll(/[A-Za-z0-9][^,.;:!?()]{0,40}, [^,.;:!?()]{1,40}, [^,.;:!?()]{1,40} and [a-z]/g)) {
     // A window that already contains ", and " is a correctly-punctuated list
