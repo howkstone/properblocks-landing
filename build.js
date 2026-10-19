@@ -236,6 +236,21 @@ function withChromeCss(html) {
   return stripped.slice(0, i) + CHROME_CSS + stripped.slice(i);
 }
 
+// Cloudflare Web Analytics: cookie-free visit counts on every public page
+// (decision of 19 Oct 2026). Written here rather than injected at the edge,
+// because the edge mode in use skipped UK visitors entirely. The portal does
+// not load it; the cookies page says so. CSP allowances: _headers below and
+// functions/_middleware.js.
+const CF_BEACON = "<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{\"token\": \"3e66f271b1ff45e29fe0b51a7f50e5b6\"}'></script><!-- End Cloudflare Web Analytics -->";
+
+function withBeacon(html) {
+  // Idempotent, as withChromeCss: strip a previous build's copy first.
+  const stripped = html.replace(/<!-- Cloudflare Web Analytics -->[\s\S]*?<!-- End Cloudflare Web Analytics -->\n?/g, '');
+  const i = stripped.lastIndexOf('</body>');
+  if (i === -1) throw new Error('no </body> to add the analytics beacon before');
+  return stripped.slice(0, i) + CF_BEACON + '\n' + stripped.slice(i);
+}
+
 function applyChrome(html, current, opts) {
   const o = opts || {};
   // Tested by matching, never by comparing before/after: a page already
@@ -282,12 +297,12 @@ const CHROMED = [
 ];
 CHROMED.forEach(([rel, key, opts]) => {
   const file = path.join(OUT, rel);
-  fs.writeFileSync(file, applyChrome(fs.readFileSync(file, 'utf8'), key, opts));
+  fs.writeFileSync(file, withBeacon(applyChrome(fs.readFileSync(file, 'utf8'), key, opts)));
 });
 [['privacy/index.html', 'privacy'], ['terms/index.html', 'terms'], ['cookies/index.html', 'cookies']]
   .forEach(([rel, key]) => {
     const file = path.join(OUT, rel);
-    fs.writeFileSync(file, applyChromeToPolicy(fs.readFileSync(file, 'utf8'), key));
+    fs.writeFileSync(file, withBeacon(applyChromeToPolicy(fs.readFileSync(file, 'utf8'), key)));
   });
 console.log(`Chrome: same header and footer written to ${CHROMED.length + 3} pages.`);
 
@@ -401,7 +416,7 @@ fs.writeFileSync(path.join(OUT, '_headers'),
   '  X-Content-Type-Options: nosniff\n' +
   '  Referrer-Policy: strict-origin-when-cross-origin\n' +
   '  Strict-Transport-Security: max-age=31536000; includeSubDomains\n' +
-  "  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev https://api.qrserver.com; media-src 'self' https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'\n" +
+  "  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev https://api.qrserver.com; media-src 'self' https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'\n" +
   '\n' +
   '/brand/*\n' +
   '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800\n' +

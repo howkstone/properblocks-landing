@@ -26,6 +26,11 @@
 //     defence-in-depth.
 
 const R2_PUBLIC = 'https://pub-db98ca8cff464d5a815f4823cbb00748.r2.dev';
+// Cloudflare Web Analytics (cookie-free visit counts, decision of 19 Oct 2026):
+// the beacon loads from static.cloudflareinsights.com and reports to
+// cloudflareinsights.com. Both must stay in step with _headers in build.js.
+const CF_BEACON_SCRIPT = 'https://static.cloudflareinsights.com';
+const CF_BEACON_REPORT = 'https://cloudflareinsights.com';
 
 function randomNonce() {
   // 16 bytes = 128 bits of entropy. Base64-encoded, strip padding for the
@@ -40,12 +45,12 @@ function randomNonce() {
 function buildCsp(nonce) {
   return [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'`,
+    `script-src 'self' 'nonce-${nonce}' ${CF_BEACON_SCRIPT}`,
     "style-src 'self' 'unsafe-inline'",
     "font-src 'self'",
     `img-src 'self' data: ${R2_PUBLIC} https://api.qrserver.com`,
     `media-src 'self' ${R2_PUBLIC}`,
-    "connect-src 'self'",
+    `connect-src 'self' ${CF_BEACON_REPORT}`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "object-src 'none'",
