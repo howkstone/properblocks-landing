@@ -798,6 +798,59 @@ footer .copy-note{font-size:14px;color:var(--ink-3);line-height:1.6;margin:2px 0
   nav.head{gap:14px}
   nav.head a:not(.btn){display:none}
 }
+
+/* ---- One screen per desktop section (ui-standard.md U-214, Howard 25 Oct 2026: "every desktop page is a
+   'section' which has to be self-sufficient, not requiring more scrolling"). Measured by every-width-check.mjs
+   at 1366x663 and 1440x795, where the fixed header leaves 580px and 712px. */
+/* Two borders meeting made one heavy line under Michael's section. */
+.cofounder + .who{border-top:0}
+/* A stat's figure and its words wrap onto two lines in a narrow card, never past its edge. */
+.pillar .stat{flex-wrap:wrap;gap:2px 12px}
+/* A section split in two reads as one band: no doubled padding at the seam, at any width. */
+#approach{padding-bottom:20px}
+.section-deliver{padding-top:20px}
+#partners{padding-bottom:20px}
+.partners-more{padding-top:0}
+@media (min-width:1100px){
+  #approach{padding:60px 32px 44px}
+  #approach .section-head{max-width:none;margin-bottom:28px}
+  #approach .section-head h2{margin-bottom:0}
+  #approach .pillar{padding:24px 26px}
+  .section-deliver{padding:44px 32px 64px}
+  .section-deliver .commit-intro{margin-top:0;margin-bottom:24px}
+  .deliver-item > summary{padding:15px 2px}
+  #partners{padding:60px 32px 20px}
+  #partners .section-head{max-width:900px;margin-bottom:28px}
+  #partners .section-head h2{margin-bottom:12px}
+  #partners .section-head p{max-width:860px;font-size:16px;line-height:1.55}
+  .partners-more{padding:0 32px 72px}
+  .partners-grid .pillar{display:grid;grid-template-columns:40px 1fr;column-gap:14px;row-gap:10px;align-content:start;padding:22px 24px}
+  .partners-grid .pillar .ic{width:40px;height:40px}
+  .partners-grid .pillar h3{align-self:center;font-size:20px}
+  .partners-grid .pillar p,.partners-grid .pillar .stat{grid-column:1 / -1}
+  .partners-grid .pillar p{font-size:14.5px;line-height:1.5}
+  .partners-grid .pillar .stat{padding-top:12px}
+}
+/* The portal band in two screens: the portal itself, then its security, the directors' extras and the demo. */
+.portal-band--more{padding-top:12px}
+.portal-band--more::before{display:none}
+.portal-inner--more{grid-template-areas:'sec foot' 'sec demo';align-items:start}
+.portal-inner--more .portal-sec{align-self:start}
+.portal-inner--more .portal-foot{margin-top:0;padding-top:0;border-top:0;align-self:start}
+@media (min-width:981px){
+  .portal-band:not(.portal-band--more){padding:28px 32px 22px}
+  #portal .portal-inner{grid-template-areas:'head head' 'feats screen';row-gap:16px}
+  #portal .portal-head{max-width:none;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);column-gap:44px;align-items:end}
+  #portal .portal-eyebrow{grid-column:1;margin-bottom:10px}
+  #portal .portal-head h2{grid-column:1;margin:0}
+  #portal .portal-lede{grid-column:2;grid-row:1 / 3;margin:0}
+  #portal .pf{padding:5px 12px 5px 10px}
+}
+@media (max-width:980px){
+  #portal .portal-inner{grid-template-areas:'head' 'feats' 'screen'}
+  .portal-inner--more{grid-template-columns:1fr;grid-template-areas:'sec' 'foot' 'demo'}
+  .portal-band--more{padding-top:0}
+}
 </style>
 <noscript>
 <style>
@@ -896,6 +949,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     </div>
   </div>
 
+</section>
+
+<!-- What we deliver: its own screen, so each desktop section is seen whole (U-214, 25 Oct 2026). -->
+<section class="section section-deliver" id="deliver" aria-label="What we deliver">
   <div class="commit-intro" data-reveal-head>
     <h3>Things can be better. <em>This is what we deliver.</em></h3>
   </div>
@@ -949,18 +1006,6 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p class="portal-eyebrow">Included with every block</p>
       <h2 id="portal-h" data-words>Your block, on a login of your own.</h2>
       <p class="portal-lede">Every leaseholder gets an account on our own portal, which we wrote and we run. The same figures the directors see, the same records, whenever you want them.</p>
-    </div>
-
-    <div class="portal-sec">
-      <p class="portal-sec-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.2 8.4 8 9.5 4.8-1.1 8-5 8-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>Because it holds your money and your address</p>
-      <ul class="portal-chips" data-reveal-children>
-        <li>Two-factor sign-in, by app or text</li>
-        <li>TLS 1.3 with 256-bit encryption on every page</li>
-        <li>Passwords put through 600,000 rounds of hashing</li>
-        <li>Backups encrypted to 256-bit, with a copy on a second provider</li>
-        <li>An audit trail the database itself refuses to let anyone edit or delete</li>
-        <li>You see your own flat, and nothing else</li>
-      </ul>
     </div>
 
     <ul class="portal-feats" id="portal-feats" data-reveal-children>
@@ -1078,6 +1123,23 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           </div>
         </div>
       </div>
+  </div>
+</section>
+
+<!-- The portal's security, the directors' extras and the demo: the second screen of the band (U-214, 25 Oct 2026). -->
+<section class="portal-band portal-band--more" id="portal-more" aria-label="How the portal keeps your records safe">
+  <div class="portal-inner portal-inner--more" data-reveal-children>
+    <div class="portal-sec">
+      <p class="portal-sec-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.2 8.4 8 9.5 4.8-1.1 8-5 8-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>Because it holds your money and your address</p>
+      <ul class="portal-chips" data-reveal-children>
+        <li>Two-factor sign-in, by app or text</li>
+        <li>TLS 1.3 with 256-bit encryption on every page</li>
+        <li>Passwords put through 600,000 rounds of hashing</li>
+        <li>Backups encrypted to 256-bit, with a copy on a second provider</li>
+        <li>An audit trail the database itself refuses to let anyone edit or delete</li>
+        <li>You see your own flat, and nothing else</li>
+      </ul>
+    </div>
 
     <div class="portal-foot">
       <p>RTM Directors receive further privileges: see who owes what, control of who can see which page, board meetings minuted, and every safety and compliance date held with the date it has to be done again.</p>
@@ -1296,6 +1358,12 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p>Block buildings cover placed and reviewed by an independent broker, with terrorism and directors' &amp; officers' included and the sums insured checked.</p>
       <div class="stat"><span class="v">Independent</span><span class="l">broker-placed cover</span></div>
     </article>
+  </div>
+</section>
+
+<!-- The other three partners: the second screen of the network (U-214, 25 Oct 2026). -->
+<section class="section partners-more" id="partners-more" aria-label="More of our partner network">
+  <div class="pillars partners-grid" data-reveal-children>
     <article class="pillar">
       <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
       <h3>Fire &amp; compliance</h3>
