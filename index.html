@@ -87,6 +87,11 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
+  /* Radius scale for corners of 12px or more (U-221). */
+  --r-md:12px;
+  --r-lg:14px;
+  --r-xl:18px;
+  --r-pill:999px;
   --bg:#FAF9F6;
   --panel:#FFFFFF;
   --alt:#F5F4EF;
@@ -354,7 +359,7 @@ header .btn,.mark-name{white-space:nowrap}
    needs are in the list itself. */
 .portal-band{background:var(--moss);color:#EDEFEE;padding:56px 32px 60px;position:relative;overflow:hidden}
 .portal-band::before{content:"";position:absolute;inset:0;background:radial-gradient(110% 130% at 76% 0%,rgba(77,219,232,0.13),transparent 62%);pointer-events:none}
-.portal-inner{position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);grid-template-areas:'head sec' 'feats screen' 'foot foot' 'demo demo';column-gap:44px;row-gap:24px;align-items:start}
+.portal-inner{position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);grid-template-areas:'head head' 'feats screen';column-gap:44px;row-gap:24px;align-items:start}
 .portal-head{grid-area:head;max-width:640px;align-self:center}
 .portal-eyebrow{font-size:14px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;color:#4DDBE8;margin:0 0 14px}
 .portal-head h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(30px,3.4vw,42px);line-height:1.1;letter-spacing:-0.02em;color:#FFFFFF;margin:0 0 16px;text-wrap:balance}
@@ -374,6 +379,7 @@ header .btn,.mark-name{white-space:nowrap}
 .pf:nth-child(6){transition-delay:0.25s}
 .pf:nth-child(7){transition-delay:0.30s}
 .pf:nth-child(8){transition-delay:0.35s}
+.pf:nth-child(9){transition-delay:0.40s}
 .pf:hover{background:rgba(77,219,232,0.05)}
 .pf:hover .pf-label{color:#FFFFFF}
 .pf:focus-visible{outline:2px solid #4DDBE8;outline-offset:2px}
@@ -389,7 +395,7 @@ header .btn,.mark-name{white-space:nowrap}
 .portal-screen.in{opacity:1;transform:none}
 .ps-chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#F0EEE8;border-bottom:1px solid #E1DED5}
 .ps-dot{width:9px;height:9px;border-radius:50%;background:#CFCBC1}
-.ps-url{margin-left:6px;font-size:11.5px;color:var(--ink-3);background:#FBFAF7;border:1px solid #E1DED5;border-radius:20px;padding:3px 12px;letter-spacing:0.01em}
+.ps-url{margin-left:6px;font-size:11.5px;color:var(--ink-3);background:#FBFAF7;border:1px solid #E1DED5;border-radius:var(--r-pill);padding:3px 12px;letter-spacing:0.01em}
 .ps-stage{display:grid;min-height:326px}
 .ps-pane{grid-area:1 / 1;position:relative;padding:20px 22px 22px;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity 0.5s ease,transform 0.5s cubic-bezier(0.22,1,0.36,1),visibility 0s linear 0.5s}
 .ps-pane.is-on{opacity:1;visibility:visible;transform:none;transition:opacity 0.5s ease,transform 0.5s cubic-bezier(0.22,1,0.36,1),visibility 0s}
@@ -403,7 +409,7 @@ header .btn,.mark-name{white-space:nowrap}
 .pm-bal{display:flex;align-items:baseline;justify-content:space-between;margin-top:12px;padding-top:11px;border-top:2px solid var(--ink)}
 .pm-bal span{font-size:12px;color:var(--ink-3);letter-spacing:0.03em}
 .pm-bal b{font-family:Fraunces,Georgia,serif;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
-.pm-chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:0.02em;padding:3px 9px;border-radius:20px;background:var(--copper-light);color:var(--copper-deep)}
+.pm-chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:0.02em;padding:3px 9px;border-radius:var(--r-pill);background:var(--copper-light);color:var(--copper-deep)}
 .pm-chip.pm-open{background:#FEF3C7;color:#8A6212}
 .pm-chip.pm-done{background:#DCF3E7;color:#1B6E4A}
 .pm-card{border:1px solid var(--rule);border-radius:7px;padding:12px 14px;margin-bottom:9px;background:#FFFFFF}
@@ -431,9 +437,6 @@ header .btn,.mark-name{white-space:nowrap}
 .pm-form .pm-input{border:1px solid var(--rule-2);border-radius:5px;padding:7px 10px;font-size:12.5px;color:var(--ink)}
 
 /* Security wink. Six plain statements of what actually protects the account. */
-.portal-sec{grid-area:sec;align-self:center;border:1px solid rgba(255,255,255,0.16);border-radius:10px;background:rgba(255,255,255,0.045);padding:18px 22px 20px}
-.portal-sec-label{display:flex;align-items:center;gap:9px;font-size:14px;letter-spacing:0.11em;text-transform:uppercase;font-weight:600;color:#7FB6BC;margin-bottom:13px}
-.portal-sec-label svg{width:16px;height:16px;fill:none;stroke:#4DDBE8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .portal-chips{display:flex;flex-direction:column;gap:0}
 .portal-chips li{list-style:none;display:grid;grid-template-columns:14px 1fr;gap:10px;align-items:start;font-size:14px;line-height:1.45;color:#D6E2E1;padding:5px 0;opacity:0;transform:translateY(8px);transition:opacity 0.5s ease,transform 0.5s ease}
 .portal-chips li.in{opacity:1;transform:none}
@@ -443,22 +446,8 @@ header .btn,.mark-name{white-space:nowrap}
 .portal-chips li:nth-child(4){transition-delay:0.18s}
 .portal-chips li:nth-child(5){transition-delay:0.24s}
 .portal-chips li:nth-child(6){transition-delay:0.30s}
-.portal-foot{grid-area:foot;margin-top:4px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.14);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 26px}
-.portal-foot p{font-size:14px;line-height:1.6;color:#A9C0C0;max-width:660px}
-.portal-foot .btn{background:transparent;color:#4DDBE8;border:1.5px solid #4DDBE8;font-weight:500;min-height:48px;padding:0 24px;justify-content:center}
-.portal-foot .btn:hover{background:rgba(77,219,232,0.12);color:#FFFFFF}
-/* "Try it on an example block": the demo-account panel under the Portal band's
-   footer (approved mock-up, 13 Oct 2026). It reveals with the band like its
-   siblings: the scroll-reveal puts .in on every direct child of .portal-inner. */
-.portal-demo{grid-area:demo;border:1px solid rgba(255,255,255,0.16);border-radius:10px;background:rgba(255,255,255,0.045);padding:22px 26px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;opacity:0;transform:translateY(12px);transition:opacity 0.6s ease,transform 0.6s cubic-bezier(0.22,1,0.36,1)}
-.portal-demo.in{opacity:1;transform:none}
-.portal-demo h3{font-family:Fraunces,serif;font-weight:400;font-size:24px;line-height:1.2;color:#FFFFFF;margin:0 0 8px}
-.portal-demo p{font-size:14.5px;line-height:1.6;color:#BFD2D2;max-width:640px;margin:0}
-.portal-demo .free{color:#4DDBE8;font-weight:600}
-.portal-demo .btn{background:#4DDBE8;color:#0B2F33;border-color:#4DDBE8;font-weight:500;min-height:48px;padding:0 24px;justify-content:center}
-.portal-demo .btn:hover{background:#7FE7F0;border-color:#7FE7F0;box-shadow:none}
 @media (max-width:980px){
-  .portal-inner{grid-template-columns:1fr;grid-template-areas:'head' 'screen' 'feats' 'sec' 'foot' 'demo';row-gap:26px}
+  .portal-inner{grid-template-columns:1fr;grid-template-areas:'head' 'screen' 'feats';row-gap:26px}
   .portal-head{max-width:none}
 }
 @media (max-width:640px){
@@ -527,7 +516,16 @@ header .btn,.mark-name{white-space:nowrap}
 .casework-body{display:flex;flex-direction:column;gap:32px;padding-top:8px}
 .casework-stack-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
 .casework-head{position:sticky;top:16px;z-index:3;background:var(--bg);padding:10px 0 14px;margin-bottom:10px}
-.case-stack-card{position:sticky;top:calc(var(--case-top) + var(--stack-idx) * 24px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;padding:44px 44px 40px;box-shadow:0 24px 48px -16px rgba(31,27,23,0.18),0 6px 14px -6px rgba(31,27,23,0.08);transition:transform 0.4s ease}
+.case-stack-card{position:sticky;top:calc(var(--case-top) + var(--stack-idx) * 24px);background:var(--panel);border:1px solid var(--rule);border-radius:var(--r-xl);padding:44px 44px 40px;box-shadow:0 24px 48px -16px rgba(31,27,23,0.18),0 6px 14px -6px rgba(31,27,23,0.08);transition:transform 0.4s ease}
+/* The second action beside a section's one button, as a plain link (U-220; Howard, 25 Oct 2026 picker: "One button, with the second action as a plain text link"). */
+.text-link{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-size:15px;font-weight:600;color:var(--copper-deep);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}
+.text-link:hover{color:var(--ink)}
+.text-link:focus-visible{outline:2px solid var(--copper-deep);outline-offset:3px;border-radius:3px}
+.cta-band .text-link{font-size:16px}
+/* Continuous corners where the browser can draw them (Chrome and Edge 139+); others keep the plain radius (U-221). */
+@supports (corner-shape: squircle){
+  .case-stack-card,.jstep-num,.msg-modal-card,.ps-url,.pm-chip{corner-shape:squircle}
+}
 .case-stack-eyebrow{font-family:Inter,sans-serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper-deep);font-weight:600;margin-bottom:28px}
 .case-stack-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 
@@ -555,7 +553,7 @@ header .btn,.mark-name{white-space:nowrap}
   .casework-stack{padding:32px 16px 28px}
   .casework-stack-inner{gap:24px}
   .casework-stack{--case-top:92px}
-  .case-stack-card{padding:28px 24px 26px;top:calc(var(--case-top) + var(--stack-idx) * 18px);border-radius:14px}
+  .case-stack-card{padding:28px 24px 26px;top:calc(var(--case-top) + var(--stack-idx) * 18px);border-radius:var(--r-lg)}
   .casework-head{top:8px}
   .case-stack-grid{grid-template-columns:1fr;gap:24px}
   .case-sign{padding:32px 20px 26px;min-height:0}
@@ -628,7 +626,7 @@ header .btn,.mark-name{white-space:nowrap}
 .journey-head{max-width:1120px;margin:0 auto;padding:64px 32px 0;text-align:center}
 .journey-track{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:28px;padding:24px 32px 56px;margin:0}
 .jstep{position:relative;flex:0 0 clamp(280px,30%,360px);display:flex;flex-direction:column;gap:16px}
-.jstep-num{width:64px;height:64px;border-radius:12px;background:var(--copper-light);display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:24px;font-weight:500;color:var(--copper-deep);font-variant-numeric:tabular-nums;transition:background 0.45s ease,color 0.45s ease,transform 0.45s cubic-bezier(0.22,1,0.36,1)}
+.jstep-num{width:64px;height:64px;border-radius:var(--r-md);background:var(--copper-light);display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:24px;font-weight:500;color:var(--copper-deep);font-variant-numeric:tabular-nums;transition:background 0.45s ease,color 0.45s ease,transform 0.45s cubic-bezier(0.22,1,0.36,1)}
 .jstep.active .jstep-num{background:var(--copper-deep);color:var(--copper-light);transform:scale(1.06)}
 .jstep-body h3{font-family:Fraunces,serif;font-weight:500;font-size:clamp(21px,2.2vw,26px);letter-spacing:-0.005em;color:var(--ink);margin-bottom:8px}
 .jstep-body p{font-size:clamp(15.5px,1.4vw,17px);color:var(--ink-2);line-height:1.62;max-width:38ch}
@@ -672,7 +670,7 @@ header .btn,.mark-name{white-space:nowrap}
 .msg-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .msg-modal[aria-hidden="false"]{display:flex}
 .msg-modal-overlay{position:absolute;inset:0;background:rgba(16,62,67,0.55);backdrop-filter:blur(4px);cursor:pointer}
-.msg-modal-card{position:relative;background:var(--panel);border-radius:12px;max-width:560px;width:100%;max-height:calc(100vh - 40px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--ink-3) transparent;padding:32px 32px 28px;box-shadow:0 24px 60px -10px rgba(16,62,67,0.35),0 8px 24px -4px rgba(16,62,67,0.18);font-family:Inter,sans-serif}
+.msg-modal-card{position:relative;background:var(--panel);border-radius:var(--r-md);max-width:560px;width:100%;max-height:calc(100vh - 40px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--ink-3) transparent;padding:32px 32px 28px;box-shadow:0 24px 60px -10px rgba(16,62,67,0.35),0 8px 24px -4px rgba(16,62,67,0.18);font-family:Inter,sans-serif}
 .msg-modal-close{position:absolute;top:28px;right:20px;width:44px;height:44px;border:none;background:transparent;font-size:28px;line-height:1;color:var(--ink-3);cursor:pointer;border-radius:8px;transition:background 0.15s ease,color 0.15s ease;display:flex;align-items:center;justify-content:center}
 .msg-modal-close:hover{background:var(--alt);color:var(--ink)}
 .msg-modal-close:focus-visible{outline:2px solid var(--copper-deep);outline-offset:2px}
@@ -759,7 +757,6 @@ header .btn,.mark-name{white-space:nowrap}
 .dm-again{margin-top:14px;text-align:center}
 .dm-again button{background:none;border:0;padding:10px 12px;min-height:44px;font:inherit;font-size:14px;color:var(--copper-deep);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .dm-sent-when{display:block;margin-top:4px}
-.portal-demo h3{text-wrap:balance}
 @media (max-width:600px){.dm-form input[type=text],.dm-form input[type=email],.dm-form select{font-size:16px}}
 
 /* Footer */
@@ -829,14 +826,32 @@ footer .copy-note{font-size:14px;color:var(--ink-3);line-height:1.6;margin:2px 0
   .partners-grid .pillar p{font-size:14.5px;line-height:1.5}
   .partners-grid .pillar .stat{padding-top:12px}
 }
-/* The portal band in two screens: the portal itself, then its security, the directors' extras and the demo. */
-.portal-band--more{padding-top:12px}
-.portal-band--more::before{display:none}
-.portal-inner--more{grid-template-areas:'sec foot' 'sec demo';align-items:start}
-.portal-inner--more .portal-sec{align-self:start}
-.portal-inner--more .portal-foot{margin-top:0;padding-top:0;border-top:0;align-self:start}
+/* Under the portal tour, one idea per band (U-220; Howard, 25 Oct 2026 picker: "Two bands, and the directors' extras join the portal tour"): the safeguards, then the demo. */
+.portal-band--safe,.portal-band--demo{padding:52px 32px}
+.portal-band--safe::before,.portal-band--demo::before{display:none}
+.portal-band--safe{border-top:1px solid rgba(255,255,255,0.10)}
+.portal-band--demo{border-top:1px solid rgba(255,255,255,0.10)}
+.portal-one{position:relative;max-width:1200px;margin:0 auto}
+.portal-one-head{display:flex;align-items:center;gap:22px;margin-bottom:22px}
+.portal-one-ic{flex:none;display:flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:50%;background:rgba(77,219,232,0.08);border:1px solid rgba(77,219,232,0.22)}
+.portal-one-ic svg{width:36px;height:36px;fill:none;stroke:#4DDBE8;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.portal-one-h{font-family:Fraunces,serif;font-weight:400;font-size:clamp(28px,3.2vw,40px);line-height:1.12;letter-spacing:-0.02em;color:#FFFFFF;margin:0;text-wrap:balance}
+.portal-band--safe .portal-chips{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.portal-one-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 40px}
+.portal-one-p{font-size:16px;line-height:1.6;color:#BFD2D2;max-width:640px;margin:14px 0 0}
+.portal-one-p .free{color:#4DDBE8;font-weight:600}
+.portal-band--demo .btn{background:#4DDBE8;color:#0B2F33;border-color:#4DDBE8;font-weight:500;min-height:48px;padding:0 24px;justify-content:center}
+.portal-band--demo .btn:hover{background:#7FE7F0;border-color:#7FE7F0;box-shadow:none}
+.portal-one-acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}
+.portal-band--demo .text-link{color:#4DDBE8}
+.portal-band--demo .text-link:hover{color:#FFFFFF}
+.portal-band--demo .text-link:focus-visible{outline-color:#4DDBE8}
+.portal-login-phone{display:none}
+@media (max-width:520px){.portal-login-phone{display:inline-flex}}
+@media (max-width:860px){.portal-one-ic{display:none}.portal-band--safe .portal-chips{display:flex}}
+@media (max-width:640px){.portal-band--safe,.portal-band--demo{padding:44px 20px}}
 @media (min-width:981px){
-  .portal-band:not(.portal-band--more){padding:28px 32px 22px}
+  #portal{padding:28px 32px 22px}
   #portal .portal-inner{grid-template-areas:'head head' 'feats screen';row-gap:16px}
   #portal .portal-head{max-width:none;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);column-gap:44px;align-items:end}
   #portal .portal-eyebrow{grid-column:1;margin-bottom:10px}
@@ -846,15 +861,13 @@ footer .copy-note{font-size:14px;color:var(--ink-3);line-height:1.6;margin:2px 0
 }
 @media (max-width:980px){
   #portal .portal-inner{grid-template-areas:'head' 'screen' 'feats'}
-  .portal-inner--more{grid-template-columns:1fr;grid-template-areas:'sec' 'foot' 'demo'}
-  .portal-band--more{padding-top:0}
 }
 </style>
 <noscript>
 <style>
 /* If JavaScript is disabled the reveal animations never fire, so make sure
    the elements that start at opacity:0 are visible by default. */
-.hero-pillars,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.jstep,.section-head h2 .w,.portal-demo{
+.hero-pillars,.hero .lede,.hero-ctas,.trust-creds .c,.section-head p,.pillar,.jstep,.section-head h2 .w,.portal-chips li,.pf,.portal-screen{
   opacity:1 !important;transform:none !important
 }
 /* The unravel wordmark is clipped away until the scroll handler steps it
@@ -899,7 +912,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
       <p class="lede" id="hero-lede">We're independent, London-based, and out to shake up the block management industry.<br>We work with RTM companies, offering market-leading transparency: every pound and every action visible to the leaseholders who pay for it.</p>
       <div class="hero-ctas" id="hero-ctas">
         <button type="button" class="btn btn-primary js-open-message-modal">Message us</button>
-        <a href="#approach" class="btn btn-ghost">How we work</a>
+        <a href="#approach" class="text-link">How we work</a>
       </div>
     </div>
     <div class="unravel hero-unravel" id="unravel" aria-label="Proper Blocks">
@@ -1039,6 +1052,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
           <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="m8 12 2.5 2.5L16 9"/></svg></span>
           <span class="pf-label">Selling or remortgaging</span>
         </button>
+        <button type="button" class="pf" role="tab" id="pf-directors" aria-controls="ps-directors" aria-selected="false" tabindex="-1">
+          <span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.7-3 2.9-4.8 5.5-4.8s4.8 1.8 5.5 4.8"/><path d="M16 5.5a3 3 0 0 1 0 5.6M18 14.6c1.3.7 2.2 2.2 2.5 4.4"/></svg></span>
+          <span class="pf-label">For RTM directors</span>
+        </button>
       </div>
 
       <div class="portal-screen" id="portal-screen">
@@ -1119,37 +1136,48 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
             <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Insurance and certificates attached</span></div>
             <div class="pm-tick"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg><span>Pack issued to your solicitor</span></div>
           </div>
+          <div class="ps-pane" id="ps-directors" role="tabpanel" aria-labelledby="pf-directors" tabindex="0">
+            <div class="ps-title">For RTM directors</div>
+            <p class="ps-cap">See who owes what, control of who can see which page, board meetings minuted, and every safety and compliance date held with the date it has to be done again.</p>
+            <div class="pm-row"><span>Flat 4 &middot; Service charge, Q2</span><span class="pm-chip pm-open">Overdue</span></div>
+            <div class="pm-row"><span>Board meeting, 12 Sep</span><span class="pm-chip pm-done">Minuted</span></div>
+            <div class="pm-row"><span>Fire risk assessment</span><b>Due again 14 Mar</b></div>
+            <div class="pm-row"><span>Insurance schedule page</span><b>Directors only</b></div>
+          </div>
         </div>
       </div>
   </div>
 </section>
 
-<!-- The portal's security, the directors' extras and the demo: the second screen of the band (U-214, 25 Oct 2026). -->
-<section class="portal-band portal-band--more" id="portal-more" aria-label="How the portal keeps your records safe">
-  <div class="portal-inner portal-inner--more" data-reveal-children>
-    <div class="portal-sec">
-      <p class="portal-sec-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.2 8.4 8 9.5 4.8-1.1 8-5 8-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>Because it holds your money and your address</p>
-      <ul class="portal-chips" data-reveal-children>
-        <li>Two-factor sign-in, by app or text</li>
-        <li>TLS 1.3 with 256-bit encryption on every page</li>
-        <li>Passwords put through 600,000 rounds of hashing</li>
-        <li>Backups encrypted to 256-bit, with a copy on a second provider</li>
-        <li>An audit trail the database itself refuses to let anyone edit or delete</li>
-        <li>You see your own flat, and nothing else</li>
-      </ul>
+<!-- The portal's safeguards, then its demo: one idea per band (U-220; Howard, 25 Oct 2026 picker: "Two bands, and the directors' extras join the portal tour").
+     The directors' extras are the ninth feature in the portal tour above. Portal login is in the header on wider screens;
+     up to 520px the header drops it (phone top bar note above), so it shows here as a text link. -->
+<section class="portal-band portal-band--safe" id="portal-safe" aria-labelledby="portal-safe-h">
+  <div class="portal-one" data-reveal-children>
+    <div class="portal-one-head">
+      <span class="portal-one-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.2 8.4 8 9.5 4.8-1.1 8-5 8-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <h2 class="portal-one-h" id="portal-safe-h">Because it holds your money and your address</h2>
     </div>
+    <ul class="portal-chips" data-reveal-children>
+      <li>Two-factor sign-in, by app or text</li>
+      <li>TLS 1.3 with 256-bit encryption on every page</li>
+      <li>Passwords put through 600,000 rounds of hashing</li>
+      <li>Backups encrypted to 256-bit, with a copy on a second provider</li>
+      <li>An audit trail the database itself refuses to let anyone edit or delete</li>
+      <li>You see your own flat, and nothing else</li>
+    </ul>
+  </div>
+</section>
 
-    <div class="portal-foot">
-      <p>RTM Directors receive further privileges: see who owes what, control of who can see which page, board meetings minuted, and every safety and compliance date held with the date it has to be done again.</p>
-      <a href="https://dennishouse.properblocks.co.uk" class="btn">Portal login</a>
+<section class="portal-band portal-band--demo" id="portal-demo" aria-labelledby="portal-demo-h">
+  <div class="portal-one portal-one-row" data-reveal-children>
+    <div>
+      <h2 class="portal-one-h" id="portal-demo-h">Want to see our portal in action?</h2>
+      <p class="portal-one-p"><span class="free">Free access here.</span> We need an email only for your login details, but we won't re&#8209;target you in any way. Set-up takes just 30 seconds.</p>
     </div>
-
-    <div class="portal-demo">
-      <div>
-        <h3>Want to see our portal in action?</h3>
-        <p><span class="free">Free access here.</span> We need an email only for your login details, but we won't re&#8209;target you in any way. Set-up takes just 30 seconds.</p>
-      </div>
+    <div class="portal-one-acts">
       <button type="button" class="btn btn-primary js-open-demo-modal">Get a demo login</button>
+      <a href="https://dennishouse.properblocks.co.uk" class="text-link portal-login-phone">Portal login</a>
     </div>
   </div>
 </section>
@@ -1464,7 +1492,7 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     <h2>We're <strong>independent</strong>, and we're judged on <strong>your block</strong>.</h2>
     <div class="cta-row">
       <button type="button" class="btn btn-primary btn-lg js-open-message-modal">Message us</button>
-      <a href="/fees/" class="btn btn-ghost btn-lg">See our fees</a>
+      <a href="/fees/" class="text-link">See our fees</a>
     </div>
     <p>We only take on a small number of buildings each year, and we limit the number of blocks each manager runs. This ensures we maintain our high standards, and we can be on-site when required.</p>
   </div>
