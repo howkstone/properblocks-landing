@@ -166,8 +166,8 @@ header .btn,.mark-name{white-space:nowrap}
 .hero-eyebrow.in{opacity:1;transform:translateY(0)}
 .hero-eyebrow::before{content:"";width:24px;height:1px;background:var(--copper);display:inline-block}
 
-/* Manifesto H1 - two-phase reveal (Ken-style). Phase A on load timer, then
-   Phase B and the wordmark on the same clock (one-screen hero, 25 Oct 2026). */
+/* Manifesto H1 - two-phase reveal (Ken-style). Phase A on load timer,
+   Phase B word-lit by scrollY progress through the .hero-stage. */
 .hero-manifesto{font-family:Fraunces,serif;font-weight:400;font-size:clamp(34px,min(5.4vw,7.4vh),68px);line-height:1.05;letter-spacing:-0.025em;color:var(--ink);margin:0 auto clamp(16px,3vh,32px);max-width:760px;text-wrap:balance}
 .hero-manifesto .phase{display:block}
 .hero-manifesto .phase-b{margin-top:0.18em}
@@ -802,11 +802,6 @@ footer .copy-note{font-size:14px;color:var(--ink-3);line-height:1.6;margin:2px 0
 /* ---- One screen per desktop section (ui-standard.md U-214, Howard 25 Oct 2026: "every desktop page is a
    'section' which has to be self-sufficient, not requiring more scrolling"). Measured by every-width-check.mjs
    at 1366x663 and 1440x795, where the fixed header leaves 580px and 712px. */
-/* The hero is one screen under the header: no pinned scroll stage, so the section is exactly what is seen. */
-.hero-stage{min-height:0;margin-top:84px}
-.hero{position:relative;height:calc(100vh - 84px);min-height:460px;padding-top:20px;padding-bottom:28px}
-@media (max-height:640px){.hero{padding-top:16px}}
-@media (max-width:900px){.hero-stage{margin-top:70px}.hero{height:auto;min-height:calc(100svh - 70px);padding-top:28px}}
 /* Two borders meeting made one heavy line under Michael's section. */
 .cofounder + .who{border-top:0}
 /* A stat's figure and its words wrap onto two lines in a narrow card, never past its edge. */
@@ -1585,9 +1580,10 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
 
   // ---- Hero manifesto: two-phase reveal ----
   // Phase A (timer): "Block management." lights word-by-word on load.
-  // Phase B: "Done properly." lights once phase A has, then the wordmark climbs
-  // in. Until 25 Oct 2026 phase B waited on the scroll through a 160vh pinned
-  // stage; the hero is now one screen (U-214), so it runs on the clock.
+  // Phase B (scroll-driven): "done properly." lights as scrollY climbs through
+  // the .hero-stage's 200vh. The hero is sticky-pinned for that first 100vh
+  // so the screen stays put until both sentences are revealed. Same pattern
+  // as theken.uk's "Someone you love is slipping out of reach..." manifesto.
   (function(){
     const target = document.getElementById('hero-manifesto');
     if(!target) return;
@@ -1621,16 +1617,33 @@ header{background:rgba(251,248,242,0.92);backdrop-filter:blur(12px);border-botto
     const PER_WORD_MS = 220;
     const PRE_ROLL_MS = 350;
     wordsA.forEach((w,i)=>setTimeout(()=>w.classList.add('lit'), PRE_ROLL_MS + i*PER_WORD_MS));
-    // ---- Phase B + unravel: chained, on the same clock ----
-    // The hero is one screen (U-214, 25 Oct 2026: every desktop section is seen whole, without scrolling inside it),
-    // so nothing waits on the scroll any more. The order is kept: "Done properly." lights once "Block management."
-    // has, and "Proper Blocks" then climbs through its five stages, so the wordmark never arrives on its own.
-    const B_START_MS = PRE_ROLL_MS + wordsA.length * PER_WORD_MS + 250;
-    wordsB.forEach((w,i)=>setTimeout(()=>w.classList.add('lit'), B_START_MS + i*PER_WORD_MS));
-    if(unravelSection){
-      const U_START_MS = B_START_MS + wordsB.length * PER_WORD_MS + 300;
-      for(let i=1; i<=5; i++) setTimeout(()=>unravelSection.classList.add('stage-'+i), U_START_MS + (i-1)*110);
+    // ---- Phase B + unravel: chained scroll-driven reveals ----
+
+    function onManifestoScroll(){
+      const vh = window.innerHeight;
+      const sy = window.scrollY;
+      // Phase B (done properly) lights as the user scrolls 0.05vh → 0.45vh.
+      const phaseBStart = vh * 0.04;
+      const phaseBEnd = vh * 0.22;
+      const phaseBProgress = Math.max(0, Math.min(1, (sy - phaseBStart) / (phaseBEnd - phaseBStart)));
+      const litCount = Math.round(phaseBProgress * wordsB.length);
+      wordsB.forEach((w,i)=>w.classList.toggle('lit', i < litCount));
+      // Unravel "Proper Blocks": stays fully hidden until phase B is filled,
+      // then climbs through the 5 clip-path stages as scroll continues from
+      // 0.50vh → 1.00vh. Still inside the 220vh sticky pin zone so the user
+      // sees it grow without ever leaving the hero. Was timer-driven for a
+      // few hours on 2026-05-26 but that broke the "reveal after done
+      // properly" intent - the wordmark just appeared on its own.
+      if(unravelSection){
+        const unravelStart = vh * 0.24;
+        const unravelEnd = vh * 0.50;
+        const unravelProgress = Math.max(0, Math.min(1, (sy - unravelStart) / (unravelEnd - unravelStart)));
+        const stage = Math.floor(unravelProgress * 5);  // 0..5
+        for(let i=1; i<=5; i++) unravelSection.classList.toggle('stage-'+i, stage >= i);
+      }
     }
+    window.addEventListener('scroll', onManifestoScroll, {passive:true});
+    onManifestoScroll();
   })();
 
   // ---- Onboarding journey: scroll-driven horizontal travel ----
