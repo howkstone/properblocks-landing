@@ -162,7 +162,7 @@ const REG_NOTE = 'Our professional indemnity cover is in the name of Big Brain L
 // it in its credentials band instead, and one link twice on a page is noise.
 // The ICO has no logo here: it refuses its logo to anyone without the
 // Commissioner's express approval.
-const TPO_MARK = '<a class="tpo" href="https://www.tpos.co.uk/business-search/proper-blocks/" target="_blank" rel="noopener" aria-label="The Property Ombudsman, membership T14754: our entry on their public member register, opens in a new tab"><img src="/img/the-property-ombudsman.webp" alt="The Property Ombudsman" width="103" height="36"></a>';
+const TPO_MARK = '<a class="tpo" href="https://www.tpos.co.uk/business-search/proper-blocks/" target="_blank" rel="noopener noreferrer" aria-label="The Property Ombudsman, membership T14754: our entry on their public member register, opens in a new tab"><img src="/img/the-property-ombudsman.webp" alt="The Property Ombudsman" width="103" height="36"></a>';
 
 // The home page carries the note inside the indemnity credential, where the
 // claim it qualifies is, so the shared footer leaves it off there: printing it
@@ -423,6 +423,14 @@ CHROMED.forEach(([rel, key, opts]) => {
     if (key === 'cookies') html = withVisitSwitch(html);
     fs.writeFileSync(file, html);
   });
+
+// 404.html (security sweep, 7 Nov 2026). Cloudflare Pages serves the home page
+// with status 200 for every unknown address until the project has a top-level
+// 404.html; with one, an unknown address answers 404 with this page. Built
+// from the portal's own not-found page, so the two sites say the same thing,
+// in the policy-page chrome (its "Back to the portal" line drops out there).
+fs.writeFileSync(path.join(OUT, '404.html'),
+  withBeacon(applyChromeToPolicy(inlinePolicyCss(readModuleTemplate('not_found.js'), policyCss), 'notfound')));
 console.log(`Chrome: same header and footer written to ${CHROMED.length + 3} pages.`);
 
 
@@ -604,5 +612,10 @@ console.log('Built:');
 // catches the same fact being stated two ways on two pages. Fails the build.
 require('child_process').execFileSync(
   process.execPath, [path.join(__dirname, 'scripts', 'consistency-check.js')],
+  { stdio: 'inherit' }
+);
+// The 404 page, the new-tab links and the header set. Fails the build.
+require('child_process').execFileSync(
+  process.execPath, [path.join(__dirname, 'scripts', 'security-check.js')],
   { stdio: 'inherit' }
 );

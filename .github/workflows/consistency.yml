@@ -16,3 +16,7 @@ jobs:
       # Catches a hand-edit to pricing / FAQs / block-manager-london /
       # contractor that never went through build.js.
       - run: node scripts/consistency-check.js
+      # Security sweep, 7 Nov 2026: the 404 page is in place, every new-tab
+      # link is noopener noreferrer, and _headers carries the full set.
+      - run: node scripts/security-check.js --self-test
+      - run: node scripts/security-check.js
