@@ -428,9 +428,15 @@ CHROMED.forEach(([rel, key, opts]) => {
 // with status 200 for every unknown address until the project has a top-level
 // 404.html; with one, an unknown address answers 404 with this page. Built
 // from the portal's own not-found page, so the two sites say the same thing,
-// in the policy-page chrome (its "Back to the portal" line drops out there).
-fs.writeFileSync(path.join(OUT, '404.html'),
-  withBeacon(applyChromeToPolicy(inlinePolicyCss(readModuleTemplate('not_found.js'), policyCss), 'notfound')));
+// in the policy-page chrome. Its "Back to the portal" link becomes a link home:
+// on a page whose only job is a way on, the body keeps one (NN/g, GOV.UK).
+{
+  const back = '<p><a class="back" href="/">&larr; Back to the portal</a></p>';
+  const src = inlinePolicyCss(readModuleTemplate('not_found.js'), policyCss);
+  if (!src.includes(back)) throw new Error('not_found.js: the back link has changed');
+  fs.writeFileSync(path.join(OUT, '404.html'), withBeacon(applyChromeToPolicy(
+    src.replace(back, '<p><a class="back" href="/">&larr; Back to the home page</a></p>'), 'notfound')));
+}
 console.log(`Chrome: same header and footer written to ${CHROMED.length + 3} pages.`);
 
 
