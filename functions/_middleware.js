@@ -69,9 +69,9 @@ function buildCsp(nonce) {
 // list on every request, so removing a code shuts its holders out again.
 //
 // Left open on purpose: the legal pages (privacy, terms, cookies), fonts and
-// images the holding page needs, robots.txt, and /issues (Dennis House
-// residents report faults through it). The portal is a different host and is
-// not touched.
+// images the holding page needs, robots.txt, and /issues (residents report
+// faults through it). The portal is a different host and is not touched; the
+// holding page links its generic sign-in, which names no block.
 // ---------------------------------------------------------------------------
 const INVITE_COOKIE = 'pb_invite';
 const OPEN_PATHS = [/^\/(privacy|terms|cookies)(\/|$)/, /^\/(fonts|img|brand)\//, /^\/robots\.txt$/, /^\/issues\/?$/];
@@ -144,7 +144,7 @@ footer .links{margin-top:6px;display:flex;gap:14px;justify-content:center;flex-w
       ${error ? `<p class="err" id="code-err" role="alert">&#9888; ${escHtml(error)}</p>` : ''}
       <button type="submit">Continue</button>
     </form>
-    <p class="resident">Live at Dennis House? <a href="https://dennishouse.properblocks.co.uk">Sign in to the residents' portal</a></p>
+    <p class="resident">Already have an account? <a href="https://portal.properblocks.co.uk/">Sign in</a></p>
   </div>
   <footer>
     <div>&copy; 2026 Proper Blocks Ltd &middot; Co. No. 17301605 &middot; Registered in England &amp; Wales</div>
